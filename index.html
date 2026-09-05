@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230A4F44'/%3E%3Cpath d='M8 24 C 14 18, 18 14, 24 8' stroke='%237FBFAF' stroke-width='2.5' fill='none' stroke-linecap='round'/%3E%3Cpath d='M8 8 C 14 14, 18 18, 24 24' stroke='%23DFF0EB' stroke-width='2.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+<meta name="description" content="T&L@Biomed — course hub with notes, an interactive mock quiz, past grade distributions and structured tutorials.">
+<title>T&amp;L@Biomed — course hub</title>
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Spectral:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* ============================================================
+   Design tokens
+   ============================================================ */
+:root {
+  --bg: #F2F6F3;
+  --surface: #FFFFFF;
+  --ink: #14323A;
+  --ink-2: #50646A;
+  --ink-3: #7C8F93;
+  --line: #DCE6E1;
+  --primary: #0E6B5C;
+  --primary-strong: #0A4F44;
+  --primary-soft: #E2F0EB;
+  --accent: #C97F1B;
+  --accent-soft: #F9EFDC;
+  --ok: #2E7D4F;
+  --ok-soft: #E4F2E9;
+  --bad: #C4453C;
+  --bad-soft: #F9E7E5;
+  --radius: 14px;
+  --shadow: 0 1px 2px rgba(20,50,58,.06), 0 8px 24px rgba(20,50,58,.08);
+  --font-display: "Spectral", Georgia, "Times New Roman", serif;
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+}
+
+/* ============================================================
+   Base
+   ============================================================ */
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+.hidden { display: none !important; }
+a { color: var(--primary); text-decoration: none; }
+a:hover { text-decoration: underline; }
+:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; border-radius: 4px; }
+code, .mono { font-family: var(--font-mono); }
+
+h1, h2, h3 { font-family: var(--font-display); line-height: 1.2; margin: 0 0 .35em; }
+p { margin: 0 0 .9em; }
+
+/* ============================================================
+   Masthead
+   ============================================================ */
+.masthead {
+  background: var(--primary-strong);
+  color: #F4FBF8;
+  padding: 34px 20px 46px;
+}
+.masthead-inner {
+  max-width: 980px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+.brand-code {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: #9CC9BC;
+  display: block;
+  margin-bottom: 10px;
+}
+.masthead h1 {
+  font-size: clamp(28px, 4.4vw, 40px);
+  margin-bottom: 6px;
+  color: #FFFFFF;
+  font-weight: 700;
+}
+.masthead-sub {
+  margin: 0;
+  color: #BFDED4;
+  font-size: 15px;
+}
+.dna { flex: 0 0 auto; width: 200px; height: 116px; opacity: .95; }
+.dna .strand-a { stroke: #7FBFAF; stroke-width: 3; fill: none; stroke-linecap: round; }
+.dna .strand-b { stroke: #DFF0EB; stroke-width: 3; fill: none; stroke-linecap: round; }
+.dna .rung { stroke: #4E9E8C; stroke-width: 2; opacity: .7; }
+
+/* ============================================================
+   Tab bar (signature: specimen-slide chips)
+   ============================================================ */
+.tabbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--bg);
+  padding: 12px 16px 0;
+}
+.tabbar-inner {
+  max-width: 980px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 15px;
+  min-height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--ink-2);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background .15s ease, color .15s ease, border-color .15s ease;
+}
+.tab svg { width: 17px; height: 17px; flex: 0 0 auto; }
+.tab .acc {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: .08em;
+  color: var(--ink-3);
+  text-transform: uppercase;
+}
+.tab:hover { border-color: var(--primary); color: var(--primary); }
+.tab[aria-selected="true"] {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #FFFFFF;
+}
+.tab[aria-selected="true"] .acc { color: #BFDED4; }
+.tab .lock-dot { width: 12px; height: 12px; }
+
+/* ============================================================
+   Views / layout
+   ============================================================ */
+main { max-width: 980px; margin: 0 auto; padding: 26px 16px 60px; }
+.view { animation: rise .28s ease; }
+@keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+.view-head { margin-bottom: 22px; }
+.view-head .eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: 8px;
+  display: block;
+}
+.view-head h2 { font-size: clamp(22px, 3vw, 30px); }
+.view-head p { color: var(--ink-2); margin: 0; }
+
+.banner {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  background: var(--accent-soft);
+  border: 1px solid #EAD9AC;
+  color: #6B4A10;
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  font-size: 14px;
+  margin-bottom: 22px;
+}
+.banner svg { width: 18px; height: 18px; flex: 0 0 auto; margin-top: 2px; }
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+/* ============================================================
+   Notes
+   ============================================================ */
+.notes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+.note-card {
+  display: block;
+  padding: 18px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  color: var(--ink);
+  transition: border-color .15s ease, transform .15s ease;
+}
+.note-card:hover { border-color: var(--primary); text-decoration: none; transform: translateY(-2px); }
+.note-card .nc-title { font-weight: 600; font-size: 16px; display: flex; align-items: center; gap: 8px; }
+.note-card .nc-title svg { width: 15px; height: 15px; color: var(--primary); flex: 0 0 auto; }
+.note-card .nc-desc { color: var(--ink-2); font-size: 14px; margin: 6px 0 10px; }
+.note-card .nc-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--primary);
+  background: var(--primary-soft);
+  border-radius: 999px;
+  padding: 3px 9px;
+}
+.tag.sample { background: var(--accent-soft); color: #6B4A10; }
+
+/* ============================================================
+   Tutorials
+   ============================================================ */
+.tutorial-group { margin-bottom: 26px; }
+.tutorial-group h3 {
+  font-size: 19px;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+.tutorial-group .tg-note { font-family: var(--font-mono); font-size: 11px; color: var(--ink-3); }
+.tut-list { list-style: none; margin: 10px 0 0; padding: 0; }
+.tut-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 16px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  margin-bottom: 8px;
+  color: var(--ink);
+  transition: border-color .15s ease;
+}
+.tut-row:hover { border-color: var(--primary); text-decoration: none; }
+.tut-row .tr-main { flex: 1 1 auto; min-width: 0; }
+.tut-row .tr-title { font-weight: 600; font-size: 15px; }
+.tut-row .tr-desc { color: var(--ink-2); font-size: 13.5px; }
+.tut-row svg.arrow { width: 16px; height: 16px; color: var(--primary); flex: 0 0 auto; }
+
+/* ============================================================
+   Empty state
+   ============================================================ */
+.empty-state {
+  text-align: center;
+  padding: 52px 24px;
+  color: var(--ink-2);
+}
+.empty-state svg { width: 40px; height: 40px; color: var(--ink-3); margin-bottom: 12px; }
+.empty-state h3 { color: var(--ink); font-size: 18px; }
+.empty-state p { font-size: 14px; max-width: 520px; margin: 0 auto 10px; }
+.empty-state code {
+  display: inline-block;
+  background: var(--primary-soft);
+  color: var(--primary);
+  border-radius: 8px;
+  padding: 2px 8px;
+  font-size: 12.5px;
+}
+
+/* ============================================================
+   Mock quiz
+   ============================================================ */
+.quiz-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.quiz-meta .tag { background: var(--primary-soft); }
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 10px 22px;
+  border-radius: 12px;
+  border: 1px solid var(--primary);
+  background: var(--primary);
+  color: #FFFFFF;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .15s ease, border-color .15s ease;
+}
+.btn:hover { background: var(--primary-strong); border-color: var(--primary-strong); text-decoration: none; }
+.btn.secondary { background: var(--surface); color: var(--primary); }
+.btn.secondary:hover { background: var(--primary-soft); border-color: var(--primary); }
+
+.quiz-shell { padding: 22px; }
+.qbar { height: 6px; background: var(--line); border-radius: 999px; overflow: hidden; margin-bottom: 18px; }
+.qbar-fill { height: 100%; width: 0; background: var(--accent); border-radius: 999px; transition: width .25s ease; }
+.qnum { font-family: var(--font-mono); font-size: 12px; letter-spacing: .08em; color: var(--ink-3); margin-bottom: 8px; }
+.qprompt { font-family: var(--font-display); font-size: 19px; font-weight: 600; margin-bottom: 18px; }
+.options { display: grid; gap: 10px; }
+.opt {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  text-align: left;
+  padding: 12px 14px;
+  min-height: 48px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 15px;
+  cursor: pointer;
+  transition: border-color .15s ease, background .15s ease;
+}
+.opt:hover:not(:disabled) { border-color: var(--primary); }
+.opt:disabled { cursor: default; }
+.opt-key {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--primary);
+  background: var(--primary-soft);
+  border-radius: 8px;
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+.opt.is-correct { border-color: var(--ok); background: var(--ok-soft); }
+.opt.is-correct .opt-key { background: var(--ok); color: #FFFFFF; }
+.opt.is-wrong { border-color: var(--bad); background: var(--bad-soft); }
+.opt.is-wrong .opt-key { background: var(--bad); color: #FFFFFF; }
+.feedback { margin-top: 14px; padding: 12px 14px; border-radius: 12px; font-size: 14.5px; }
+.feedback strong { display: block; margin-bottom: 3px; }
+.fb-ok { background: var(--ok-soft); color: #1E5B39; border: 1px solid #BFE0CB; }
+.fb-bad { background: var(--bad-soft); color: #7E2A24; border: 1px solid #EBC6C2; }
+.quiz-next { margin-top: 16px; display: flex; justify-content: flex-end; }
+
+.results-head { text-align: center; padding: 30px 22px 8px; }
+.results-score { font-family: var(--font-display); font-size: 44px; font-weight: 700; color: var(--primary); }
+.results-percent { font-family: var(--font-mono); font-size: 16px; color: var(--ink-2); }
+.results-verdict { color: var(--ink-2); margin-top: 6px; }
+.results-actions { display: flex; gap: 10px; justify-content: center; padding: 18px 0 8px; }
+.review-list { list-style: none; margin: 8px 0 0; padding: 0 22px 24px; }
+.review-item { border-top: 1px solid var(--line); padding: 14px 0; }
+.review-item .rv-q { font-weight: 600; font-size: 15px; margin-bottom: 6px; }
+.review-item .rv-line { font-size: 14px; margin: 2px 0; }
+.review-item .rv-line b { font-weight: 600; }
+.rv-ok { color: var(--ok); }
+.rv-bad { color: var(--bad); }
+.review-item .rv-exp { color: var(--ink-2); font-size: 13.5px; margin-top: 6px; }
+
+/* ============================================================
+   Grade distribution
+   ============================================================ */
+.seg { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+.seg-btn {
+  min-height: 40px;
+  padding: 7px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink-2);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  cursor: pointer;
+  transition: border-color .15s ease, background .15s ease, color .15s ease;
+}
+.seg-btn:hover { border-color: var(--primary); color: var(--primary); }
+.seg-btn[aria-pressed="true"] { background: var(--primary); border-color: var(--primary); color: #FFFFFF; }
+.stat-chips { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 18px; }
+.stat-chip { padding: 14px 16px; }
+.stat-chip .sc-label { font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); }
+.stat-chip .sc-value { font-family: var(--font-display); font-size: 24px; font-weight: 700; color: var(--primary); margin-top: 2px; }
+.stat-chip .sc-value small { font-family: var(--font-body); font-size: 13px; font-weight: 500; color: var(--ink-2); }
+.chart-wrap { padding: 18px 14px 10px; }
+#grade-chart { width: 100%; min-height: 340px; }
+.chart-foot { font-size: 12.5px; color: var(--ink-3); padding: 0 18px 16px; }
+
+/* ============================================================
+   Unlock screen
+   ============================================================ */
+.unlock-wrap { display: flex; justify-content: center; padding: 40px 0 30px; }
+.unlock-card { max-width: 430px; width: 100%; text-align: center; padding: 34px 28px; }
+.unlock-card svg.big { width: 40px; height: 40px; color: var(--primary); margin-bottom: 12px; }
+.unlock-card h2 { font-size: 22px; }
+.unlock-card p { color: var(--ink-2); font-size: 14.5px; }
+.unlock-form { display: flex; gap: 10px; margin-top: 16px; }
+.unlock-form input {
+  flex: 1 1 auto;
+  min-height: 44px;
+  padding: 0 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--ink);
+  background: var(--surface);
+}
+.unlock-form input:focus { border-color: var(--primary); outline: none; }
+.unlock-error { color: var(--bad); font-size: 13.5px; margin-top: 10px; min-height: 20px; }
+.shake { animation: shake .3s ease; }
+@keyframes shake {
+  0%, 100% { transform: none; }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+}
+
+/* ============================================================
+   Footer
+   ============================================================ */
+footer {
+  border-top: 1px solid var(--line);
+  background: var(--surface);
+  padding: 18px 16px 26px;
+  margin-top: 20px;
+}
+.footer-inner {
+  max-width: 980px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--ink-3);
+  font-size: 13px;
+}
+.link-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  color: var(--ink-2);
+  font-family: var(--font-body);
+  font-size: 13px;
+  min-height: 40px;
+  padding: 0 14px;
+  cursor: pointer;
+}
+.link-btn:hover { border-color: var(--primary); color: var(--primary); }
+.link-btn svg { width: 14px; height: 14px; }
+
+/* ============================================================
+   Responsive + motion
+   ============================================================ */
+@media (max-width: 768px) {
+  .masthead { padding: 26px 16px 40px; }
+  .dna { display: none; }
+  .tabbar { padding: 10px 12px 0; }
+  main { padding: 20px 12px 48px; }
+  .results-score { font-size: 36px; }
+  #grade-chart { min-height: 300px; }
+}
+@media (max-width: 420px) {
+  .tab { flex: 1 1 44%; justify-content: center; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     Masthead
+     ============================================================ -->
+<header class="masthead">
+  <div class="masthead-inner">
+    <div>
+      <span class="brand-code">T&amp;L@Biomed</span>
+      <h1>Teaching &amp; Learning @ Biomedicine</h1>
+      <p class="masthead-sub">Notes &middot; Mock quiz &middot; Grade distributions &middot; Structured tutorials</p>
+    </div>
+    <svg class="dna" viewBox="0 0 240 140" aria-hidden="true">
+      <path class="strand-a" d="M30 10 C 90 35, 60 105, 210 130"></path>
+      <path class="strand-b" d="M30 130 C 90 105, 60 35, 210 10"></path>
+      <g class="rung">
+        <line x1="38" y1="20" x2="38" y2="120"></line>
+        <line x1="62" y1="28" x2="62" y2="112"></line>
+        <line x1="86" y1="36" x2="86" y2="104"></line>
+        <line x1="110" y1="44" x2="110" y2="96"></line>
+        <line x1="134" y1="52" x2="134" y2="88"></line>
+        <line x1="158" y1="60" x2="158" y2="80"></line>
+        <line x1="182" y1="66" x2="182" y2="74"></line>
+      </g>
+    </svg>
+  </div>
+</header>
+
+<!-- ============================================================
+     Tab bar
+     ============================================================ -->
+<nav class="tabbar" aria-label="Course sections">
+  <div class="tabbar-inner" role="tablist">
+    <button class="tab" data-route="notes" role="tab" aria-selected="false" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"></path><path d="M4 18.5V5.5"></path><path d="M8 7h8"></path><path d="M8 10h5"></path></svg>
+      <span>Notes</span>
+      <span class="acc">TLB-01</span>
+    </button>
+    <button class="tab" data-route="quiz" role="tab" aria-selected="false" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"></rect><path d="M8 8l1.5 1.5L12.5 6"></path><path d="M8 13l1.5 1.5L12.5 11"></path><path d="M15.5 8h2.5"></path><path d="M15.5 13h2.5"></path></svg>
+      <span>Mock Quiz</span>
+      <span class="acc">MCQ-02</span>
+    </button>
+    <button class="tab" data-route="grades" role="tab" aria-selected="false" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 20v-9"></path><path d="M12 20V6"></path><path d="M19 20v-12"></path><path d="M3.5 20h17"></path></svg>
+      <span>Grade Distribution</span>
+      <span class="acc">GRD-03</span>
+    </button>
+    <button class="tab" data-route="tutorials" role="tab" aria-selected="false" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 3 8l9 5 9-5-9-5z"></path><path d="M3 13l9 5 9-5"></path></svg>
+      <span>Structured Tutorials</span>
+      <span class="acc">TUT-04</span>
+    </button>
+  </div>
+</nav>
+
+<main>
+
+  <!-- ============================================================
+       View: Notes
+       ============================================================ -->
+  <section class="view hidden" id="view-notes" data-route="notes" role="tabpanel">
+    <div class="view-head">
+      <span class="eyebrow">TLB / Notes</span>
+      <h2>Notes</h2>
+      <p>Curated links to lecture notes, readings and references.</p>
+    </div>
+    <div class="banner hidden" id="notes-sample-banner">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 8h.01"></path><path d="M11 12h1v4h1"></path></svg>
+      <span><strong>Sample links.</strong> Replace the <code>notes</code> entries in <code>SITE_CONFIG</code> with your own, then delete the <code>sample: true</code> flags.</span>
+    </div>
+    <div class="notes-grid" id="notes-list"></div>
+  </section>
+
+  <!-- ============================================================
+       View: Mock Quiz
+       ============================================================ -->
+  <section class="view hidden" id="view-quiz" data-route="quiz" role="tabpanel">
+    <div class="view-head">
+      <span class="eyebrow">TLB / Mock quiz</span>
+      <h2>Mock Quiz</h2>
+      <p>Multiple choice, instant feedback. Pick an answer to see whether you got it right.</p>
+    </div>
+
+    <div class="banner hidden" id="quiz-sample-banner">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 8h.01"></path><path d="M11 12h1v4h1"></path></svg>
+      <span><strong>Sample questions.</strong> Replace the <code>quiz</code> block in <code>SITE_CONFIG</code> to publish your own.</span>
+    </div>
+
+    <div id="quiz-intro" class="card quiz-shell">
+      <div class="qprompt" id="quiz-title"></div>
+      <p id="quiz-intro-text"></p>
+      <div class="quiz-meta" id="quiz-meta"></div>
+      <div style="margin-top:18px">
+        <button class="btn" id="quiz-start" type="button">Start the quiz</button>
+      </div>
+    </div>
+
+    <div id="quiz-run" class="card quiz-shell hidden">
+      <div class="qbar"><div class="qbar-fill" id="quiz-progress"></div></div>
+      <div class="qnum" id="quiz-qnum"></div>
+      <div class="qprompt" id="quiz-prompt"></div>
+      <div class="options" id="quiz-options"></div>
+      <div class="feedback hidden" id="quiz-feedback"></div>
+      <div class="quiz-next">
+        <button class="btn secondary hidden" id="quiz-next" type="button">Next question</button>
+      </div>
+    </div>
+
+    <div id="quiz-results" class="card hidden">
+      <div class="results-head">
+        <div class="results-score" id="res-score"></div>
+        <div class="results-percent" id="res-percent"></div>
+        <div class="results-verdict" id="res-verdict"></div>
+        <div class="results-actions">
+          <button class="btn" id="res-retry" type="button">Try again</button>
+        </div>
+      </div>
+      <ul class="review-list" id="res-review"></ul>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       View: Grade Distribution
+       ============================================================ -->
+  <section class="view hidden" id="view-grades" data-route="grades" role="tabpanel">
+    <div class="view-head">
+      <span class="eyebrow">TLB / Grades</span>
+      <h2>Grade Distribution</h2>
+      <p>Past years at a glance — pick a year, or compare them all.</p>
+    </div>
+
+    <div class="banner hidden" id="grade-sample-banner">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 8h.01"></path><path d="M11 12h1v4h1"></path></svg>
+      <span><strong>Sample data.</strong> Replace the <code>grades</code> block in <code>SITE_CONFIG</code> to publish your own figures.</span>
+    </div>
+
+    <div id="grade-empty" class="card empty-state hidden">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"></rect><path d="M8 9h8"></path><path d="M8 13h8"></path><path d="M8 17h5"></path></svg>
+      <h3>No grade data published yet</h3>
+      <p>Add past years to <code>SITE_CONFIG.grades.years</code>, then set <code>sample</code> to <code>false</code>.</p>
+    </div>
+
+    <div id="grade-content" class="hidden">
+      <div class="seg" id="grade-seg" role="group" aria-label="Select academic year"></div>
+      <div class="stat-chips" id="grade-stats"></div>
+      <div class="card chart-wrap">
+        <div id="grade-chart" role="img" aria-label="Grade distribution bar chart"></div>
+        <div class="chart-foot" id="grade-chart-foot"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       View: Structured Tutorials
+       ============================================================ -->
+  <section class="view hidden" id="view-tutorials" data-route="tutorials" role="tabpanel">
+    <div class="view-head">
+      <span class="eyebrow">TLB / Tutorials</span>
+      <h2>Structured Tutorials</h2>
+      <p>Organised by topic — follow the sequence, or jump to what you need.</p>
+    </div>
+    <div class="banner hidden" id="tutorials-sample-banner">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 8h.01"></path><path d="M11 12h1v4h1"></path></svg>
+      <span><strong>Sample links.</strong> Replace the <code>tutorials</code> entries in <code>SITE_CONFIG</code> with your own, then delete the <code>sample: true</code> flags.</span>
+    </div>
+    <div id="tutorial-groups"></div>
+  </section>
+
+  <!-- ============================================================
+       Unlock screen (private sections)
+       ============================================================ -->
+  <section class="unlock-wrap hidden" id="unlock-screen">
+    <div class="card unlock-card" id="unlock-card">
+      <svg class="big" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 7.5-2"></path></svg>
+      <h2>This section is reserved</h2>
+      <p>Notes, grade distributions and tutorials are for enrolled students. Enter the passcode your instructor shared to continue.</p>
+      <form class="unlock-form" id="unlock-form">
+        <input type="password" id="unlock-input" autocomplete="off" placeholder="Passcode" aria-label="Passcode">
+        <button class="btn" type="submit">Unlock</button>
+      </form>
+      <div class="unlock-error" id="unlock-error" role="alert"></div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <span>T&amp;L@Biomed &middot; a free course hub &middot; edit <code>SITE_CONFIG</code> to publish updates</span>
+    <button class="link-btn hidden" id="lock-btn" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg>
+      <span id="lock-btn-label">Lock private sections</span>
+    </button>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.6.0/dist/echarts.min.js" integrity="sha384-pPi0zxBAoDu6+JXW/C68UZLvBUUtU+7zonhif43rqj7pxsGyqyqzcian2Rj37Rss" crossorigin="anonymous"></script>
+<script>
+/* ===APP-CORE-START=== */
+"use strict";
+
+/* ============================================================
+   CONFIG — edit this block to publish your own content.
+   After editing, run `npm test` in the project folder to
+   validate the data before deploying.
+   ============================================================ */
+var SITE_CONFIG = {
+  course: {
+    code: "T&L@Biomed",
+    name: "Teaching & Learning @ Biomedicine"
+  },
+
+  /* Passcode for the private sections (Notes, Grade Distribution,
+     Structured Tutorials). Empty string "" = sections are open.
+     NOTE: this is a light client-side gate, not real security —
+     anyone who can read the page source can see the passcode. */
+  passcode: "tlbiomed26",
+
+  /* Notes: a plain list of link cards. Add as many as you like.
+     The rows below are sample scaffolding (sample: true) — replace
+     the titles, urls and tags with your own and delete the flag. */
+  notes: [
+    { title: "Week 1 — Cell structure & function", desc: "Lecture slides and reading list.", url: "https://example.com/tlb-notes-week1", tags: ["week-1", "cell-bio"], sample: true },
+    { title: "Week 2 — Biomolecules & metabolism", desc: "Slides plus worked examples.", url: "https://example.com/tlb-notes-week2", tags: ["week-2", "biochem"], sample: true },
+    { title: "Week 3 — Cardiovascular physiology", desc: "Lecture notes and lab sheet.", url: "https://example.com/tlb-notes-week3", tags: ["week-3", "physiology"], sample: true },
+    { title: "Week 4 — Bacterial pathogens", desc: "Microbiology slides and revision questions.", url: "https://example.com/tlb-notes-week4", tags: ["week-4", "micro"], sample: true }
+  ],
+
+  /* Structured tutorials: grouped by topic, each item is a link.
+     Sample scaffolding below — replace with your real tutorials. */
+  tutorials: [
+    { topic: "Biochemistry", note: "3 steps", items: [
+      { title: "Glycolysis walkthrough", desc: "Step-by-step with diagrams.", url: "https://example.com/tut-glycolysis", sample: true },
+      { title: "Krebs cycle — the key intermediates", desc: "Mnemonics and exam-style questions.", url: "https://example.com/tut-krebs", sample: true },
+      { title: "Enzyme kinetics basics", desc: "Michaelis-Menten in plain language.", url: "https://example.com/tut-kinetics", sample: true }
+    ] },
+    { topic: "Physiology", note: "2 steps", items: [
+      { title: "Reading a 12-lead ECG", desc: "The P-QRS-T sequence in 10 minutes.", url: "https://example.com/tut-ecg", sample: true },
+      { title: "Respiratory physiology essentials", desc: "Pressures, volumes and gas exchange.", url: "https://example.com/tut-resp", sample: true }
+    ] },
+    { topic: "Microbiology", note: "2 steps", items: [
+      { title: "Gram staining — practical guide", desc: "What the colours mean and why.", url: "https://example.com/tut-gram", sample: true },
+      { title: "Antimicrobial mechanisms", desc: "How the major drug classes act.", url: "https://example.com/tut-antibiotics", sample: true }
+    ] }
+  ],
+
+  /* Mock quiz: multiple choice. answerIndex counts from 0.
+     Set sample to false once you replace the questions. */
+  quiz: {
+    sample: true,
+    title: "Mock Quiz — sample set",
+    intro: "Five starter questions covering cell biology, biochemistry and physiology. Answer each question, get instant feedback, and review your results at the end.",
+    shuffle: false,
+    questions: [
+      {
+        id: "q1",
+        prompt: "Which organelle is the primary site of ATP production in eukaryotic cells?",
+        options: ["Nucleus", "Mitochondrion", "Ribosome", "Golgi apparatus"],
+        answerIndex: 1,
+        explanation: "The mitochondrion hosts the electron transport chain and oxidative phosphorylation, producing most cellular ATP."
+      },
+      {
+        id: "q2",
+        prompt: "The basic structural unit of DNA is the:",
+        options: ["Amino acid", "Nucleotide", "Fatty acid", "Monosaccharide"],
+        answerIndex: 1,
+        explanation: "DNA is a polymer of nucleotides, each made of a phosphate, a deoxyribose sugar and a nitrogenous base."
+      },
+      {
+        id: "q3",
+        prompt: "Which of the following is a Gram-positive bacterium?",
+        options: ["Escherichia coli", "Vibrio cholerae", "Staphylococcus aureus", "Neisseria meningitidis"],
+        answerIndex: 2,
+        explanation: "Staphylococcus aureus retains the crystal violet stain (thick peptidoglycan wall), so it appears Gram-positive."
+      },
+      {
+        id: "q4",
+        prompt: "On a standard ECG, the P wave corresponds to:",
+        options: ["Ventricular depolarisation", "Atrial depolarisation", "Ventricular repolarisation", "AV nodal delay"],
+        answerIndex: 1,
+        explanation: "The P wave reflects atrial depolarisation; the QRS complex reflects ventricular depolarisation."
+      },
+      {
+        id: "q5",
+        prompt: "Which enzyme catalyses the first committed step of glycolysis?",
+        options: ["Hexokinase", "Pyruvate kinase", "Phosphofructokinase-1", "Aldolase"],
+        answerIndex: 2,
+        explanation: "Phosphofructokinase-1 converts fructose-6-phosphate to fructose-1,6-bisphosphate — the first committed (and key regulated) step."
+      }
+    ]
+  },
+
+  /* Grade distribution: past years, one entry per year.
+     Bands are any labels you use (A+, A, A-, ... F). Counts must
+     sum to `cohort`. failBands are the bands counted as failures.
+     Set sample to false once you replace the data. */
+  grades: {
+    sample: true,
+    title: "Grade distribution — past years",
+    failBands: ["F"],
+    years: [
+      { year: "AY2022-23", cohort: 152, distribution: { "A+": 6, "A": 18, "A-": 16, "B+": 20, "B": 24, "B-": 17, "C+": 16, "C": 15, "D": 11, "F": 9 } },
+      { year: "AY2023-24", cohort: 148, distribution: { "A+": 8, "A": 21, "A-": 15, "B+": 19, "B": 24, "B-": 16, "C+": 15, "C": 14, "D": 9, "F": 7 } },
+      { year: "AY2024-25", cohort: 161, distribution: { "A+": 9, "A": 23, "A-": 17, "B+": 22, "B": 26, "B-": 18, "C+": 17, "C": 15, "D": 8, "F": 6 } }
+    ]
+  }
+};
+
+/* ============================================================
+   Icons (inline SVG)
+   ============================================================ */
+var ICONS = {
+  ext: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7"></path><path d="M9 7h8v8"></path></svg>',
+  lock: '<svg class="lock-dot" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg>',
+  empty: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"></rect><path d="M8 9h8"></path><path d="M8 13h8"></path><path d="M8 17h5"></path></svg>'
+};
+
+/* ============================================================
+   Pure logic (unit-tested via window.TL)
+   ============================================================ */
+var TL = window.TL = {};
+
+TL.getConfig = function () {
+  return JSON.parse(JSON.stringify(SITE_CONFIG));
+};
+
+/* Rank a band label like "A+", "B-", "F" on the grade scale
+   (A highest, F lowest; "+" above plain, "-" below). Unknown
+   labels return null and sort after the standard bands. */
+function bandValue(band) {
+  var s = String(band).trim().toUpperCase();
+  var m = /^([A-F])([+\-]?)$/.exec(s);
+  if (!m) return null;
+  var letterVal = "FEDCBA".indexOf(m[1]); /* A=5, B=4, C=3, D=2, E=1, F=0 */
+  var mod = m[2] === "+" ? 0.4 : (m[2] === "-" ? -0.4 : 0);
+  return letterVal + mod;
+}
+
+TL.bandSort = function (bands) {
+  return bands.slice().sort(function (a, b) {
+    var va = bandValue(a), vb = bandValue(b);
+    if (va === null && vb === null) return String(a).localeCompare(String(b));
+    if (va === null) return 1;
+    if (vb === null) return -1;
+    return vb - va;
+  });
+};
+
+TL.evaluateQuestion = function (question, selectedIndex) {
+  return { correct: selectedIndex === question.answerIndex, answerIndex: question.answerIndex };
+};
+
+TL.computeScore = function (questions, answers) {
+  var correct = 0;
+  questions.forEach(function (q) {
+    if (answers[q.id] === q.answerIndex) correct += 1;
+  });
+  var total = questions.length;
+  var percent = total ? Math.round((correct / total) * 1000) / 10 : 0;
+  return { correct: correct, total: total, percent: percent };
+};
+
+TL.gradeStats = function (year, failBands) {
+  var dist = year.distribution || {};
+  var total = 0, fail = 0, modeBand = null, modeCount = -1;
+  Object.keys(dist).forEach(function (band) {
+    var n = dist[band] || 0;
+    total += n;
+    if (failBands.indexOf(band) !== -1) fail += n;
+    if (n > modeCount) { modeCount = n; modeBand = band; }
+  });
+  var pass = total - fail;
+  var passRate = total ? Math.round((pass / total) * 1000) / 10 : 0;
+  return { total: total, fail: fail, pass: pass, passRate: passRate, modeBand: modeBand };
+};
+
+/* ============================================================
+   DOM helpers
+   ============================================================ */
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, function (c) {
+    return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+  });
+}
+function $(id) { return document.getElementById(id); }
+function show(id, on) { $(id).classList.toggle("hidden", !on); }
+function addLinkAttrs(a) { a.target = "_blank"; a.rel = "noopener noreferrer"; }
+function emptyNode(el) { while (el.firstChild) el.removeChild(el.firstChild); }
+
+/* ============================================================
+   App state
+   ============================================================ */
+var state = {
+  route: "quiz",
+  unlocked: false,
+  quiz: { idx: 0, answers: {}, questions: [], started: false }
+};
+var gradeState = { year: "__all__", chart: null, chartReady: false };
+
+var ROUTES = ["notes", "quiz", "grades", "tutorials"];
+var GATED = ["notes", "grades", "tutorials"];
+var STORAGE_KEY = "tlb_unlocked";
+
+function readUnlock() {
+  try { return window.localStorage.getItem(STORAGE_KEY) === "1"; }
+  catch (e) { return false; }
+}
+function writeUnlock(v) {
+  try {
+    if (v) window.localStorage.setItem(STORAGE_KEY, "1");
+    else window.localStorage.removeItem(STORAGE_KEY);
+  } catch (e) { /* storage unavailable — stay in-memory */ }
+}
+
+/* ============================================================
+   Router
+   ============================================================ */
+function parseRoute() {
+  var h = window.location.hash.replace(/^#\/?/, "");
+  return ROUTES.indexOf(h) !== -1 ? h : "quiz";
+}
+
+function route() {
+  state.route = parseRoute();
+  state.unlocked = readUnlock();
+  renderTabs();
+
+  var gated = GATED.indexOf(state.route) !== -1;
+  var needsGate = gated && !state.unlocked && SITE_CONFIG.passcode !== "";
+
+  show("unlock-screen", needsGate);
+  if (needsGate) {
+    ROUTES.forEach(function (r) { show("view-" + r, false); });
+    $("unlock-error").textContent = "";
+    return;
+  }
+
+  ROUTES.forEach(function (r) { show("view-" + r, r === state.route); });
+  if (state.route === "grades") initGrades();
+  if (state.route === "quiz") ensureQuizIntro();
+}
+
+function renderTabs() {
+  var tabs = document.querySelectorAll(".tab");
+  tabs.forEach(function (t) {
+    t.setAttribute("aria-selected", String(t.dataset.route === state.route));
+  });
+  var showLockBtn = SITE_CONFIG.passcode !== "";
+  show("lock-btn", showLockBtn);
+  if (showLockBtn) {
+    $("lock-btn-label").textContent = state.unlocked ? "Lock private sections" : "Private sections unlocked";
+  }
+}
+
+/* ============================================================
+   Notes
+   ============================================================ */
+function renderNotes() {
+  var list = $("notes-list");
+  emptyNode(list);
+  var notes = SITE_CONFIG.notes || [];
+  show("notes-sample-banner", notes.some(function (n) { return !!n.sample; }));
+
+  if (!notes.length) {
+    list.innerHTML =
+      '<div class="empty-state" style="grid-column:1/-1">' + ICONS.empty +
+      "<h3>No notes published yet</h3>" +
+      "<p>Links will appear here. Add entries to <code>SITE_CONFIG.notes</code> in <code>index.html</code>.</p>" +
+      "<p>Each entry: title, description and url.</p></div>";
+    return;
+  }
+
+  notes.forEach(function (n) {
+    var a = document.createElement("a");
+    a.className = "note-card";
+    a.href = n.url || "#";
+    addLinkAttrs(a);
+    var sampleBadge = n.sample ? '<span class="tag sample">sample</span>' : "";
+    var tags = (n.tags || []).map(function (t) {
+      return '<span class="tag">' + escapeHtml(t) + "</span>";
+    }).join("");
+    a.innerHTML =
+      '<span class="nc-title">' + ICONS.ext + "<span>" + escapeHtml(n.title) + "</span></span>" +
+      '<div class="nc-desc">' + escapeHtml(n.desc || "") + "</div>" +
+      '<div class="nc-tags">' + tags + sampleBadge + "</div>";
+    list.appendChild(a);
+  });
+}
+
+/* ============================================================
+   Tutorials
+   ============================================================ */
+function renderTutorials() {
+  var wrap = $("tutorial-groups");
+  emptyNode(wrap);
+  var groups = SITE_CONFIG.tutorials || [];
+  show("tutorials-sample-banner", groups.some(function (g) {
+    return (g.items || []).some(function (i) { return !!i.sample; });
+  }));
+
+  if (!groups.length) {
+    wrap.innerHTML =
+      '<div class="card empty-state">' + ICONS.empty +
+      "<h3>No tutorials published yet</h3>" +
+      "<p>Topics and their link lists appear here. Add entries to <code>SITE_CONFIG.tutorials</code>.</p></div>";
+    return;
+  }
+
+  groups.forEach(function (g) {
+    var section = document.createElement("section");
+    section.className = "tutorial-group";
+    section.innerHTML =
+      "<h3>" + escapeHtml(g.topic) +
+      (g.note ? ' <span class="tg-note">' + escapeHtml(g.note) + "</span>" : "") + "</h3>";
+    var ul = document.createElement("ul");
+    ul.className = "tut-list";
+    (g.items || []).forEach(function (item) {
+      var li = document.createElement("li");
+      var a = document.createElement("a");
+      a.className = "tut-row";
+      a.href = item.url || "#";
+      addLinkAttrs(a);
+      a.innerHTML =
+        '<span class="tr-main"><span class="tr-title">' + escapeHtml(item.title) +
+        (item.sample ? ' <span class="tag sample">sample</span>' : "") + "</span>" +
+        (item.desc ? '<span class="tr-desc">' + escapeHtml(item.desc) + "</span>" : "") + "</span>" +
+        '<svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg>';
+      li.appendChild(a);
+      ul.appendChild(li);
+    });
+    section.appendChild(ul);
+    wrap.appendChild(section);
+  });
+}
+
+/* ============================================================
+   Mock quiz
+   ============================================================ */
+function ensureQuizIntro() {
+  if (!state.quiz.started) renderQuizIntro();
+}
+function renderQuizIntro() {
+  var cfg = SITE_CONFIG.quiz;
+  show("quiz-sample-banner", !!cfg.sample);
+  show("quiz-intro", true);
+  show("quiz-run", false);
+  show("quiz-results", false);
+  $("quiz-title").textContent = cfg.title || "Mock Quiz";
+  $("quiz-intro-text").textContent = cfg.intro || "";
+  var meta = $("quiz-meta");
+  meta.innerHTML = "";
+  [cfg.questions.length + " questions", cfg.shuffle ? "shuffled" : "in order"].forEach(function (m) {
+    var s = document.createElement("span");
+    s.className = "tag";
+    s.textContent = m;
+    meta.appendChild(s);
+  });
+}
+function startQuiz() {
+  var cfg = SITE_CONFIG.quiz;
+  var qs = cfg.questions.slice();
+  if (cfg.shuffle) {
+    for (var i = qs.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = qs[i]; qs[i] = qs[j]; qs[j] = t;
+    }
+  }
+  state.quiz = { idx: 0, answers: {}, questions: qs, started: true };
+  show("quiz-intro", false);
+  show("quiz-results", false);
+  show("quiz-run", true);
+  renderQuestion();
+}
+function renderQuestion() {
+  var q = state.quiz.questions[state.quiz.idx];
+  var total = state.quiz.questions.length;
+  $("quiz-qnum").textContent = "Question " + (state.quiz.idx + 1) + " of " + total;
+  $("quiz-prompt").textContent = q.prompt;
+  $("quiz-progress").style.width = (state.quiz.idx / total * 100) + "%";
+
+  var opts = $("quiz-options");
+  emptyNode(opts);
+  q.options.forEach(function (opt, i) {
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "opt";
+    b.dataset.i = String(i);
+    var key = document.createElement("span");
+    key.className = "opt-key";
+    key.textContent = String.fromCharCode(65 + i);
+    var txt = document.createElement("span");
+    txt.textContent = opt;
+    b.appendChild(key);
+    b.appendChild(txt);
+    b.addEventListener("click", function () { choose(i); });
+    opts.appendChild(b);
+  });
+
+  $("quiz-feedback").className = "feedback hidden";
+  $("quiz-feedback").innerHTML = "";
+  $("quiz-next").classList.add("hidden");
+}
+function choose(i) {
+  var q = state.quiz.questions[state.quiz.idx];
+  state.quiz.answers[q.id] = i;
+
+  var buttons = $("quiz-options").querySelectorAll(".opt");
+  buttons.forEach(function (b) {
+    var idx = Number(b.dataset.i);
+    b.disabled = true;
+    if (idx === q.answerIndex) b.classList.add("is-correct");
+    else if (idx === i) b.classList.add("is-wrong");
+  });
+
+  var ok = i === q.answerIndex;
+  var fb = $("quiz-feedback");
+  fb.className = "feedback " + (ok ? "fb-ok" : "fb-bad");
+  fb.innerHTML = "<strong>" + (ok ? "Correct" : "Not quite") + "</strong>" +
+    (q.explanation ? escapeHtml(q.explanation) : "");
+
+  var last = state.quiz.idx + 1 >= state.quiz.questions.length;
+  $("quiz-next").textContent = last ? "See results" : "Next question";
+  $("quiz-next").classList.remove("hidden");
+  $("quiz-progress").style.width = ((state.quiz.idx + 1) / state.quiz.questions.length * 100) + "%";
+}
+function nextQuestion() {
+  if (state.quiz.idx + 1 >= state.quiz.questions.length) renderResults();
+  else { state.quiz.idx += 1; renderQuestion(); }
+}
+function renderResults() {
+  var qs = state.quiz.questions;
+  var res = TL.computeScore(qs, state.quiz.answers);
+  show("quiz-run", false);
+  show("quiz-results", true);
+
+  $("res-score").textContent = res.correct + " / " + res.total;
+  $("res-percent").textContent = res.percent + "%";
+  $("res-verdict").textContent = verdictFor(res.percent);
+
+  var list = $("res-review");
+  emptyNode(list);
+  qs.forEach(function (q) {
+    var chosen = state.quiz.answers[q.id];
+    var ok = chosen === q.answerIndex;
+    var li = document.createElement("li");
+    li.className = "review-item";
+    li.innerHTML =
+      '<div class="rv-q">' + escapeHtml(q.prompt) + "</div>" +
+      '<div class="rv-line ' + (ok ? "rv-ok" : "rv-bad") + '"><b>' + (ok ? "Correct" : "Incorrect") + "</b> — your answer: " +
+      escapeHtml(q.options[chosen] !== undefined ? q.options[chosen] : "—") + "</div>" +
+      (ok ? "" : '<div class="rv-line">Correct answer: <b>' + escapeHtml(q.options[q.answerIndex]) + "</b></div>") +
+      (q.explanation ? '<div class="rv-exp">' + escapeHtml(q.explanation) + "</div>" : "");
+    list.appendChild(li);
+  });
+}
+function verdictFor(percent) {
+  if (percent >= 90) return "Excellent — exam ready.";
+  if (percent >= 75) return "Solid — polish the gaps below.";
+  if (percent >= 60) return "Getting there — review the topics you missed.";
+  return "Keep practising — go through the explanations and try again.";
+}
+
+/* ============================================================
+   Grade distribution
+   ============================================================ */
+function allBands() {
+  var set = {};
+  (SITE_CONFIG.grades.years || []).forEach(function (y) {
+    Object.keys(y.distribution || {}).forEach(function (b) { set[b] = true; });
+  });
+  return TL.bandSort(Object.keys(set));
+}
+function renderGradeMeta() {
+  show("grade-sample-banner", !!SITE_CONFIG.grades.sample);
+  var years = SITE_CONFIG.grades.years || [];
+  var empty = years.length === 0;
+  show("grade-empty", empty);
+  show("grade-content", !empty);
+  if (empty) return;
+
+  var seg = $("grade-seg");
+  emptyNode(seg);
+  var allBtn = document.createElement("button");
+  allBtn.type = "button";
+  allBtn.className = "seg-btn";
+  allBtn.setAttribute("aria-pressed", String(gradeState.year === "__all__"));
+  allBtn.textContent = "All years";
+  allBtn.addEventListener("click", function () { gradeState.year = "__all__"; renderGradeMeta(); });
+  seg.appendChild(allBtn);
+  years.forEach(function (y) {
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "seg-btn";
+    b.setAttribute("aria-pressed", String(gradeState.year === y.year));
+    b.textContent = y.year;
+    b.addEventListener("click", function () { gradeState.year = y.year; renderGradeMeta(); });
+    seg.appendChild(b);
+  });
+
+  renderGradeStats();
+  renderGradeChart();
+}
+function selectedYears() {
+  var years = SITE_CONFIG.grades.years || [];
+  if (gradeState.year === "__all__") return years;
+  return years.filter(function (y) { return y.year === gradeState.year; });
+}
+function renderGradeStats() {
+  var years = selectedYears();
+  var failBands = SITE_CONFIG.grades.failBands || [];
+  var total = 0, pass = 0;
+  var modePool = [];
+  years.forEach(function (y) {
+    var s = TL.gradeStats(y, failBands);
+    total += s.total; pass += s.pass;
+    if (s.modeBand) modePool.push(s.modeBand);
+  });
+  var passRate = total ? Math.round((pass / total) * 1000) / 10 : 0;
+  var chips = [
+    { label: years.length === 1 ? "Cohort" : "Cohort (all)", value: total, unit: "students" },
+    { label: "Pass rate", value: passRate, unit: "%" },
+    { label: "Failed", value: total - pass, unit: "students" },
+    { label: "Most common", value: modePool[0] || "—", unit: "band" }
+  ];
+  var wrap = $("grade-stats");
+  emptyNode(wrap);
+  chips.forEach(function (c) {
+    var d = document.createElement("div");
+    d.className = "card stat-chip";
+    d.innerHTML = '<div class="sc-label">' + c.label + '</div><div class="sc-value">' +
+      escapeHtml(String(c.value)) + " <small>" + escapeHtml(c.unit) + "</small></div>";
+    wrap.appendChild(d);
+  });
+}
+function renderGradeChart() {
+  var el = $("grade-chart");
+  var years = selectedYears();
+  var bands = allBands();
+  if (!years.length || !bands.length) return;
+
+  if (typeof window.echarts === "undefined") {
+    el.innerHTML = '<div class="chart-foot">Chart library failed to load — check your internet connection.</div>';
+    return;
+  }
+
+  if (!gradeState.chartReady) {
+    gradeState.chart = window.echarts.init(el);
+    new ResizeObserver(function () { gradeState.chart.resize(); }).observe(el);
+    gradeState.chartReady = true;
+  }
+
+  var ramp = ["#9CC9BC", "#5FA894", "#2F8877", "#0E6B5C", "#0A4F44"];
+  var series = years.map(function (y, i) {
+    return {
+      name: y.year,
+      type: "bar",
+      barMaxWidth: 26,
+      data: bands.map(function (b) { return (y.distribution[b] || 0); }),
+      itemStyle: { color: ramp[i % ramp.length] },
+      label: years.length === 1
+        ? { show: true, position: "top", fontFamily: "IBM Plex Mono, monospace", fontSize: 10, color: "#50646A" }
+        : { show: false }
+    };
+  });
+
+  gradeState.chart.setOption({
+    color: ramp,
+    tooltip: { trigger: "axis", axisPointer: { type: "shadow" }, confine: true },
+    legend: { type: "scroll", bottom: 0, icon: "roundRect", textStyle: { color: "#50646A", fontFamily: "IBM Plex Sans, sans-serif", fontSize: 12 } },
+    grid: { left: "4%", right: "4%", top: 18, bottom: series.length > 1 ? 48 : 20, containLabel: true },
+    xAxis: {
+      type: "category",
+      data: bands,
+      boundaryGap: true,
+      axisLine: { lineStyle: { color: "#DCE6E1" } },
+      axisTick: { show: false },
+      axisLabel: { color: "#50646A", fontFamily: "IBM Plex Mono, monospace", fontSize: 11, interval: "auto" }
+    },
+    yAxis: {
+      type: "value",
+      minInterval: 1,
+      axisLabel: { color: "#50646A", fontFamily: "IBM Plex Mono, monospace", fontSize: 11 },
+      splitLine: { lineStyle: { color: "#E7EEEA" } }
+    },
+    series: series
+  }, true);
+
+  var foot = $("grade-chart-foot");
+  foot.textContent = years.length === 1
+    ? years[0].year + " — counts per grade band. Hover a bar for exact numbers."
+    : "All past years compared — counts per grade band. Hover a bar for exact numbers.";
+}
+function initGrades() {
+  if (!gradeState.metaRendered) {
+    renderGradeMeta();
+    gradeState.metaRendered = true;
+  }
+}
+
+/* ============================================================
+   Unlock
+   ============================================================ */
+function tryUnlock(passcode) {
+  if (passcode === SITE_CONFIG.passcode) {
+    state.unlocked = true;
+    writeUnlock(true);
+    renderTabs();
+    route();
+    return true;
+  }
+  return false;
+}
+
+/* ============================================================
+   Init (guarded so pure logic can run in Node tests)
+   ============================================================ */
+function initApp() {
+  var tabs = document.querySelectorAll(".tab");
+  tabs.forEach(function (t) {
+    t.addEventListener("click", function () {
+      window.location.hash = t.dataset.route;
+    });
+  });
+
+  $("quiz-start").addEventListener("click", startQuiz);
+  $("quiz-next").addEventListener("click", nextQuestion);
+  $("res-retry").addEventListener("click", startQuiz);
+
+  $("unlock-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var val = $("unlock-input").value;
+    if (tryUnlock(val)) {
+      $("unlock-input").value = "";
+    } else {
+      $("unlock-error").textContent = "That passcode is not recognised. Try again, or ask your instructor.";
+      var card = $("unlock-card");
+      card.classList.remove("shake");
+      void card.offsetWidth;
+      card.classList.add("shake");
+    }
+  });
+
+  $("lock-btn").addEventListener("click", function () {
+    writeUnlock(false);
+    state.unlocked = false;
+    renderTabs();
+    route();
+  });
+
+  window.addEventListener("hashchange", route);
+
+  renderNotes();
+  renderTutorials();
+  renderQuizIntro();
+  route();
+}
+
+if (typeof document !== "undefined" && document.getElementById) {
+  initApp();
+}
+/* ===APP-CORE-END=== */
+</script>
+<noscript><p style="max-width:980px;margin:24px auto;padding:0 16px">This course hub needs JavaScript enabled for the quiz and charts.</p></noscript>
+</body>
+</html>

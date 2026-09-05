@@ -1,0 +1,12 @@
+{
+  "name": "tlbiomed-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Free static course hub for T&L@Biomed: notes, interactive mock quiz, grade distribution chart, structured tutorials.",
+  "scripts": {
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
