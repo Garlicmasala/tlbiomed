@@ -604,8 +604,8 @@ footer {
   <div class="masthead-inner">
     <div>
       <span class="brand-code">T&amp;L@Biomed</span>
-      <h1>Teaching &amp; Learning @ Biomedicine</h1>
-      <p class="masthead-sub">Notes &middot; Mock quiz &middot; Grade distributions &middot; Structured tutorials</p>
+      <h1 data-i18n="site.name">Teaching &amp; Learning @ Biomedicine</h1>
+      <p class="masthead-sub" data-i18n="site.sub">Notes &middot; Mock quiz &middot; Grade distributions &middot; Structured tutorials</p>
     </div>
     <svg class="dna" viewBox="0 0 240 140" aria-hidden="true">
       <path class="strand-a" d="M30 10 C 90 35, 60 105, 210 130"></path>
@@ -630,22 +630,22 @@ footer {
   <div class="tabbar-inner" role="tablist">
     <button class="tab" data-route="notes" role="tab" aria-selected="false" type="button">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"></path><path d="M4 18.5V5.5"></path><path d="M8 7h8"></path><path d="M8 10h5"></path></svg>
-      <span>Notes</span>
+      <span data-i18n="tab.notes">Notes</span>
       <span class="acc">TLB-01</span>
     </button>
     <button class="tab" data-route="quiz" role="tab" aria-selected="false" type="button">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"></rect><path d="M8 8l1.5 1.5L12.5 6"></path><path d="M8 13l1.5 1.5L12.5 11"></path><path d="M15.5 8h2.5"></path><path d="M15.5 13h2.5"></path></svg>
-      <span>Mock Quiz</span>
+      <span data-i18n="tab.quiz">Mock Quiz</span>
       <span class="acc">MCQ-02</span>
     </button>
     <button class="tab" data-route="grades" role="tab" aria-selected="false" type="button">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 20v-9"></path><path d="M12 20V6"></path><path d="M19 20v-12"></path><path d="M3.5 20h17"></path></svg>
-      <span>Grade Distribution</span>
+      <span data-i18n="tab.grades">Grade Distribution</span>
       <span class="acc">GRD-03</span>
     </button>
     <button class="tab" data-route="tutorials" role="tab" aria-selected="false" type="button">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 3 8l9 5 9-5-9-5z"></path><path d="M3 13l9 5 9-5"></path></svg>
-      <span>Structured Tutorials</span>
+      <span data-i18n="tab.tutorials">Structured Tutorials</span>
       <span class="acc">TUT-04</span>
     </button>
   </div>
@@ -658,19 +658,19 @@ footer {
        ============================================================ -->
   <section class="view hidden" id="view-notes" data-route="notes" role="tabpanel">
     <div class="view-head">
-      <span class="eyebrow">TLB / Notes</span>
-      <h2>Notes</h2>
-      <p>Curated links to lecture notes, readings and references.</p>
+      <span class="eyebrow" data-i18n="notes.eyebrow">TLB / Notes</span>
+      <h2 data-i18n="notes.title">Notes</h2>
+      <p data-i18n="notes.desc">Curated links to lecture notes, readings and references.</p>
     </div>
 
-    <div class="banner hidden" id="notes-sample-banner">
+    <div class="banner hidden" id="notes-sample-banner" data-i18n="notes.banner">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 8h.01"></path><path d="M11 12h1v4h1"></path></svg>
-      <span><strong>Sample links.</strong> Replace the <code>notes</code> entries in <code>SITE_CONFIG</code> with your own, then delete the <code>sample: true</code> flags.</span>
+      <span></span>
     </div>
 
     <div class="filter-row hidden" id="notes-filter-row">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg>
-      <input type="search" id="notes-filter" placeholder="Filter notes by title, tag or description" aria-label="Filter notes">
+      <input type="search" id="notes-filter" data-i18n-ph="notes.filterPh" placeholder="Filter notes by title, tag or description" aria-label="Filter notes">
     </div>
 
     <div class="notes-grid" id="notes-list"></div>
@@ -681,14 +681,14 @@ footer {
        ============================================================ -->
   <section class="view hidden" id="view-quiz" data-route="quiz" role="tabpanel">
     <div class="view-head">
-      <span class="eyebrow">TLB / Mock quiz</span>
-      <h2>Mock Quiz</h2>
-      <p>Multiple choice, instant feedback. Pick an answer to see whether you got it right.</p>
+      <span class="eyebrow" data-i18n="quiz.eyebrow">TLB / Mock quiz</span>
+      <h2 data-i18n="quiz.title">Mock Quiz</h2>
+      <p data-i18n="quiz.desc">Multiple choice, instant feedback. Pick an answer to see whether you got it right.</p>
     </div>
 
-    <div class="banner hidden" id="quiz-sample-banner">
+    <div class="banner hidden" id="quiz-sample-banner" data-i18n="quiz.banner">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 8h.01"></path><path d="M11 12h1v4h1"></path></svg>
-      <span><strong>Sample questions.</strong> Replace the <code>quiz</code> block in <code>SITE_CONFIG</code> to publish your own.</span>
+      <span></span>
     </div>
 
     <div id="quiz-intro" class="card quiz-shell">
@@ -697,7 +697,7 @@ footer {
       <div class="quiz-meta" id="quiz-meta"></div>
       <div class="quiz-stats" id="quiz-stats"></div>
       <div style="margin-top:18px">
-        <button class="btn" id="quiz-start" type="button">Start the quiz</button>
+        <button class="btn" id="quiz-start" data-i18n="quiz.start" type="button">Start the quiz</button>
       </div>
     </div>
 
@@ -707,7 +707,7 @@ footer {
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
           <span id="quiz-timer">0:00</span>
         </span>
-        <span class="kbd-hint">Keys 1&ndash;4 to answer &middot; Enter to continue</span>
+        <span class="kbd-hint" data-i18n="quiz.kbd">Keys 1&ndash;4 to answer &middot; Enter to continue</span>
       </div>
       <div class="qbar"><div class="qbar-fill" id="quiz-progress"></div></div>
       <div class="qnum" id="quiz-qnum"></div>
@@ -715,7 +715,7 @@ footer {
       <div class="options" id="quiz-options"></div>
       <div class="feedback hidden" id="quiz-feedback"></div>
       <div class="quiz-next">
-        <button class="btn secondary hidden" id="quiz-next" type="button">Next question</button>
+        <button class="btn secondary hidden" id="quiz-next" data-i18n="quiz.next" type="button">Next question</button>
       </div>
     </div>
 
@@ -734,7 +734,7 @@ footer {
         <div class="results-verdict" id="res-verdict"></div>
         <div class="results-time" id="res-time"></div>
         <div class="results-actions">
-          <button class="btn" id="res-retry" type="button">Try again</button>
+          <button class="btn" id="res-retry" data-i18n="quiz.retry" type="button">Try again</button>
         </div>
       </div>
       <ul class="review-list" id="res-review"></ul>
@@ -746,30 +746,30 @@ footer {
        ============================================================ -->
   <section class="view hidden" id="view-grades" data-route="grades" role="tabpanel">
     <div class="view-head">
-      <span class="eyebrow">TLB / Grades</span>
-      <h2>Grade Distribution</h2>
-      <p>Past years at a glance — pick a year, or compare them all.</p>
+      <span class="eyebrow" data-i18n="grades.eyebrow">TLB / Grades</span>
+      <h2 data-i18n="grades.title">Grade Distribution</h2>
+      <p data-i18n="grades.desc">Past years at a glance — pick a year, or compare them all.</p>
     </div>
 
-    <div class="banner hidden" id="grade-sample-banner">
+    <div class="banner hidden" id="grade-sample-banner" data-i18n="grades.banner">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 8h.01"></path><path d="M11 12h1v4h1"></path></svg>
-      <span><strong>Sample data.</strong> Replace the <code>grades</code> block in <code>SITE_CONFIG</code> to publish your own figures.</span>
+      <span></span>
     </div>
 
     <div id="grade-empty" class="card empty-state hidden">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"></rect><path d="M8 9h8"></path><path d="M8 13h8"></path><path d="M8 17h5"></path></svg>
-      <h3>No grade data published yet</h3>
-      <p>Add past years to <code>SITE_CONFIG.grades.years</code>, then set <code>sample</code> to <code>false</code>.</p>
+      <h3 data-i18n="grades.emptyTitle">No grade data published yet</h3>
+      <p data-i18n="grades.emptyBody">Add past years to <code>SITE_CONFIG.grades.years</code>, then set <code>sample</code> to <code>false</code>.</p>
     </div>
 
     <div id="grade-content" class="hidden">
       <div class="seg" id="grade-seg" role="group" aria-label="Select academic year"></div>
       <div class="seg" id="grade-mode-seg" role="group" aria-label="View options">
-        <button class="seg-btn" data-mode="chart" aria-pressed="true" type="button">Chart</button>
-        <button class="seg-btn" data-mode="table" aria-pressed="false" type="button">Table</button>
+        <button class="seg-btn" data-mode="chart" aria-pressed="true" data-i18n="grades.chart" type="button">Chart</button>
+        <button class="seg-btn" data-mode="table" aria-pressed="false" data-i18n="grades.table" type="button">Table</button>
         <span style="flex:1 1 100%;"></span>
-        <button class="seg-btn" data-unit="counts" aria-pressed="true" type="button">Counts</button>
-        <button class="seg-btn" data-unit="pct" aria-pressed="false" type="button">Percent</button>
+        <button class="seg-btn" data-unit="counts" aria-pressed="true" data-i18n="grades.counts" type="button">Counts</button>
+        <button class="seg-btn" data-unit="pct" aria-pressed="false" data-i18n="grades.pct" type="button">Percent</button>
       </div>
       <div class="stat-chips" id="grade-stats"></div>
       <div class="card chart-wrap" id="grade-chart-card">
@@ -787,19 +787,19 @@ footer {
        ============================================================ -->
   <section class="view hidden" id="view-tutorials" data-route="tutorials" role="tabpanel">
     <div class="view-head">
-      <span class="eyebrow">TLB / Tutorials</span>
-      <h2>Structured Tutorials</h2>
-      <p>Organised by topic — follow the sequence, or jump to what you need.</p>
+      <span class="eyebrow" data-i18n="tutorials.eyebrow">TLB / Tutorials</span>
+      <h2 data-i18n="tutorials.title">Structured Tutorials</h2>
+      <p data-i18n="tutorials.desc">Organised by topic — follow the sequence, or jump to what you need.</p>
     </div>
 
-    <div class="banner hidden" id="tutorials-sample-banner">
+    <div class="banner hidden" id="tutorials-sample-banner" data-i18n="tutorials.banner">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 8h.01"></path><path d="M11 12h1v4h1"></path></svg>
-      <span><strong>Sample links.</strong> Replace the <code>tutorials</code> entries in <code>SITE_CONFIG</code> with your own, then delete the <code>sample: true</code> flags.</span>
+      <span></span>
     </div>
 
     <div class="filter-row hidden" id="tutorials-filter-row">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg>
-      <input type="search" id="tutorials-filter" placeholder="Filter tutorials by topic or title" aria-label="Filter tutorials">
+      <input type="search" id="tutorials-filter" data-i18n-ph="tutorials.filterPh" placeholder="Filter tutorials by topic or title" aria-label="Filter tutorials">
     </div>
 
     <div id="tutorial-groups"></div>
@@ -811,11 +811,11 @@ footer {
   <section class="unlock-wrap hidden" id="unlock-screen">
     <div class="card unlock-card" id="unlock-card">
       <svg class="big" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 7.5-2"></path></svg>
-      <h2>This section is reserved</h2>
-      <p>Notes, grade distributions and tutorials are for enrolled students. Enter the passcode your instructor shared to continue.</p>
+      <h2 data-i18n="unlock.title">This section is reserved</h2>
+      <p data-i18n="unlock.desc">Notes, grade distributions and tutorials are for enrolled students. Enter the passcode your instructor shared to continue.</p>
       <form class="unlock-form" id="unlock-form">
-        <input type="password" id="unlock-input" autocomplete="off" placeholder="Passcode" aria-label="Passcode">
-        <button class="btn" type="submit">Unlock</button>
+        <input type="password" id="unlock-input" autocomplete="off" data-i18n-ph="unlock.placeholder" placeholder="Passcode" aria-label="Passcode">
+        <button class="btn" data-i18n="unlock.submit" type="submit">Unlock</button>
       </form>
       <div class="unlock-error" id="unlock-error" role="alert"></div>
     </div>
@@ -825,11 +825,15 @@ footer {
 
 <footer>
   <div class="footer-inner">
-    <span>T&amp;L@Biomed &middot; a free course hub &middot; edit <code>SITE_CONFIG</code> to publish updates</span>
+    <span data-i18n="footer.note">T&amp;L@Biomed &middot; a free course hub &middot; edit <code>SITE_CONFIG</code> to publish updates</span>
     <div class="footer-actions">
       <button class="link-btn" id="copy-link-btn" type="button">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg>
-        <span>Copy link</span>
+        <span data-i18n="footer.copy">Copy link</span>
+      </button>
+      <button class="link-btn" id="lang-btn" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18"></path><path d="M12 3c2.5 2.6 3.8 5.7 3.8 9S14.5 18.4 12 21c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3z"></path></svg>
+        <span id="lang-btn-label">中文</span>
       </button>
       <button class="link-btn" id="theme-btn" type="button">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"></circle><path d="M12 2.5v2"></path><path d="M12 19.5v2"></path><path d="M2.5 12h2"></path><path d="M19.5 12h2"></path><path d="M5 5l1.4 1.4"></path><path d="M17.6 17.6L19 19"></path><path d="M19 5l-1.4 1.4"></path><path d="M6.4 17.6L5 19"></path></svg>
@@ -867,6 +871,11 @@ var SITE_CONFIG = {
      anyone who can read the page source can see the passcode. */
   passcode: "tlbiomed26",
 
+  /* Language: which UI language students see first.
+     detect: auto-pick zh for Chinese browsers before falling back
+     to `default`. Students can switch anytime from the footer. */
+  language: { default: "en", detect: true },
+
   /* Notes: a plain list of link cards. Add as many as you like.
      The rows below are sample scaffolding (sample: true) — replace
      the titles, urls and tags with your own and delete the flag. */
@@ -874,7 +883,11 @@ var SITE_CONFIG = {
     { title: "Week 1 — Cell structure & function", desc: "Lecture slides and reading list.", url: "https://example.com/tlb-notes-week1", tags: ["week-1", "cell-bio"], sample: true },
     { title: "Week 2 — Biomolecules & metabolism", desc: "Slides plus worked examples.", url: "https://example.com/tlb-notes-week2", tags: ["week-2", "biochem"], sample: true },
     { title: "Week 3 — Cardiovascular physiology", desc: "Lecture notes and lab sheet.", url: "https://example.com/tlb-notes-week3", tags: ["week-3", "physiology"], sample: true },
-    { title: "Week 4 — Bacterial pathogens", desc: "Microbiology slides and revision questions.", url: "https://example.com/tlb-notes-week4", tags: ["week-4", "micro"], sample: true }
+    { title: "Week 4 — Bacterial pathogens", desc: "Microbiology slides and revision questions.", url: "https://example.com/tlb-notes-week4", tags: ["week-4", "micro"], sample: true },
+    { title: "Week 5 — Immunology: innate & adaptive immunity", desc: "Slides, reading list and concept map.", url: "https://example.com/tlb-notes-week5", tags: ["week-5", "immunology"], sample: true },
+    { title: "Week 6 — Pharmacology: principles of drug action", desc: "Lecture notes and problem set.", url: "https://example.com/tlb-notes-week6", tags: ["week-6", "pharmacology"], sample: true },
+    { title: "Week 7 — Molecular genetics & genomics", desc: "Slides and worked examples.", url: "https://example.com/tlb-notes-week7", tags: ["week-7", "genetics"], sample: true },
+    { title: "Week 8 — Neurophysiology: CNS & PNS", desc: "Lecture notes and lab sheet.", url: "https://example.com/tlb-notes-week8", tags: ["week-8", "neuroscience"], sample: true }
   ],
 
   /* Structured tutorials: grouped by topic, each item is a link.
@@ -892,6 +905,22 @@ var SITE_CONFIG = {
     { topic: "Microbiology", note: "2 steps", items: [
       { title: "Gram staining — practical guide", desc: "What the colours mean and why.", url: "https://example.com/tut-gram", sample: true },
       { title: "Antimicrobial mechanisms", desc: "How the major drug classes act.", url: "https://example.com/tut-antibiotics", sample: true }
+    ] },
+    { topic: "Immunology", note: "2 steps", items: [
+      { title: "Innate vs adaptive immunity", desc: "A side-by-side map of the two arms.", url: "https://example.com/tut-innate-adaptive", sample: true },
+      { title: "ELISA — reading the result", desc: "What the colour change actually tells you.", url: "https://example.com/tut-elisa", sample: true }
+    ] },
+    { topic: "Pharmacology", note: "2 steps", items: [
+      { title: "Pharmacokinetics in four steps", desc: "Absorption, distribution, metabolism, excretion.", url: "https://example.com/tut-pk", sample: true },
+      { title: "Receptor families & drug targets", desc: "Ion channels, GPCRs, enzymes and transporters.", url: "https://example.com/tut-receptors", sample: true }
+    ] },
+    { topic: "Neuroscience", note: "2 steps", items: [
+      { title: "The action potential, step by step", desc: "Ion movements and refractory periods.", url: "https://example.com/tut-action-potential", sample: true },
+      { title: "Autonomic nervous system basics", desc: "Sympathetic vs parasympathetic at a glance.", url: "https://example.com/tut-ans", sample: true }
+    ] },
+    { topic: "Haematology", note: "2 steps", items: [
+      { title: "Reading a full blood count", desc: "RBC, WBC, platelets — normal ranges and what they mean.", url: "https://example.com/tut-fbc", sample: true },
+      { title: "The coagulation cascade, simplified", desc: "Intrinsic, extrinsic and common pathways.", url: "https://example.com/tut-coag", sample: true }
     ] }
   ],
 
@@ -902,7 +931,7 @@ var SITE_CONFIG = {
   quiz: {
     sample: true,
     title: "Mock Quiz — sample set",
-    intro: "Five starter questions covering cell biology, biochemistry and physiology. Answer each question, get instant feedback, and review your results at the end.",
+    intro: "Ten starter questions across cell biology, biochemistry, physiology, microbiology, immunology, pharmacology, genetics, haematology and neuroscience.",
     shuffle: false,
     shuffleOptions: true,
     questions: [
@@ -940,6 +969,41 @@ var SITE_CONFIG = {
         options: ["Hexokinase", "Pyruvate kinase", "Phosphofructokinase-1", "Aldolase"],
         answerIndex: 2,
         explanation: "Phosphofructokinase-1 converts fructose-6-phosphate to fructose-1,6-bisphosphate — the first committed (and key regulated) step."
+      },
+      {
+        id: "q6",
+        prompt: "Which cell type is the main producer of antibodies?",
+        options: ["Cytotoxic T cell", "Plasma cell", "Macrophage", "Natural killer cell"],
+        answerIndex: 1,
+        explanation: "Plasma cells are differentiated B lymphocytes that secrete antibodies."
+      },
+      {
+        id: "q7",
+        prompt: "In pharmacokinetics, the plasma half-life of a drug is:",
+        options: ["The time for its concentration to fall by half", "The time until it is fully absorbed", "The duration of its therapeutic effect", "The time it spends in the gut"],
+        answerIndex: 0,
+        explanation: "Half-life is the time taken for the plasma concentration to drop to half its current value."
+      },
+      {
+        id: "q8",
+        prompt: "In double-stranded DNA, adenine pairs with:",
+        options: ["Cytosine", "Guanine", "Thymine", "Uracil"],
+        answerIndex: 2,
+        explanation: "Adenine pairs with thymine (two hydrogen bonds); guanine pairs with cytosine."
+      },
+      {
+        id: "q9",
+        prompt: "The neurotransmitter released at the neuromuscular junction is:",
+        options: ["Dopamine", "Serotonin", "Acetylcholine", "GABA"],
+        answerIndex: 2,
+        explanation: "Motor neurones release acetylcholine at the neuromuscular junction to trigger muscle contraction."
+      },
+      {
+        id: "q10",
+        prompt: "Which blood cell is responsible for oxygen transport?",
+        options: ["Platelet", "Erythrocyte", "Neutrophil", "Monocyte"],
+        answerIndex: 1,
+        explanation: "Erythrocytes (red blood cells) carry oxygen bound to haemoglobin."
       }
     ]
   },
@@ -970,9 +1034,214 @@ var ICONS = {
 };
 
 /* ============================================================
+   UI strings (i18n) — add a language by appending a dictionary.
+   ============================================================ */
+var LANGS = {
+  en: {
+    "site.name": "Teaching & Learning @ Biomedicine",
+    "site.title": "T&L@Biomed — course hub",
+    "site.sub": "Notes · Mock quiz · Grade distributions · Structured tutorials",
+    "site.desc": "T&L@Biomed — course hub with notes, an interactive mock quiz, past grade distributions and structured tutorials.",
+    "tab.notes": "Notes",
+    "tab.quiz": "Mock Quiz",
+    "tab.grades": "Grade Distribution",
+    "tab.tutorials": "Structured Tutorials",
+    "notes.eyebrow": "TLB / Notes",
+    "notes.title": "Notes",
+    "notes.desc": "Curated links to lecture notes, readings and references.",
+    "notes.banner": "<strong>Sample links.</strong> Replace the <code>notes</code> entries in <code>SITE_CONFIG</code> with your own, then delete the <code>sample: true</code> flags.",
+    "notes.filterPh": "Filter notes by title, tag or description",
+    "notes.none": "No notes match \"{q}\".",
+    "notes.emptyTitle": "No notes published yet",
+    "notes.emptyBody": "Links will appear here. Add entries to <code>SITE_CONFIG.notes</code> in <code>index.html</code>.",
+    "notes.emptyHint": "Each entry: title, description and url.",
+    "quiz.eyebrow": "TLB / Mock quiz",
+    "quiz.title": "Mock Quiz",
+    "quiz.desc": "Multiple choice, instant feedback. Pick an answer to see whether you got it right.",
+    "quiz.banner": "<strong>Sample questions.</strong> Replace the <code>quiz</code> block in <code>SITE_CONFIG</code> to publish your own.",
+    "quiz.start": "Start the quiz",
+    "quiz.qnum": "Question {c} of {t}",
+    "quiz.next": "Next question",
+    "quiz.seeResults": "See results",
+    "quiz.kbd": "Keys 1–4 to answer · Enter to continue",
+    "quiz.correct": "Correct",
+    "quiz.wrong": "Not quite",
+    "quiz.retry": "Try again",
+    "quiz.finished": "Finished in {t}",
+    "review.ok": "<b>Correct</b> — your answer: {a}",
+    "review.bad": "<b>Incorrect</b> — your answer: {a}",
+    "review.correctAnswer": "Correct answer: <b>{a}</b>",
+    "verdict.excellent": "Excellent — exam ready.",
+    "verdict.solid": "Solid — polish the gaps below.",
+    "verdict.mid": "Getting there — review the topics you missed.",
+    "verdict.low": "Keep practising — go through the explanations and try again.",
+    "quiz.statsNone": "No attempts yet — your results stay on this device.",
+    "quiz.statsSome": "Best {b}% · {n} attempt{s} on this device",
+    "quiz.metaQ": "{n} questions",
+    "quiz.metaInOrder": "in order",
+    "quiz.metaShuffled": "shuffled",
+    "quiz.metaOptShuffled": "answers shuffled",
+    "tag.sample": "sample",
+    "grades.eyebrow": "TLB / Grades",
+    "grades.title": "Grade Distribution",
+    "grades.desc": "Past years at a glance — pick a year, or compare them all.",
+    "grades.banner": "<strong>Sample data.</strong> Replace the <code>grades</code> block in <code>SITE_CONFIG</code> to publish your own figures.",
+    "grades.allYears": "All years",
+    "grades.chart": "Chart",
+    "grades.table": "Table",
+    "grades.counts": "Counts",
+    "grades.pct": "Percent",
+    "grades.chipCohort": "Cohort",
+    "grades.chipCohortAll": "Cohort (all)",
+    "grades.chipPass": "Pass rate",
+    "grades.chipFail": "Failed",
+    "grades.chipMode": "Most common",
+    "grades.unitStudents": "students",
+    "grades.unitPct": "%",
+    "grades.unitBand": "band",
+    "grades.failTag": " (fail)",
+    "grades.total": "Total",
+    "grades.chartFootOne": "{y} — {u} per grade band. Hover a bar for exact numbers.",
+    "grades.chartFootAll": "All past years compared — {u} per grade band. Hover a bar for exact numbers.",
+    "grades.unitLabelCount": "count",
+    "grades.unitLabelPct": "percentage",
+    "grades.emptyTitle": "No grade data published yet",
+    "grades.emptyBody": "Add past years to <code>SITE_CONFIG.grades.years</code>, then set <code>sample</code> to <code>false</code>.",
+    "grades.chartFail": "Chart library failed to load — check your internet connection.",
+    "tutorials.eyebrow": "TLB / Tutorials",
+    "tutorials.title": "Structured Tutorials",
+    "tutorials.desc": "Organised by topic — follow the sequence, or jump to what you need.",
+    "tutorials.banner": "<strong>Sample links.</strong> Replace the <code>tutorials</code> entries in <code>SITE_CONFIG</code> with your own, then delete the <code>sample: true</code> flags.",
+    "tutorials.filterPh": "Filter tutorials by topic or title",
+    "tutorials.none": "No tutorials match \"{q}\".",
+    "tutorials.emptyTitle": "No tutorials published yet",
+    "tutorials.emptyBody": "Topics and their link lists appear here. Add entries to <code>SITE_CONFIG.tutorials</code>.",
+    "unlock.title": "This section is reserved",
+    "unlock.desc": "Notes, grade distributions and tutorials are for enrolled students. Enter the passcode your instructor shared to continue.",
+    "unlock.placeholder": "Passcode",
+    "unlock.submit": "Unlock",
+    "unlock.error": "That passcode is not recognised. Try again, or ask your instructor.",
+    "footer.note": "T&L@Biomed · a free course hub · edit <code>SITE_CONFIG</code> to publish updates",
+    "footer.copy": "Copy link",
+    "footer.lock": "Lock private sections",
+    "footer.unlocked": "Private sections unlocked",
+    "theme.toDark": "Dark mode",
+    "theme.toLight": "Light mode",
+    "lang.other": "中文",
+    "toast.copied": "Link copied to clipboard",
+    "toast.copyHint": "Copy the address bar link to share",
+    "toast.unlocked": "Private sections unlocked",
+    "toast.locked": "Private sections locked",
+    "toast.darkOn": "Dark mode on",
+    "toast.darkOff": "Light mode on",
+    "toast.langChanged": "Language switched to 中文"
+  },
+  zh: {
+    "site.name": "生物醫學教學與學習",
+    "site.title": "T&L@Biomed — 課程中心",
+    "site.sub": "筆記 · 模擬測驗 · 成績分佈 · 結構化導修",
+    "site.desc": "T&L@Biomed — 課程中心：筆記、互動模擬測驗、歷年成績分佈與結構化導修。",
+    "tab.notes": "筆記",
+    "tab.quiz": "模擬測驗",
+    "tab.grades": "成績分佈",
+    "tab.tutorials": "結構化導修",
+    "notes.eyebrow": "TLB / 筆記",
+    "notes.title": "筆記",
+    "notes.desc": "精選連結：講義、閱讀材料及參考資料。",
+    "notes.banner": "<strong>範例連結。</strong>把 <code>SITE_CONFIG</code> 內的 <code>notes</code> 項目換成你自己的內容，然後刪去 <code>sample: true</code> 標記。",
+    "notes.filterPh": "按標題、標籤或描述篩選筆記",
+    "notes.none": "沒有符合「{q}」的筆記。",
+    "notes.emptyTitle": "尚未發佈任何筆記",
+    "notes.emptyBody": "連結會顯示在這裡。在 <code>index.html</code> 的 <code>SITE_CONFIG.notes</code> 加入項目。",
+    "notes.emptyHint": "每個項目：標題、描述與網址。",
+    "quiz.eyebrow": "TLB / 模擬測驗",
+    "quiz.title": "模擬測驗",
+    "quiz.desc": "多項選擇題，即時回饋。選取答案即知對錯。",
+    "quiz.banner": "<strong>範例題目。</strong>替換 <code>SITE_CONFIG</code> 中的 <code>quiz</code> 區塊以發佈你自己的題目。",
+    "quiz.start": "開始測驗",
+    "quiz.qnum": "第 {c} 題，共 {t} 題",
+    "quiz.next": "下一題",
+    "quiz.seeResults": "查看結果",
+    "quiz.kbd": "按 1–4 作答 · Enter 繼續",
+    "quiz.correct": "正確",
+    "quiz.wrong": "答錯了",
+    "quiz.retry": "再試一次",
+    "quiz.finished": "用時 {t}",
+    "review.ok": "<b>正確</b> — 你的答案：{a}",
+    "review.bad": "<b>答錯</b> — 你的答案：{a}",
+    "review.correctAnswer": "正確答案：<b>{a}</b>",
+    "verdict.excellent": "表現優秀 — 已達應試水平。",
+    "verdict.solid": "基礎穩固 — 針對以下缺口補強。",
+    "verdict.mid": "尚可 — 重溫答錯的課題。",
+    "verdict.low": "繼續練習 — 細看解說後再試一次。",
+    "quiz.statsNone": "尚未作答 — 成績只保留在本機。",
+    "quiz.statsSome": "最佳 {b}% · 本機已作答 {n} 次",
+    "quiz.metaQ": "{n} 題",
+    "quiz.metaInOrder": "按序出題",
+    "quiz.metaShuffled": "隨機出題",
+    "quiz.metaOptShuffled": "選項隨機",
+    "tag.sample": "範例",
+    "grades.eyebrow": "TLB / 成績",
+    "grades.title": "成績分佈",
+    "grades.desc": "一覽歷年成績 — 選擇年份，或比較全部。",
+    "grades.banner": "<strong>範例數據。</strong>替換 <code>SITE_CONFIG</code> 中的 <code>grades</code> 區塊以發佈你的數據。",
+    "grades.allYears": "全部年份",
+    "grades.chart": "圖表",
+    "grades.table": "表格",
+    "grades.counts": "人數",
+    "grades.pct": "百分比",
+    "grades.chipCohort": "總人數",
+    "grades.chipCohortAll": "總人數（全部）",
+    "grades.chipPass": "及格率",
+    "grades.chipFail": "不及格",
+    "grades.chipMode": "最常見",
+    "grades.unitStudents": "人",
+    "grades.unitPct": "%",
+    "grades.unitBand": "等級",
+    "grades.failTag": "（不及格）",
+    "grades.total": "總計",
+    "grades.chartFootOne": "{y} — 各等級的{u}。將滑鼠移至長條可看確切數字。",
+    "grades.chartFootAll": "比較歷年 — 各等級的{u}。將滑鼠移至長條可看確切數字。",
+    "grades.unitLabelCount": "人數",
+    "grades.unitLabelPct": "百分比",
+    "grades.emptyTitle": "尚未發佈成績數據",
+    "grades.emptyBody": "在 <code>SITE_CONFIG.grades.years</code> 加入歷年數據，然後把 <code>sample</code> 設為 <code>false</code>。",
+    "grades.chartFail": "圖表程式庫載入失敗 — 請檢查網絡連線。",
+    "tutorials.eyebrow": "TLB / 導修",
+    "tutorials.title": "結構化導修",
+    "tutorials.desc": "按課題組織 — 依序學習，或直接跳到所需內容。",
+    "tutorials.banner": "<strong>範例連結。</strong>把 <code>SITE_CONFIG</code> 內的 <code>tutorials</code> 項目換成你自己的內容，然後刪去 <code>sample: true</code> 標記。",
+    "tutorials.filterPh": "按課題或標題篩選導修",
+    "tutorials.none": "沒有符合「{q}」的導修。",
+    "tutorials.emptyTitle": "尚未發佈任何導修",
+    "tutorials.emptyBody": "課題及其連結清單會顯示在這裡。在 <code>SITE_CONFIG.tutorials</code> 加入項目。",
+    "unlock.title": "此區塊僅限學生",
+    "unlock.desc": "筆記、成績分佈與導修僅供就讀學生使用。請輸入導師發放的通行碼以繼續。",
+    "unlock.placeholder": "通行碼",
+    "unlock.submit": "解鎖",
+    "unlock.error": "通行碼不正確。請重試，或向導師查詢。",
+    "footer.note": "T&L@Biomed · 免費課程中心 · 編輯 <code>SITE_CONFIG</code> 發佈更新",
+    "footer.copy": "複製連結",
+    "footer.lock": "鎖定私人區塊",
+    "footer.unlocked": "私人區塊已解鎖",
+    "theme.toDark": "深色模式",
+    "theme.toLight": "淺色模式",
+    "lang.other": "English",
+    "toast.copied": "連結已複製到剪貼簿",
+    "toast.copyHint": "請複製網址列的連結以分享",
+    "toast.unlocked": "私人區塊已解鎖",
+    "toast.locked": "私人區塊已鎖定",
+    "toast.darkOn": "已開啟深色模式",
+    "toast.darkOff": "已開啟淺色模式",
+    "toast.langChanged": "已切換為 English"
+  }
+};
+
+/* ============================================================
    Pure logic (unit-tested via window.TL)
    ============================================================ */
 var TL = window.TL = {};
+TL.LANGS = LANGS;
 
 TL.getConfig = function () {
   return JSON.parse(JSON.stringify(SITE_CONFIG));
@@ -995,6 +1264,25 @@ TL.formatDuration = function (sec) {
   var s = sec % 60;
   return m + ":" + (s < 10 ? "0" : "") + s;
 };
+
+/* Look up a UI string. Missing key -> English -> the key itself. */
+function currentLang() { return state.lang; }
+function t(key, lang) {
+  var L = lang || currentLang();
+  var dict = LANGS[L] || LANGS.en;
+  if (dict[key] !== undefined) return dict[key];
+  if (LANGS.en[key] !== undefined) return LANGS.en[key];
+  return key;
+}
+function fmt(key, vars, lang) {
+  var s = t(key, lang);
+  Object.keys(vars || {}).forEach(function (k) {
+    s = s.split("{" + k + "}").join(String(vars[k]));
+  });
+  return s;
+}
+TL.t = t;
+TL.fmt = fmt;
 
 /* Rank a band label like "A+", "B-", "F" on the grade scale
    (A highest, F lowest; "+" above plain, "-" below). Unknown
@@ -1065,6 +1353,7 @@ function emptyNode(el) { while (el.firstChild) el.removeChild(el.firstChild); }
 var state = {
   route: "quiz",
   unlocked: false,
+  lang: "en",
   quiz: { idx: 0, answers: {}, questions: [], started: false, shuffledOptions: [], timerStart: 0, timerId: null },
   notesFilter: "",
   tutorialsFilter: ""
@@ -1076,6 +1365,7 @@ var GATED = ["notes", "grades", "tutorials"];
 var STORAGE_KEY = "tlb_unlocked";
 var THEME_KEY = "tlb_theme";
 var HISTORY_KEY = "tlb_quiz_history";
+var LANG_KEY = "tlb_lang";
 
 function readUnlock() {
   try { return window.localStorage.getItem(STORAGE_KEY) === "1"; }
@@ -1100,6 +1390,17 @@ function currentTheme() {
   try { return window.localStorage.getItem(THEME_KEY) === "dark" ? "dark" : "light"; }
   catch (e) { return "light"; }
 }
+function initialLang() {
+  var saved = null;
+  try { saved = window.localStorage.getItem(LANG_KEY); } catch (e) { /* ignore */ }
+  if (saved && LANGS[saved]) return saved;
+  if (SITE_CONFIG.language.detect !== false && typeof navigator !== "undefined" && navigator.language) {
+    var nav = navigator.language.toLowerCase();
+    if (nav.indexOf("zh") === 0) return "zh";
+    if (nav.indexOf("en") === 0) return "en";
+  }
+  return LANGS[SITE_CONFIG.language.default] ? SITE_CONFIG.language.default : "en";
+}
 
 /* ============================================================
    Toasts
@@ -1120,16 +1421,50 @@ function toast(msg) {
 /* ============================================================
    Theme
    ============================================================ */
-function applyTheme(t) {
-  document.documentElement.setAttribute("data-theme", t);
-  $("theme-btn-label").textContent = t === "dark" ? "Light mode" : "Dark mode";
+function applyTheme(th) {
+  document.documentElement.setAttribute("data-theme", th);
+  $("theme-btn-label").textContent = th === "dark" ? t("theme.toLight") : t("theme.toDark");
   if (gradeState.metaRendered && gradeState.mode === "chart") renderGradeChart();
 }
 function toggleTheme() {
   var next = currentTheme() === "dark" ? "light" : "dark";
   try { window.localStorage.setItem(THEME_KEY, next); } catch (e) { /* ignore */ }
   applyTheme(next);
-  toast(next === "dark" ? "Dark mode on" : "Light mode on");
+  toast(next === "dark" ? t("toast.darkOn") : t("toast.darkOff"));
+}
+
+/* ============================================================
+   Language
+   ============================================================ */
+function applyI18n() {
+  document.querySelectorAll("[data-i18n]").forEach(function (el) {
+    el.innerHTML = t(el.dataset.i18n);
+  });
+  document.querySelectorAll("[data-i18n-ph]").forEach(function (el) {
+    el.placeholder = t(el.dataset.i18nPh);
+  });
+  $("lang-btn-label").textContent = t("lang.other");
+  document.title = t("site.title");
+  var metaDesc = document.querySelector('meta[name="description"]');
+  if (metaDesc) metaDesc.setAttribute("content", t("site.desc"));
+
+  renderTabs();
+  renderNotes();
+  renderTutorials();
+  if (!state.quiz.started) renderQuizIntro();
+  if (gradeState.metaRendered) renderGradeMeta();
+  if (state.quiz.started && !$("quiz-run").classList.contains("hidden")) {
+    var total = state.quiz.questions.length;
+    $("quiz-qnum").textContent = fmt("quiz.qnum", { c: state.quiz.idx + 1, t: total });
+    var last = state.quiz.idx + 1 >= total;
+    $("quiz-next").textContent = last ? t("quiz.seeResults") : t("quiz.next");
+  }
+}
+function toggleLang() {
+  state.lang = state.lang === "zh" ? "en" : "zh";
+  try { window.localStorage.setItem(LANG_KEY, state.lang); } catch (e) { /* ignore */ }
+  applyI18n();
+  toast(t("toast.langChanged"));
 }
 
 /* ============================================================
@@ -1162,13 +1497,13 @@ function route() {
 
 function renderTabs() {
   var tabs = document.querySelectorAll(".tab");
-  tabs.forEach(function (t) {
-    t.setAttribute("aria-selected", String(t.dataset.route === state.route));
+  tabs.forEach(function (tEl) {
+    tEl.setAttribute("aria-selected", String(tEl.dataset.route === state.route));
   });
-  var showLockBtn = SITE_CONFIG.passcode !== "";
+  var showLockBtn = SITE_CONFIG.passcode !== "" && state.unlocked;
   show("lock-btn", showLockBtn);
   if (showLockBtn) {
-    $("lock-btn-label").textContent = state.unlocked ? "Lock private sections" : "Private sections unlocked";
+    $("lock-btn-label").textContent = t("footer.lock");
   }
 }
 
@@ -1192,16 +1527,16 @@ function renderNotes() {
   if (!notes.length) {
     list.innerHTML =
       '<div class="empty-state" style="grid-column:1/-1">' + ICONS.empty +
-      "<h3>No notes published yet</h3>" +
-      "<p>Links will appear here. Add entries to <code>SITE_CONFIG.notes</code> in <code>index.html</code>.</p>" +
-      "<p>Each entry: title, description and url.</p></div>";
+      "<h3>" + t("notes.emptyTitle") + "</h3>" +
+      "<p>" + t("notes.emptyBody") + "</p>" +
+      "<p>" + t("notes.emptyHint") + "</p></div>";
     return;
   }
 
   var visible = notes.filter(noteMatches);
   if (!visible.length) {
-    list.innerHTML = '<p class="no-match" style="grid-column:1/-1">No notes match "' +
-      escapeHtml(state.notesFilter) + '".</p>';
+    list.innerHTML = '<p class="no-match" style="grid-column:1/-1">' +
+      fmt("notes.none", { q: state.notesFilter }) + "</p>";
     return;
   }
 
@@ -1210,9 +1545,9 @@ function renderNotes() {
     a.className = "note-card";
     a.href = n.url || "#";
     addLinkAttrs(a);
-    var sampleBadge = n.sample ? '<span class="tag sample">sample</span>' : "";
-    var tags = (n.tags || []).map(function (t) {
-      return '<span class="tag">' + escapeHtml(t) + "</span>";
+    var sampleBadge = n.sample ? '<span class="tag sample">' + t("tag.sample") + "</span>" : "";
+    var tags = (n.tags || []).map(function (tg) {
+      return '<span class="tag">' + escapeHtml(tg) + "</span>";
     }).join("");
     a.innerHTML =
       '<span class="nc-title">' + ICONS.ext + "<span>" + escapeHtml(n.title) + "</span></span>" +
@@ -1243,8 +1578,8 @@ function renderTutorials() {
   if (!groups.length) {
     wrap.innerHTML =
       '<div class="card empty-state">' + ICONS.empty +
-      "<h3>No tutorials published yet</h3>" +
-      "<p>Topics and their link lists appear here. Add entries to <code>SITE_CONFIG.tutorials</code>.</p></div>";
+      "<h3>" + t("tutorials.emptyTitle") + "</h3>" +
+      "<p>" + t("tutorials.emptyBody") + "</p></div>";
     return;
   }
 
@@ -1255,8 +1590,7 @@ function renderTutorials() {
   });
 
   if (!filtered.length) {
-    wrap.innerHTML = '<p class="no-match">No tutorials match "' +
-      escapeHtml(state.tutorialsFilter) + '".</p>';
+    wrap.innerHTML = '<p class="no-match">' + fmt("tutorials.none", { q: state.tutorialsFilter }) + "</p>";
     return;
   }
 
@@ -1276,7 +1610,7 @@ function renderTutorials() {
       addLinkAttrs(a);
       a.innerHTML =
         '<span class="tr-main"><span class="tr-title">' + escapeHtml(item.title) +
-        (item.sample ? ' <span class="tag sample">sample</span>' : "") + "</span>" +
+        (item.sample ? ' <span class="tag sample">' + t("tag.sample") + "</span>" : "") + "</span>" +
         (item.desc ? '<span class="tr-desc">' + escapeHtml(item.desc) + "</span>" : "") + "</span>" +
         '<svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg>';
       li.appendChild(a);
@@ -1305,11 +1639,15 @@ function renderQuizIntro() {
   show("quiz-intro", true);
   show("quiz-run", false);
   show("quiz-results", false);
-  $("quiz-title").textContent = cfg.title || "Mock Quiz";
+  $("quiz-title").textContent = cfg.title || t("quiz.title");
   $("quiz-intro-text").textContent = cfg.intro || "";
   var meta = $("quiz-meta");
   meta.innerHTML = "";
-  [cfg.questions.length + " questions", cfg.shuffle ? "shuffled" : "in order", cfg.shuffleOptions ? "answers shuffled" : ""].forEach(function (m) {
+  [
+    fmt("quiz.metaQ", { n: cfg.questions.length }),
+    cfg.shuffle ? t("quiz.metaShuffled") : t("quiz.metaInOrder"),
+    cfg.shuffleOptions ? t("quiz.metaOptShuffled") : ""
+  ].forEach(function (m) {
     if (!m) return;
     var s = document.createElement("span");
     s.className = "tag";
@@ -1318,8 +1656,8 @@ function renderQuizIntro() {
   });
   var h = loadHistory();
   $("quiz-stats").textContent = h.attempts
-    ? "Best " + h.best + "% · " + h.attempts + (h.attempts === 1 ? " attempt" : " attempts") + " on this device"
-    : "No attempts yet — your results stay on this device.";
+    ? fmt("quiz.statsSome", { b: h.best, n: h.attempts, s: h.attempts === 1 ? "" : "s" })
+    : t("quiz.statsNone");
 }
 function startQuiz() {
   var cfg = SITE_CONFIG.quiz;
@@ -1349,7 +1687,7 @@ function elapsedSeconds() {
 function renderQuestion() {
   var q = state.quiz.questions[state.quiz.idx];
   var total = state.quiz.questions.length;
-  $("quiz-qnum").textContent = "Question " + (state.quiz.idx + 1) + " of " + total;
+  $("quiz-qnum").textContent = fmt("quiz.qnum", { c: state.quiz.idx + 1, t: total });
   $("quiz-prompt").textContent = q.prompt;
   $("quiz-progress").style.width = (state.quiz.idx / total * 100) + "%";
 
@@ -1397,11 +1735,11 @@ function choose(i) {
   var ok = chosenOriginal === q.answerIndex;
   var fb = $("quiz-feedback");
   fb.className = "feedback " + (ok ? "fb-ok" : "fb-bad");
-  fb.innerHTML = "<strong>" + (ok ? "Correct" : "Not quite") + "</strong>" +
+  fb.innerHTML = "<strong>" + (ok ? t("quiz.correct") : t("quiz.wrong")) + "</strong>" +
     (q.explanation ? escapeHtml(q.explanation) : "");
 
   var last = state.quiz.idx + 1 >= state.quiz.questions.length;
-  $("quiz-next").textContent = last ? "See results" : "Next question";
+  $("quiz-next").textContent = last ? t("quiz.seeResults") : t("quiz.next");
   $("quiz-next").classList.remove("hidden");
   $("quiz-progress").style.width = ((state.quiz.idx + 1) / state.quiz.questions.length * 100) + "%";
 }
@@ -1419,7 +1757,7 @@ function renderResults() {
   $("res-score").textContent = res.correct + " / " + res.total;
   $("res-percent").textContent = res.percent + "%";
   $("res-verdict").textContent = verdictFor(res.percent);
-  $("res-time").textContent = "Finished in " + TL.formatDuration(elapsedSeconds());
+  $("res-time").textContent = fmt("quiz.finished", { t: TL.formatDuration(elapsedSeconds()) });
 
   var C = 2 * Math.PI * 48;
   var ringEl = $("res-ring");
@@ -1445,18 +1783,18 @@ function renderResults() {
     li.className = "review-item";
     li.innerHTML =
       '<div class="rv-q">' + escapeHtml(q.prompt) + "</div>" +
-      '<div class="rv-line ' + (ok ? "rv-ok" : "rv-bad") + '"><b>' + (ok ? "Correct" : "Incorrect") + "</b> — your answer: " +
-      escapeHtml(q.options[chosen] !== undefined ? q.options[chosen] : "—") + "</div>" +
-      (ok ? "" : '<div class="rv-line">Correct answer: <b>' + escapeHtml(q.options[q.answerIndex]) + "</b></div>") +
+      '<div class="rv-line ' + (ok ? "rv-ok" : "rv-bad") + '">' +
+      fmt(ok ? "review.ok" : "review.bad", { a: escapeHtml(q.options[chosen] !== undefined ? q.options[chosen] : "—") }) + "</div>" +
+      (ok ? "" : '<div class="rv-line">' + fmt("review.correctAnswer", { a: escapeHtml(q.options[q.answerIndex]) }) + "</div>") +
       (q.explanation ? '<div class="rv-exp">' + escapeHtml(q.explanation) + "</div>" : "");
     list.appendChild(li);
   });
 }
 function verdictFor(percent) {
-  if (percent >= 90) return "Excellent — exam ready.";
-  if (percent >= 75) return "Solid — polish the gaps below.";
-  if (percent >= 60) return "Getting there — review the topics you missed.";
-  return "Keep practising — go through the explanations and try again.";
+  if (percent >= 90) return t("verdict.excellent");
+  if (percent >= 75) return t("verdict.solid");
+  if (percent >= 60) return t("verdict.mid");
+  return t("verdict.low");
 }
 
 /* ============================================================
@@ -1497,7 +1835,7 @@ function renderGradeMeta() {
   allBtn.type = "button";
   allBtn.className = "seg-btn";
   allBtn.setAttribute("aria-pressed", String(gradeState.year === "__all__"));
-  allBtn.textContent = "All years";
+  allBtn.textContent = t("grades.allYears");
   allBtn.addEventListener("click", function () { gradeState.year = "__all__"; renderGradeMeta(); });
   seg.appendChild(allBtn);
   years.forEach(function (y) {
@@ -1539,10 +1877,10 @@ function renderGradeStats() {
   });
   var passRate = total ? Math.round((pass / total) * 1000) / 10 : 0;
   var chips = [
-    { label: years.length === 1 ? "Cohort" : "Cohort (all)", value: total, unit: "students" },
-    { label: "Pass rate", value: passRate, unit: "%" },
-    { label: "Failed", value: total - pass, unit: "students" },
-    { label: "Most common", value: modePool[0] || "—", unit: "band" }
+    { label: years.length === 1 ? t("grades.chipCohort") : t("grades.chipCohortAll"), value: total, unit: t("grades.unitStudents") },
+    { label: t("grades.chipPass"), value: passRate, unit: t("grades.unitPct") },
+    { label: t("grades.chipFail"), value: total - pass, unit: t("grades.unitStudents") },
+    { label: t("grades.chipMode"), value: modePool[0] || "—", unit: t("grades.unitBand") }
   ];
   var wrap = $("grade-stats");
   emptyNode(wrap);
@@ -1570,7 +1908,7 @@ function renderGradeChart() {
   if (!years.length || !bands.length) return;
 
   if (typeof window.echarts === "undefined") {
-    el.innerHTML = '<div class="chart-foot">Chart library failed to load — check your internet connection.</div>';
+    el.innerHTML = '<div class="chart-foot">' + t("grades.chartFail") + "</div>";
     return;
   }
 
@@ -1625,9 +1963,10 @@ function renderGradeChart() {
   }, true);
 
   var foot = $("grade-chart-foot");
+  var unitLabel = unit === "pct" ? t("grades.unitLabelPct") : t("grades.unitLabelCount");
   foot.textContent = years.length === 1
-    ? years[0].year + " — " + (unit === "pct" ? "percentage" : "count") + " per grade band. Hover a bar for exact numbers."
-    : "All past years compared — " + (unit === "pct" ? "percentage" : "count") + " per grade band. Hover a bar for exact numbers.";
+    ? fmt("grades.chartFootOne", { y: years[0].year, u: unitLabel })
+    : fmt("grades.chartFootAll", { u: unitLabel });
 }
 function renderGradeTable() {
   var years = selectedYears();
@@ -1638,13 +1977,13 @@ function renderGradeTable() {
   years.forEach(function (y) { html += "<th>" + escapeHtml(y.year) + "</th>"; });
   html += "</tr></thead><tbody>";
   bands.forEach(function (b) {
-    html += "<tr><td>" + escapeHtml(b) + (failBands.indexOf(b) !== -1 ? " (fail)" : "") + "</td>";
+    html += "<tr><td>" + escapeHtml(b) + (failBands.indexOf(b) !== -1 ? escapeHtml(t("grades.failTag")) : "") + "</td>";
     years.forEach(function (y) {
       html += "<td>" + gradeDisplayValue(y, b, failBands) + (gradeState.unit === "pct" ? "%" : "") + "</td>";
     });
     html += "</tr>";
   });
-  html += "<tr><td>Total</td>";
+  html += "<tr><td>" + t("grades.total") + "</td>";
   years.forEach(function (y) {
     var s = TL.gradeStats(y, failBands);
     html += "<td>" + (gradeState.unit === "pct" ? "100%" : s.total) + "</td>";
@@ -1668,7 +2007,7 @@ function tryUnlock(passcode) {
     writeUnlock(true);
     renderTabs();
     route();
-    toast("Private sections unlocked");
+    toast(t("toast.unlocked"));
     return true;
   }
   return false;
@@ -1678,12 +2017,14 @@ function tryUnlock(passcode) {
    Init (guarded so pure logic can run in Node tests)
    ============================================================ */
 function initApp() {
+  state.lang = initialLang();
   applyTheme(currentTheme());
+  applyI18n();
 
   var tabs = document.querySelectorAll(".tab");
-  tabs.forEach(function (t) {
-    t.addEventListener("click", function () {
-      window.location.hash = t.dataset.route;
+  tabs.forEach(function (tEl) {
+    tEl.addEventListener("click", function () {
+      window.location.hash = tEl.dataset.route;
     });
   });
 
@@ -1737,7 +2078,7 @@ function initApp() {
     if (tryUnlock(val)) {
       $("unlock-input").value = "";
     } else {
-      $("unlock-error").textContent = "That passcode is not recognised. Try again, or ask your instructor.";
+      $("unlock-error").textContent = t("unlock.error");
       var card = $("unlock-card");
       card.classList.remove("shake");
       void card.offsetWidth;
@@ -1750,20 +2091,21 @@ function initApp() {
     state.unlocked = false;
     renderTabs();
     route();
-    toast("Private sections locked");
+    toast(t("toast.locked"));
   });
 
   $("theme-btn").addEventListener("click", toggleTheme);
+  $("lang-btn").addEventListener("click", toggleLang);
 
   $("copy-link-btn").addEventListener("click", function () {
     var url = window.location.href;
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(url).then(
-        function () { toast("Link copied to clipboard"); },
-        function () { toast("Copy the address bar link to share"); }
+        function () { toast(t("toast.copied")); },
+        function () { toast(t("toast.copyHint")); }
       );
     } else {
-      toast("Copy the address bar link to share");
+      toast(t("toast.copyHint"));
     }
   });
 

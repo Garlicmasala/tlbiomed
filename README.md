@@ -20,6 +20,7 @@ static host (GitHub Pages, Netlify, Cloudflare Pages) and it works.
 - Notes & tutorials: live filter boxes — type to narrow note cards and tutorial groups.
 - Grade distribution: chart/table view toggle, plus counts/percent toggle for fair cross-year comparison.
 - Dark mode: footer toggle, remembered per device.
+- Multilingual: English and 繁體中文, auto-detected from the browser and switchable in the footer (remembered per device).
 - Toasts and a "Copy link" button in the footer for sharing the site.
 
 ## Project layout
@@ -42,6 +43,7 @@ Edit that one block and redeploy — no code changes needed.
 - **Mock quiz** — `SITE_CONFIG.quiz.questions`: `{ id, prompt, options[2–6], answerIndex, explanation }`. `answerIndex` counts from 0. `shuffle` reorders questions, `shuffleOptions` reorders answers within each question (correctness is tracked automatically). Set `quiz.sample` to `false` when you publish real questions.
 - **Grade distribution** — `SITE_CONFIG.grades.years`: one entry per past year, `{ year, cohort, distribution: { "A+": 8, "A": 21, ... } }`. Counts must sum to `cohort`. `failBands` lists the failing bands (default `["F"]`). Set `grades.sample` to `false` when you publish real figures.
 - **Passcode** — `SITE_CONFIG.passcode`. Empty string `""` opens the private sections to everyone.
+- **Language** — `SITE_CONFIG.language`: `{ default: "en", detect: true }`. `detect` auto-picks 中文 for Chinese browsers first; students can always switch from the footer. UI strings live in the `LANGS` dictionary in `index.html` — add a language by appending a dictionary with the same keys.
 
 ### Validate after every edit
 
@@ -77,9 +79,10 @@ attach it later.)
   browsers, but anyone who opens the page source can read the passcode.
   Fine for sharing materials with a class; don't put truly sensitive data
   behind it.
-- **Sample data** — the shipped quiz questions, grade figures, notes and
-  tutorial links are marked `sample: true` and show a banner. Replace them
-  and delete the flags.
+- **Sample data** — the shipped quiz questions (10), grade figures (3
+  years), notes (8 cards) and tutorial links (7 topics, 15 items) are
+  marked `sample: true` and show a banner. Replace them and delete the
+  flags.
 - Chart years: the colour ramp supports up to 5 years before it cycles;
   keep past years ≤ 5 per chart view (the "All years" view shows them all).
 
@@ -89,4 +92,5 @@ attach it later.)
   HTML/CSS/JS with no build step.
 - `tests/helpers/extract.js` loads the page's core script into a sandbox
   and exposes the pure logic (`evaluateQuestion`, `computeScore`,
-  `gradeStats`, `bandSort`) — the same functions the page runs.
+  `gradeStats`, `bandSort`, `shuffleArray`, `formatDuration`, `t`, `fmt`) —
+  the same functions the page runs.

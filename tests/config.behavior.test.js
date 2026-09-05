@@ -33,6 +33,12 @@ describe("course config", () => {
     assert.equal(typeof cfg.passcode, "string");
     assert.notEqual(cfg.passcode.trim(), "");
   });
+
+  it("declares a supported default language", () => {
+    assert.ok(cfg.language && cfg.language.default, "language config missing");
+    assert.ok(TL.LANGS[cfg.language.default], "unsupported default language: " + cfg.language.default);
+    if ("detect" in cfg.language) assert.equal(typeof cfg.language.detect, "boolean");
+  });
 });
 
 describe("mock quiz data", () => {
@@ -46,6 +52,10 @@ describe("mock quiz data", () => {
     cfg.quiz.questions.forEach((q) => {
       assert.ok(q.options.length >= 2 && q.options.length <= 6, "question " + q.id);
     });
+  });
+
+  it("ships a reasonable sample bank (at least 8 questions)", () => {
+    assert.ok(cfg.quiz.questions.length >= 8, "only " + cfg.quiz.questions.length + " questions");
   });
 
   it("points answerIndex at an existing option", () => {
