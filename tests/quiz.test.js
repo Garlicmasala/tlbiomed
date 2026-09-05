@@ -59,3 +59,20 @@ test("bandSort orders A+ > A > A- > B+ > B > B- > ... > F", () => {
 test("bandSort leaves unknown bands after the standard ones, sorted", () => {
   assert.deepEqual(TL.bandSort(["X", "A", "Y"]), ["A", "X", "Y"]);
 });
+
+test("shuffleArray returns a permutation without mutating the input", () => {
+  const input = [1, 2, 3, 4, 5];
+  const copy = input.slice();
+  const out = TL.shuffleArray(input);
+  assert.equal(out.length, input.length);
+  assert.deepEqual(out.slice().sort((a, b) => a - b), copy.sort((a, b) => a - b));
+  assert.deepEqual(input, copy);
+});
+
+test("formatDuration renders m:ss", () => {
+  assert.equal(TL.formatDuration(0), "0:00");
+  assert.equal(TL.formatDuration(45), "0:45");
+  assert.equal(TL.formatDuration(74), "1:14");
+  assert.equal(TL.formatDuration(3661), "61:01");
+  assert.equal(TL.formatDuration(-5), "0:00");
+});

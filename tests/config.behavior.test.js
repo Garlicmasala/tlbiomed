@@ -24,6 +24,11 @@ describe("course config", () => {
     assert.equal(typeof cfg.grades.sample, "boolean");
   });
 
+  it("keeps quiz shuffle flags as booleans when present", () => {
+    if ("shuffle" in cfg.quiz) assert.equal(typeof cfg.quiz.shuffle, "boolean");
+    if ("shuffleOptions" in cfg.quiz) assert.equal(typeof cfg.quiz.shuffleOptions, "boolean");
+  });
+
   it("has a passcode configured (private sections gated)", () => {
     assert.equal(typeof cfg.passcode, "string");
     assert.notEqual(cfg.passcode.trim(), "");

@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230A4F44'/%3E%3Cpath d='M8 24 C 14 18, 18 14, 24 8' stroke='%237FBFAF' stroke-width='2.5' fill='none' stroke-linecap='round'/%3E%3Cpath d='M8 8 C 14 14, 18 18, 24 24' stroke='%23DFF0EB' stroke-width='2.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
 <meta name="description" content="T&L@Biomed — course hub with notes, an interactive mock quiz, past grade distributions and structured tutorials.">
 <title>T&amp;L@Biomed — course hub</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230A4F44'/%3E%3Cpath d='M8 24 C 14 18, 18 14, 24 8' stroke='%237FBFAF' stroke-width='2.5' fill='none' stroke-linecap='round'/%3E%3Cpath d='M8 8 C 14 14, 18 18, 24 24' stroke='%23DFF0EB' stroke-width='2.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Spectral:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
 /* ============================================================
@@ -34,6 +34,37 @@
   --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
 }
 
+/* Dark theme */
+[data-theme="dark"] {
+  --bg: #0F1C1F;
+  --surface: #16262A;
+  --ink: #E2EFEA;
+  --ink-2: #A8BCB4;
+  --ink-3: #78928A;
+  --line: #22383C;
+  --primary: #46BFA4;
+  --primary-strong: #7BD6C1;
+  --primary-soft: #12382F;
+  --accent: #E8A23B;
+  --accent-soft: #382E14;
+  --ok: #74D19B;
+  --ok-soft: #123324;
+  --bad: #E17A70;
+  --bad-soft: #3A1D1A;
+  --shadow: 0 1px 2px rgba(0,0,0,.35), 0 10px 26px rgba(0,0,0,.4);
+}
+[data-theme="dark"] .masthead { background: #0A3B33; }
+[data-theme="dark"] .tab[aria-selected="true"],
+[data-theme="dark"] .tab[aria-selected="true"] .acc { color: #0B2A24; }
+[data-theme="dark"] .btn { color: #0B2A24; }
+[data-theme="dark"] .btn.secondary { background: var(--surface); color: var(--primary); }
+[data-theme="dark"] .seg-btn[aria-pressed="true"] { color: #0B2A24; }
+[data-theme="dark"] .opt.is-correct .opt-key,
+[data-theme="dark"] .opt.is-wrong .opt-key { color: #0B2A24; }
+[data-theme="dark"] .fb-ok { color: #BFE0CB; }
+[data-theme="dark"] .fb-bad { color: #EBC6C2; }
+[data-theme="dark"] .banner { color: #EBD9A6; }
+
 /* ============================================================
    Base
    ============================================================ */
@@ -46,6 +77,7 @@ body {
   font-size: 16px;
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
+  transition: background .2s ease, color .2s ease;
 }
 .hidden { display: none !important; }
 a { color: var(--primary); text-decoration: none; }
@@ -191,6 +223,32 @@ main { max-width: 980px; margin: 0 auto; padding: 26px 16px 60px; }
 /* ============================================================
    Notes
    ============================================================ */
+.filter-row { position: relative; margin-bottom: 16px; }
+.filter-row svg {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  color: var(--ink-3);
+  pointer-events: none;
+}
+.filter-row input {
+  width: 100%;
+  min-height: 44px;
+  padding: 0 14px 0 40px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 15px;
+}
+.filter-row input:focus { border-color: var(--primary); outline: none; }
+.filter-row input::placeholder { color: var(--ink-3); }
+.no-match { text-align: center; color: var(--ink-2); font-size: 14px; padding: 26px 12px; }
+
 .notes-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -276,6 +334,7 @@ main { max-width: 980px; margin: 0 auto; padding: 26px 16px 60px; }
    ============================================================ */
 .quiz-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
 .quiz-meta .tag { background: var(--primary-soft); }
+.quiz-stats { font-family: var(--font-mono); font-size: 12.5px; color: var(--ink-3); margin-top: 10px; }
 .btn {
   display: inline-flex;
   align-items: center;
@@ -298,6 +357,10 @@ main { max-width: 980px; margin: 0 auto; padding: 26px 16px 60px; }
 .btn.secondary:hover { background: var(--primary-soft); border-color: var(--primary); }
 
 .quiz-shell { padding: 22px; }
+.quiz-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+.timer { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 13px; color: var(--ink-2); }
+.timer svg { width: 14px; height: 14px; }
+.kbd-hint { font-family: var(--font-mono); font-size: 11.5px; color: var(--ink-3); }
 .qbar { height: 6px; background: var(--line); border-radius: 999px; overflow: hidden; margin-bottom: 18px; }
 .qbar-fill { height: 100%; width: 0; background: var(--accent); border-radius: 999px; transition: width .25s ease; }
 .qnum { font-family: var(--font-mono); font-size: 12px; letter-spacing: .08em; color: var(--ink-3); margin-bottom: 8px; }
@@ -338,8 +401,14 @@ main { max-width: 980px; margin: 0 auto; padding: 26px 16px 60px; }
 }
 .opt.is-correct { border-color: var(--ok); background: var(--ok-soft); }
 .opt.is-correct .opt-key { background: var(--ok); color: #FFFFFF; }
-.opt.is-wrong { border-color: var(--bad); background: var(--bad-soft); }
+.opt.is-wrong { border-color: var(--bad); background: var(--bad-soft); animation: shake .28s ease; }
 .opt.is-wrong .opt-key { background: var(--bad); color: #FFFFFF; }
+.opt.is-correct .opt-key { animation: opt-pop .3s ease; }
+@keyframes opt-pop {
+  0% { transform: scale(.85); }
+  60% { transform: scale(1.12); }
+  100% { transform: scale(1); }
+}
 .feedback { margin-top: 14px; padding: 12px 14px; border-radius: 12px; font-size: 14.5px; }
 .feedback strong { display: block; margin-bottom: 3px; }
 .fb-ok { background: var(--ok-soft); color: #1E5B39; border: 1px solid #BFE0CB; }
@@ -347,9 +416,24 @@ main { max-width: 980px; margin: 0 auto; padding: 26px 16px 60px; }
 .quiz-next { margin-top: 16px; display: flex; justify-content: flex-end; }
 
 .results-head { text-align: center; padding: 30px 22px 8px; }
-.results-score { font-family: var(--font-display); font-size: 44px; font-weight: 700; color: var(--primary); }
-.results-percent { font-family: var(--font-mono); font-size: 16px; color: var(--ink-2); }
-.results-verdict { color: var(--ink-2); margin-top: 6px; }
+.ring-wrap { display: flex; align-items: center; justify-content: center; gap: 18px; text-align: left; }
+.ring { width: 116px; height: 116px; flex: 0 0 auto; }
+.ring .bg { fill: none; stroke: var(--line); stroke-width: 10; }
+.ring .fg {
+  fill: none;
+  stroke: var(--primary);
+  stroke-width: 10;
+  stroke-linecap: round;
+  stroke-dasharray: 301.6;
+  stroke-dashoffset: 301.6;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+  transition: stroke-dashoffset .6s ease;
+}
+.results-score { font-family: var(--font-display); font-size: 40px; font-weight: 700; color: var(--primary); line-height: 1.1; }
+.results-percent { font-family: var(--font-mono); font-size: 15px; color: var(--ink-2); }
+.results-verdict { color: var(--ink-2); margin-top: 8px; }
+.results-time { font-family: var(--font-mono); font-size: 12.5px; color: var(--ink-3); margin-top: 4px; }
 .results-actions { display: flex; gap: 10px; justify-content: center; padding: 18px 0 8px; }
 .review-list { list-style: none; margin: 8px 0 0; padding: 0 22px 24px; }
 .review-item { border-top: 1px solid var(--line); padding: 14px 0; }
@@ -386,6 +470,12 @@ main { max-width: 980px; margin: 0 auto; padding: 26px 16px 60px; }
 .chart-wrap { padding: 18px 14px 10px; }
 #grade-chart { width: 100%; min-height: 340px; }
 .chart-foot { font-size: 12.5px; color: var(--ink-3); padding: 0 18px 16px; }
+.table-wrap { padding: 10px 6px 12px; overflow-x: auto; }
+.grade-table { width: 100%; border-collapse: collapse; font-size: 13.5px; min-width: 460px; }
+.grade-table th, .grade-table td { padding: 9px 12px; text-align: right; border-bottom: 1px solid var(--line); white-space: nowrap; }
+.grade-table th:first-child, .grade-table td:first-child { text-align: left; }
+.grade-table thead th { font-family: var(--font-mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); }
+.grade-table tbody tr:last-child td { border-bottom: none; font-weight: 600; }
 
 /* ============================================================
    Unlock screen
@@ -436,6 +526,7 @@ footer {
   color: var(--ink-3);
   font-size: 13px;
 }
+.footer-actions { display: flex; flex-wrap: wrap; gap: 8px; }
 .link-btn {
   display: inline-flex;
   align-items: center;
@@ -454,6 +545,36 @@ footer {
 .link-btn svg { width: 14px; height: 14px; }
 
 /* ============================================================
+   Toasts
+   ============================================================ */
+.toast-wrap {
+  position: fixed;
+  left: 50%;
+  bottom: 22px;
+  transform: translateX(-50%);
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  pointer-events: none;
+}
+.toast {
+  background: var(--ink);
+  color: var(--bg);
+  font-size: 13.5px;
+  font-weight: 500;
+  padding: 9px 16px;
+  border-radius: 999px;
+  box-shadow: 0 6px 20px rgba(0,0,0,.18);
+  animation: toast-in .22s ease;
+  max-width: 86vw;
+  text-align: center;
+}
+.toast.out { opacity: 0; transform: translateY(5px); transition: opacity .25s ease, transform .25s ease; }
+@keyframes toast-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+/* ============================================================
    Responsive + motion
    ============================================================ */
 @media (max-width: 768px) {
@@ -461,8 +582,10 @@ footer {
   .dna { display: none; }
   .tabbar { padding: 10px 12px 0; }
   main { padding: 20px 12px 48px; }
-  .results-score { font-size: 36px; }
+  .results-score { font-size: 34px; }
+  .ring { width: 100px; height: 100px; }
   #grade-chart { min-height: 300px; }
+  .kbd-hint { display: none; }
 }
 @media (max-width: 420px) {
   .tab { flex: 1 1 44%; justify-content: center; }
@@ -539,10 +662,17 @@ footer {
       <h2>Notes</h2>
       <p>Curated links to lecture notes, readings and references.</p>
     </div>
+
     <div class="banner hidden" id="notes-sample-banner">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 8h.01"></path><path d="M11 12h1v4h1"></path></svg>
       <span><strong>Sample links.</strong> Replace the <code>notes</code> entries in <code>SITE_CONFIG</code> with your own, then delete the <code>sample: true</code> flags.</span>
     </div>
+
+    <div class="filter-row hidden" id="notes-filter-row">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg>
+      <input type="search" id="notes-filter" placeholder="Filter notes by title, tag or description" aria-label="Filter notes">
+    </div>
+
     <div class="notes-grid" id="notes-list"></div>
   </section>
 
@@ -565,12 +695,20 @@ footer {
       <div class="qprompt" id="quiz-title"></div>
       <p id="quiz-intro-text"></p>
       <div class="quiz-meta" id="quiz-meta"></div>
+      <div class="quiz-stats" id="quiz-stats"></div>
       <div style="margin-top:18px">
         <button class="btn" id="quiz-start" type="button">Start the quiz</button>
       </div>
     </div>
 
     <div id="quiz-run" class="card quiz-shell hidden">
+      <div class="quiz-top">
+        <span class="timer">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+          <span id="quiz-timer">0:00</span>
+        </span>
+        <span class="kbd-hint">Keys 1&ndash;4 to answer &middot; Enter to continue</span>
+      </div>
       <div class="qbar"><div class="qbar-fill" id="quiz-progress"></div></div>
       <div class="qnum" id="quiz-qnum"></div>
       <div class="qprompt" id="quiz-prompt"></div>
@@ -583,9 +721,18 @@ footer {
 
     <div id="quiz-results" class="card hidden">
       <div class="results-head">
-        <div class="results-score" id="res-score"></div>
-        <div class="results-percent" id="res-percent"></div>
+        <div class="ring-wrap">
+          <svg class="ring" viewBox="0 0 120 120" aria-hidden="true">
+            <circle class="bg" cx="60" cy="60" r="48"></circle>
+            <circle class="fg" id="res-ring" cx="60" cy="60" r="48"></circle>
+          </svg>
+          <div>
+            <div class="results-score" id="res-score"></div>
+            <div class="results-percent" id="res-percent"></div>
+          </div>
+        </div>
         <div class="results-verdict" id="res-verdict"></div>
+        <div class="results-time" id="res-time"></div>
         <div class="results-actions">
           <button class="btn" id="res-retry" type="button">Try again</button>
         </div>
@@ -617,10 +764,20 @@ footer {
 
     <div id="grade-content" class="hidden">
       <div class="seg" id="grade-seg" role="group" aria-label="Select academic year"></div>
+      <div class="seg" id="grade-mode-seg" role="group" aria-label="View options">
+        <button class="seg-btn" data-mode="chart" aria-pressed="true" type="button">Chart</button>
+        <button class="seg-btn" data-mode="table" aria-pressed="false" type="button">Table</button>
+        <span style="flex:1 1 100%;"></span>
+        <button class="seg-btn" data-unit="counts" aria-pressed="true" type="button">Counts</button>
+        <button class="seg-btn" data-unit="pct" aria-pressed="false" type="button">Percent</button>
+      </div>
       <div class="stat-chips" id="grade-stats"></div>
-      <div class="card chart-wrap">
+      <div class="card chart-wrap" id="grade-chart-card">
         <div id="grade-chart" role="img" aria-label="Grade distribution bar chart"></div>
         <div class="chart-foot" id="grade-chart-foot"></div>
+      </div>
+      <div class="card table-wrap hidden" id="grade-table-card">
+        <table class="grade-table" id="grade-table"></table>
       </div>
     </div>
   </section>
@@ -634,10 +791,17 @@ footer {
       <h2>Structured Tutorials</h2>
       <p>Organised by topic — follow the sequence, or jump to what you need.</p>
     </div>
+
     <div class="banner hidden" id="tutorials-sample-banner">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 8h.01"></path><path d="M11 12h1v4h1"></path></svg>
       <span><strong>Sample links.</strong> Replace the <code>tutorials</code> entries in <code>SITE_CONFIG</code> with your own, then delete the <code>sample: true</code> flags.</span>
     </div>
+
+    <div class="filter-row hidden" id="tutorials-filter-row">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg>
+      <input type="search" id="tutorials-filter" placeholder="Filter tutorials by topic or title" aria-label="Filter tutorials">
+    </div>
+
     <div id="tutorial-groups"></div>
   </section>
 
@@ -662,12 +826,24 @@ footer {
 <footer>
   <div class="footer-inner">
     <span>T&amp;L@Biomed &middot; a free course hub &middot; edit <code>SITE_CONFIG</code> to publish updates</span>
-    <button class="link-btn hidden" id="lock-btn" type="button">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg>
-      <span id="lock-btn-label">Lock private sections</span>
-    </button>
+    <div class="footer-actions">
+      <button class="link-btn" id="copy-link-btn" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg>
+        <span>Copy link</span>
+      </button>
+      <button class="link-btn" id="theme-btn" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"></circle><path d="M12 2.5v2"></path><path d="M12 19.5v2"></path><path d="M2.5 12h2"></path><path d="M19.5 12h2"></path><path d="M5 5l1.4 1.4"></path><path d="M17.6 17.6L19 19"></path><path d="M19 5l-1.4 1.4"></path><path d="M6.4 17.6L5 19"></path></svg>
+        <span id="theme-btn-label">Dark mode</span>
+      </button>
+      <button class="link-btn hidden" id="lock-btn" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg>
+        <span id="lock-btn-label">Lock private sections</span>
+      </button>
+    </div>
   </div>
 </footer>
+
+<div class="toast-wrap" id="toast-wrap" aria-live="polite"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.6.0/dist/echarts.min.js" integrity="sha384-pPi0zxBAoDu6+JXW/C68UZLvBUUtU+7zonhif43rqj7pxsGyqyqzcian2Rj37Rss" crossorigin="anonymous"></script>
 <script>
@@ -720,12 +896,15 @@ var SITE_CONFIG = {
   ],
 
   /* Mock quiz: multiple choice. answerIndex counts from 0.
+     shuffle reorders questions; shuffleOptions reorders answers
+     within each question (correctness is tracked automatically).
      Set sample to false once you replace the questions. */
   quiz: {
     sample: true,
     title: "Mock Quiz — sample set",
     intro: "Five starter questions covering cell biology, biochemistry and physiology. Answer each question, get instant feedback, and review your results at the end.",
     shuffle: false,
+    shuffleOptions: true,
     questions: [
       {
         id: "q1",
@@ -799,6 +978,24 @@ TL.getConfig = function () {
   return JSON.parse(JSON.stringify(SITE_CONFIG));
 };
 
+/* Fisher-Yates shuffle — returns a new array, input untouched. */
+TL.shuffleArray = function (arr) {
+  var a = arr.slice();
+  for (var i = a.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var t = a[i]; a[i] = a[j]; a[j] = t;
+  }
+  return a;
+};
+
+/* Seconds -> "m:ss". */
+TL.formatDuration = function (sec) {
+  sec = Math.max(0, Math.floor(sec));
+  var m = Math.floor(sec / 60);
+  var s = sec % 60;
+  return m + ":" + (s < 10 ? "0" : "") + s;
+};
+
 /* Rank a band label like "A+", "B-", "F" on the grade scale
    (A highest, F lowest; "+" above plain, "-" below). Unknown
    labels return null and sort after the standard bands. */
@@ -868,13 +1065,17 @@ function emptyNode(el) { while (el.firstChild) el.removeChild(el.firstChild); }
 var state = {
   route: "quiz",
   unlocked: false,
-  quiz: { idx: 0, answers: {}, questions: [], started: false }
+  quiz: { idx: 0, answers: {}, questions: [], started: false, shuffledOptions: [], timerStart: 0, timerId: null },
+  notesFilter: "",
+  tutorialsFilter: ""
 };
-var gradeState = { year: "__all__", chart: null, chartReady: false };
+var gradeState = { year: "__all__", mode: "chart", unit: "counts", chart: null, chartReady: false, metaRendered: false };
 
 var ROUTES = ["notes", "quiz", "grades", "tutorials"];
 var GATED = ["notes", "grades", "tutorials"];
 var STORAGE_KEY = "tlb_unlocked";
+var THEME_KEY = "tlb_theme";
+var HISTORY_KEY = "tlb_quiz_history";
 
 function readUnlock() {
   try { return window.localStorage.getItem(STORAGE_KEY) === "1"; }
@@ -885,6 +1086,50 @@ function writeUnlock(v) {
     if (v) window.localStorage.setItem(STORAGE_KEY, "1");
     else window.localStorage.removeItem(STORAGE_KEY);
   } catch (e) { /* storage unavailable — stay in-memory */ }
+}
+function readJson(key, fallback) {
+  try {
+    var v = window.localStorage.getItem(key);
+    return v ? JSON.parse(v) : fallback;
+  } catch (e) { return fallback; }
+}
+function writeJson(key, val) {
+  try { window.localStorage.setItem(key, JSON.stringify(val)); } catch (e) { /* ignore */ }
+}
+function currentTheme() {
+  try { return window.localStorage.getItem(THEME_KEY) === "dark" ? "dark" : "light"; }
+  catch (e) { return "light"; }
+}
+
+/* ============================================================
+   Toasts
+   ============================================================ */
+function toast(msg) {
+  var wrap = $("toast-wrap");
+  if (!wrap) return;
+  var el = document.createElement("div");
+  el.className = "toast";
+  el.textContent = msg;
+  wrap.appendChild(el);
+  setTimeout(function () {
+    el.classList.add("out");
+    setTimeout(function () { el.remove(); }, 260);
+  }, 2200);
+}
+
+/* ============================================================
+   Theme
+   ============================================================ */
+function applyTheme(t) {
+  document.documentElement.setAttribute("data-theme", t);
+  $("theme-btn-label").textContent = t === "dark" ? "Light mode" : "Dark mode";
+  if (gradeState.metaRendered && gradeState.mode === "chart") renderGradeChart();
+}
+function toggleTheme() {
+  var next = currentTheme() === "dark" ? "light" : "dark";
+  try { window.localStorage.setItem(THEME_KEY, next); } catch (e) { /* ignore */ }
+  applyTheme(next);
+  toast(next === "dark" ? "Dark mode on" : "Light mode on");
 }
 
 /* ============================================================
@@ -930,11 +1175,19 @@ function renderTabs() {
 /* ============================================================
    Notes
    ============================================================ */
+function noteMatches(n) {
+  if (!state.notesFilter) return true;
+  var q = state.notesFilter.toLowerCase();
+  var hay = (n.title + " " + (n.desc || "") + " " + (n.tags || []).join(" ")).toLowerCase();
+  return hay.indexOf(q) !== -1;
+}
+
 function renderNotes() {
   var list = $("notes-list");
   emptyNode(list);
   var notes = SITE_CONFIG.notes || [];
   show("notes-sample-banner", notes.some(function (n) { return !!n.sample; }));
+  show("notes-filter-row", notes.length > 0);
 
   if (!notes.length) {
     list.innerHTML =
@@ -945,7 +1198,14 @@ function renderNotes() {
     return;
   }
 
-  notes.forEach(function (n) {
+  var visible = notes.filter(noteMatches);
+  if (!visible.length) {
+    list.innerHTML = '<p class="no-match" style="grid-column:1/-1">No notes match "' +
+      escapeHtml(state.notesFilter) + '".</p>';
+    return;
+  }
+
+  visible.forEach(function (n) {
     var a = document.createElement("a");
     a.className = "note-card";
     a.href = n.url || "#";
@@ -965,6 +1225,12 @@ function renderNotes() {
 /* ============================================================
    Tutorials
    ============================================================ */
+function tutItemMatches(item) {
+  if (!state.tutorialsFilter) return true;
+  var q = state.tutorialsFilter.toLowerCase();
+  return (item.title + " " + (item.desc || "")).toLowerCase().indexOf(q) !== -1;
+}
+
 function renderTutorials() {
   var wrap = $("tutorial-groups");
   emptyNode(wrap);
@@ -972,6 +1238,7 @@ function renderTutorials() {
   show("tutorials-sample-banner", groups.some(function (g) {
     return (g.items || []).some(function (i) { return !!i.sample; });
   }));
+  show("tutorials-filter-row", groups.length > 0);
 
   if (!groups.length) {
     wrap.innerHTML =
@@ -981,7 +1248,19 @@ function renderTutorials() {
     return;
   }
 
+  var filtered = [];
   groups.forEach(function (g) {
+    var items = (g.items || []).filter(tutItemMatches);
+    if (items.length) filtered.push({ topic: g.topic, note: g.note, items: items });
+  });
+
+  if (!filtered.length) {
+    wrap.innerHTML = '<p class="no-match">No tutorials match "' +
+      escapeHtml(state.tutorialsFilter) + '".</p>';
+    return;
+  }
+
+  filtered.forEach(function (g) {
     var section = document.createElement("section");
     section.className = "tutorial-group";
     section.innerHTML =
@@ -989,7 +1268,7 @@ function renderTutorials() {
       (g.note ? ' <span class="tg-note">' + escapeHtml(g.note) + "</span>" : "") + "</h3>";
     var ul = document.createElement("ul");
     ul.className = "tut-list";
-    (g.items || []).forEach(function (item) {
+    g.items.forEach(function (item) {
       var li = document.createElement("li");
       var a = document.createElement("a");
       a.className = "tut-row";
@@ -1014,6 +1293,12 @@ function renderTutorials() {
 function ensureQuizIntro() {
   if (!state.quiz.started) renderQuizIntro();
 }
+function loadHistory() {
+  var h = readJson(HISTORY_KEY, { attempts: 0, best: 0 });
+  if (typeof h.attempts !== "number") h.attempts = 0;
+  if (typeof h.best !== "number") h.best = 0;
+  return h;
+}
 function renderQuizIntro() {
   var cfg = SITE_CONFIG.quiz;
   show("quiz-sample-banner", !!cfg.sample);
@@ -1024,27 +1309,42 @@ function renderQuizIntro() {
   $("quiz-intro-text").textContent = cfg.intro || "";
   var meta = $("quiz-meta");
   meta.innerHTML = "";
-  [cfg.questions.length + " questions", cfg.shuffle ? "shuffled" : "in order"].forEach(function (m) {
+  [cfg.questions.length + " questions", cfg.shuffle ? "shuffled" : "in order", cfg.shuffleOptions ? "answers shuffled" : ""].forEach(function (m) {
+    if (!m) return;
     var s = document.createElement("span");
     s.className = "tag";
     s.textContent = m;
     meta.appendChild(s);
   });
+  var h = loadHistory();
+  $("quiz-stats").textContent = h.attempts
+    ? "Best " + h.best + "% · " + h.attempts + (h.attempts === 1 ? " attempt" : " attempts") + " on this device"
+    : "No attempts yet — your results stay on this device.";
 }
 function startQuiz() {
   var cfg = SITE_CONFIG.quiz;
   var qs = cfg.questions.slice();
-  if (cfg.shuffle) {
-    for (var i = qs.length - 1; i > 0; i--) {
-      var j = Math.floor(Math.random() * (i + 1));
-      var t = qs[i]; qs[i] = qs[j]; qs[j] = t;
-    }
-  }
-  state.quiz = { idx: 0, answers: {}, questions: qs, started: true };
+  if (cfg.shuffle) qs = TL.shuffleArray(qs);
+  state.quiz = { idx: 0, answers: {}, questions: qs, started: true, shuffledOptions: [], timerStart: 0, timerId: null };
   show("quiz-intro", false);
   show("quiz-results", false);
   show("quiz-run", true);
+  startTimer();
   renderQuestion();
+}
+function startTimer() {
+  stopTimer();
+  state.quiz.timerStart = Date.now();
+  $("quiz-timer").textContent = "0:00";
+  state.quiz.timerId = setInterval(function () {
+    $("quiz-timer").textContent = TL.formatDuration((Date.now() - state.quiz.timerStart) / 1000);
+  }, 1000);
+}
+function stopTimer() {
+  if (state.quiz.timerId) { clearInterval(state.quiz.timerId); state.quiz.timerId = null; }
+}
+function elapsedSeconds() {
+  return state.quiz.timerStart ? Math.floor((Date.now() - state.quiz.timerStart) / 1000) : 0;
 }
 function renderQuestion() {
   var q = state.quiz.questions[state.quiz.idx];
@@ -1053,9 +1353,13 @@ function renderQuestion() {
   $("quiz-prompt").textContent = q.prompt;
   $("quiz-progress").style.width = (state.quiz.idx / total * 100) + "%";
 
-  var opts = $("quiz-options");
-  emptyNode(opts);
-  q.options.forEach(function (opt, i) {
+  var opts = q.options.slice();
+  if (SITE_CONFIG.quiz.shuffleOptions) opts = TL.shuffleArray(opts);
+  state.quiz.shuffledOptions = opts;
+
+  var optsBox = $("quiz-options");
+  emptyNode(optsBox);
+  opts.forEach(function (opt, i) {
     var b = document.createElement("button");
     b.type = "button";
     b.className = "opt";
@@ -1068,7 +1372,7 @@ function renderQuestion() {
     b.appendChild(key);
     b.appendChild(txt);
     b.addEventListener("click", function () { choose(i); });
-    opts.appendChild(b);
+    optsBox.appendChild(b);
   });
 
   $("quiz-feedback").className = "feedback hidden";
@@ -1077,17 +1381,20 @@ function renderQuestion() {
 }
 function choose(i) {
   var q = state.quiz.questions[state.quiz.idx];
-  state.quiz.answers[q.id] = i;
+  var shuffled = state.quiz.shuffledOptions;
+  var chosenOriginal = q.options.indexOf(shuffled[i]);
+  state.quiz.answers[q.id] = chosenOriginal;
+  var correctShuffled = shuffled.indexOf(q.options[q.answerIndex]);
 
   var buttons = $("quiz-options").querySelectorAll(".opt");
   buttons.forEach(function (b) {
     var idx = Number(b.dataset.i);
     b.disabled = true;
-    if (idx === q.answerIndex) b.classList.add("is-correct");
+    if (idx === correctShuffled) b.classList.add("is-correct");
     else if (idx === i) b.classList.add("is-wrong");
   });
 
-  var ok = i === q.answerIndex;
+  var ok = chosenOriginal === q.answerIndex;
   var fb = $("quiz-feedback");
   fb.className = "feedback " + (ok ? "fb-ok" : "fb-bad");
   fb.innerHTML = "<strong>" + (ok ? "Correct" : "Not quite") + "</strong>" +
@@ -1105,12 +1412,29 @@ function nextQuestion() {
 function renderResults() {
   var qs = state.quiz.questions;
   var res = TL.computeScore(qs, state.quiz.answers);
+  stopTimer();
   show("quiz-run", false);
   show("quiz-results", true);
 
   $("res-score").textContent = res.correct + " / " + res.total;
   $("res-percent").textContent = res.percent + "%";
   $("res-verdict").textContent = verdictFor(res.percent);
+  $("res-time").textContent = "Finished in " + TL.formatDuration(elapsedSeconds());
+
+  var C = 2 * Math.PI * 48;
+  var ringEl = $("res-ring");
+  ringEl.style.strokeDasharray = C.toFixed(1);
+  var target = C * (1 - res.percent / 100);
+  if (window.requestAnimationFrame) {
+    window.requestAnimationFrame(function () { ringEl.style.strokeDashoffset = target.toFixed(1); });
+  } else {
+    ringEl.style.strokeDashoffset = target.toFixed(1);
+  }
+
+  var h = loadHistory();
+  h.attempts += 1;
+  if (res.percent > h.best) h.best = res.percent;
+  writeJson(HISTORY_KEY, h);
 
   var list = $("res-review");
   emptyNode(list);
@@ -1145,6 +1469,20 @@ function allBands() {
   });
   return TL.bandSort(Object.keys(set));
 }
+function chartThemeColors() {
+  var dark = currentTheme() === "dark";
+  return dark
+    ? { ramp: ["#2F8877", "#3E9C89", "#5FA894", "#7FBFAF", "#9CC9BC"], axis: "#22383C", split: "#22383C", label: "#A8BCB4" }
+    : { ramp: ["#9CC9BC", "#5FA894", "#2F8877", "#0E6B5C", "#0A4F44"], axis: "#DCE6E1", split: "#E7EEEA", label: "#50646A" };
+}
+function setModeButtons() {
+  var btns = document.querySelectorAll("#grade-mode-seg .seg-btn");
+  btns.forEach(function (b) {
+    var on = (b.dataset.mode && b.dataset.mode === gradeState.mode) ||
+             (b.dataset.unit && b.dataset.unit === gradeState.unit);
+    b.setAttribute("aria-pressed", String(!!on));
+  });
+}
 function renderGradeMeta() {
   show("grade-sample-banner", !!SITE_CONFIG.grades.sample);
   var years = SITE_CONFIG.grades.years || [];
@@ -1172,8 +1510,17 @@ function renderGradeMeta() {
     seg.appendChild(b);
   });
 
+  setModeButtons();
   renderGradeStats();
-  renderGradeChart();
+  if (gradeState.mode === "chart") {
+    show("grade-chart-card", true);
+    show("grade-table-card", false);
+    renderGradeChart();
+  } else {
+    show("grade-chart-card", false);
+    show("grade-table-card", true);
+    renderGradeTable();
+  }
 }
 function selectedYears() {
   var years = SITE_CONFIG.grades.years || [];
@@ -1207,10 +1554,19 @@ function renderGradeStats() {
     wrap.appendChild(d);
   });
 }
+function gradeDisplayValue(y, band, failBands) {
+  var n = y.distribution[band] || 0;
+  if (gradeState.unit === "pct") {
+    var total = TL.gradeStats(y, failBands).total;
+    return total ? Math.round((n / total) * 1000) / 10 : 0;
+  }
+  return n;
+}
 function renderGradeChart() {
   var el = $("grade-chart");
   var years = selectedYears();
   var bands = allBands();
+  var failBands = SITE_CONFIG.grades.failBands || [];
   if (!years.length || !bands.length) return;
 
   if (typeof window.echarts === "undefined") {
@@ -1224,46 +1580,77 @@ function renderGradeChart() {
     gradeState.chartReady = true;
   }
 
-  var ramp = ["#9CC9BC", "#5FA894", "#2F8877", "#0E6B5C", "#0A4F44"];
+  var colors = chartThemeColors();
+  var unit = gradeState.unit;
   var series = years.map(function (y, i) {
     return {
       name: y.year,
       type: "bar",
       barMaxWidth: 26,
-      data: bands.map(function (b) { return (y.distribution[b] || 0); }),
-      itemStyle: { color: ramp[i % ramp.length] },
+      data: bands.map(function (b) { return gradeDisplayValue(y, b, failBands); }),
+      itemStyle: { color: colors.ramp[i % colors.ramp.length] },
       label: years.length === 1
-        ? { show: true, position: "top", fontFamily: "IBM Plex Mono, monospace", fontSize: 10, color: "#50646A" }
+        ? { show: true, position: "top", fontFamily: "IBM Plex Mono, monospace", fontSize: 10, color: colors.label,
+            formatter: function (p) { return p.value + (unit === "pct" ? "%" : ""); } }
         : { show: false }
     };
   });
 
   gradeState.chart.setOption({
-    color: ramp,
-    tooltip: { trigger: "axis", axisPointer: { type: "shadow" }, confine: true },
-    legend: { type: "scroll", bottom: 0, icon: "roundRect", textStyle: { color: "#50646A", fontFamily: "IBM Plex Sans, sans-serif", fontSize: 12 } },
+    color: colors.ramp,
+    tooltip: {
+      trigger: "axis",
+      axisPointer: { type: "shadow" },
+      confine: true,
+      valueFormatter: function (v) { return v + (unit === "pct" ? "%" : ""); }
+    },
+    legend: { type: "scroll", bottom: 0, icon: "roundRect", textStyle: { color: colors.label, fontFamily: "IBM Plex Sans, sans-serif", fontSize: 12 } },
     grid: { left: "4%", right: "4%", top: 18, bottom: series.length > 1 ? 48 : 20, containLabel: true },
     xAxis: {
       type: "category",
       data: bands,
       boundaryGap: true,
-      axisLine: { lineStyle: { color: "#DCE6E1" } },
+      axisLine: { lineStyle: { color: colors.axis } },
       axisTick: { show: false },
-      axisLabel: { color: "#50646A", fontFamily: "IBM Plex Mono, monospace", fontSize: 11, interval: "auto" }
+      axisLabel: { color: colors.label, fontFamily: "IBM Plex Mono, monospace", fontSize: 11, interval: "auto" }
     },
     yAxis: {
       type: "value",
       minInterval: 1,
-      axisLabel: { color: "#50646A", fontFamily: "IBM Plex Mono, monospace", fontSize: 11 },
-      splitLine: { lineStyle: { color: "#E7EEEA" } }
+      axisLabel: { color: colors.label, fontFamily: "IBM Plex Mono, monospace", fontSize: 11,
+        formatter: unit === "pct" ? "{value}%" : undefined },
+      splitLine: { lineStyle: { color: colors.split } }
     },
     series: series
   }, true);
 
   var foot = $("grade-chart-foot");
   foot.textContent = years.length === 1
-    ? years[0].year + " — counts per grade band. Hover a bar for exact numbers."
-    : "All past years compared — counts per grade band. Hover a bar for exact numbers.";
+    ? years[0].year + " — " + (unit === "pct" ? "percentage" : "count") + " per grade band. Hover a bar for exact numbers."
+    : "All past years compared — " + (unit === "pct" ? "percentage" : "count") + " per grade band. Hover a bar for exact numbers.";
+}
+function renderGradeTable() {
+  var years = selectedYears();
+  var bands = allBands();
+  var failBands = SITE_CONFIG.grades.failBands || [];
+  var table = $("grade-table");
+  var html = "<thead><tr><th>Band</th>";
+  years.forEach(function (y) { html += "<th>" + escapeHtml(y.year) + "</th>"; });
+  html += "</tr></thead><tbody>";
+  bands.forEach(function (b) {
+    html += "<tr><td>" + escapeHtml(b) + (failBands.indexOf(b) !== -1 ? " (fail)" : "") + "</td>";
+    years.forEach(function (y) {
+      html += "<td>" + gradeDisplayValue(y, b, failBands) + (gradeState.unit === "pct" ? "%" : "") + "</td>";
+    });
+    html += "</tr>";
+  });
+  html += "<tr><td>Total</td>";
+  years.forEach(function (y) {
+    var s = TL.gradeStats(y, failBands);
+    html += "<td>" + (gradeState.unit === "pct" ? "100%" : s.total) + "</td>";
+  });
+  html += "</tr></tbody>";
+  table.innerHTML = html;
 }
 function initGrades() {
   if (!gradeState.metaRendered) {
@@ -1281,6 +1668,7 @@ function tryUnlock(passcode) {
     writeUnlock(true);
     renderTabs();
     route();
+    toast("Private sections unlocked");
     return true;
   }
   return false;
@@ -1290,6 +1678,8 @@ function tryUnlock(passcode) {
    Init (guarded so pure logic can run in Node tests)
    ============================================================ */
 function initApp() {
+  applyTheme(currentTheme());
+
   var tabs = document.querySelectorAll(".tab");
   tabs.forEach(function (t) {
     t.addEventListener("click", function () {
@@ -1300,6 +1690,46 @@ function initApp() {
   $("quiz-start").addEventListener("click", startQuiz);
   $("quiz-next").addEventListener("click", nextQuestion);
   $("res-retry").addEventListener("click", startQuiz);
+
+  $("notes-filter").addEventListener("input", function () {
+    state.notesFilter = this.value;
+    renderNotes();
+  });
+  $("tutorials-filter").addEventListener("input", function () {
+    state.tutorialsFilter = this.value;
+    renderTutorials();
+  });
+
+  document.querySelectorAll("#grade-mode-seg .seg-btn").forEach(function (b) {
+    b.addEventListener("click", function () {
+      if (b.dataset.mode) gradeState.mode = b.dataset.mode;
+      if (b.dataset.unit) gradeState.unit = b.dataset.unit;
+      setModeButtons();
+      if (gradeState.mode === "chart") {
+        show("grade-chart-card", true);
+        show("grade-table-card", false);
+        renderGradeChart();
+      } else {
+        show("grade-chart-card", false);
+        show("grade-table-card", true);
+        renderGradeTable();
+      }
+    });
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (state.route !== "quiz") return;
+    if (!$("quiz-run") || $("quiz-run").classList.contains("hidden")) return;
+    if (!state.quiz.started) return;
+    if (e.key >= "1" && e.key <= "4") {
+      var buttons = $("quiz-options").querySelectorAll(".opt");
+      var target = buttons[Number(e.key) - 1];
+      if (target && !target.disabled) target.click();
+    } else if (e.key === "Enter") {
+      var nxt = $("quiz-next");
+      if (nxt && !nxt.classList.contains("hidden")) nxt.click();
+    }
+  });
 
   $("unlock-form").addEventListener("submit", function (e) {
     e.preventDefault();
@@ -1320,6 +1750,21 @@ function initApp() {
     state.unlocked = false;
     renderTabs();
     route();
+    toast("Private sections locked");
+  });
+
+  $("theme-btn").addEventListener("click", toggleTheme);
+
+  $("copy-link-btn").addEventListener("click", function () {
+    var url = window.location.href;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(url).then(
+        function () { toast("Link copied to clipboard"); },
+        function () { toast("Copy the address bar link to share"); }
+      );
+    } else {
+      toast("Copy the address bar link to share");
+    }
   });
 
   window.addEventListener("hashchange", route);

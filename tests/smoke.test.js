@@ -21,6 +21,17 @@ test("exposes the four course tabs as routes", () => {
   });
 });
 
+test("exposes the interactive feature elements", () => {
+  [
+    "quiz-timer", "quiz-stats", "res-ring", "res-time",
+    "notes-filter", "tutorials-filter",
+    "grade-mode-seg", "grade-table",
+    "toast-wrap", "theme-btn", "copy-link-btn"
+  ].forEach((id) => {
+    assert.ok(html.includes('id="' + id + '"'), "missing id " + id);
+  });
+});
+
 test("is a single self-contained file (no non-URL asset references)", () => {
   const localRefs = html.match(/(?:href|src)="(?!https?:\/\/|data:)[^"]*"/g) || [];
   assert.deepEqual(localRefs, [], "found non-URL asset references: " + localRefs.join(", "));

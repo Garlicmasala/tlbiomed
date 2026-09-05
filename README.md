@@ -13,6 +13,15 @@ static host (GitHub Pages, Netlify, Cloudflare Pages) and it works.
 | Grade Distribution | Past years as an interactive bar chart (ECharts) | Private (passcode) |
 | Structured Tutorials | Tutorial links grouped by topic | Private (passcode) |
 
+**Interactive features**
+
+- Mock quiz: instant correct/wrong feedback, per-question explanations, progress bar, timer, keyboard shortcuts (keys 1–4 to answer, Enter to continue), optional question/answer shuffling, and a score ring with full answer review.
+- Attempt history: best score and attempt count are stored on the student's own device (localStorage) — nothing leaves the browser.
+- Notes & tutorials: live filter boxes — type to narrow note cards and tutorial groups.
+- Grade distribution: chart/table view toggle, plus counts/percent toggle for fair cross-year comparison.
+- Dark mode: footer toggle, remembered per device.
+- Toasts and a "Copy link" button in the footer for sharing the site.
+
 ## Project layout
 
 ```
@@ -30,7 +39,7 @@ Edit that one block and redeploy — no code changes needed.
 
 - **Notes** — `SITE_CONFIG.notes`: a list of `{ title, desc, url, tags }`.
 - **Tutorials** — `SITE_CONFIG.tutorials`: groups of `{ topic, note, items: [{ title, desc, url }] }`.
-- **Mock quiz** — `SITE_CONFIG.quiz.questions`: `{ id, prompt, options[2–6], answerIndex, explanation }`. `answerIndex` counts from 0. Set `quiz.sample` to `false` when you publish real questions.
+- **Mock quiz** — `SITE_CONFIG.quiz.questions`: `{ id, prompt, options[2–6], answerIndex, explanation }`. `answerIndex` counts from 0. `shuffle` reorders questions, `shuffleOptions` reorders answers within each question (correctness is tracked automatically). Set `quiz.sample` to `false` when you publish real questions.
 - **Grade distribution** — `SITE_CONFIG.grades.years`: one entry per past year, `{ year, cohort, distribution: { "A+": 8, "A": 21, ... } }`. Counts must sum to `cohort`. `failBands` lists the failing bands (default `["F"]`). Set `grades.sample` to `false` when you publish real figures.
 - **Passcode** — `SITE_CONFIG.passcode`. Empty string `""` opens the private sections to everyone.
 
