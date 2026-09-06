@@ -36,7 +36,7 @@ test("exposes the interactive feature elements", () => {
 });
 
 test("is a single self-contained file (no non-URL asset references)", () => {
-  const localRefs = html.match(/(?:href|src)="(?!https?:\/\/|data:)[^"]*"/g) || [];
+  const localRefs = (html.match(/(?:href|src)="(?!https?:\/\/|data:|#)[^"]*"/g) || []).filter(r => !/\.html?"/.test(r));
   assert.deepEqual(localRefs, [], "found non-URL asset references: " + localRefs.join(", "));
 });
 

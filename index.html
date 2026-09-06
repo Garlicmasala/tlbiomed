@@ -610,6 +610,8 @@ footer {
   body { background: #fff; }
   main { padding: 0; }
 }
+
+.footer-docs{font-family:var(--font-mono);font-size:11px;color:var(--ink-3)}.footer-docs a{color:var(--primary);text-decoration:none}.footer-docs a:hover{text-decoration:underline}
 </style>
 </head>
 <body>
@@ -850,6 +852,7 @@ footer {
 <footer>
   <div class="footer-inner">
     <span data-i18n="footer.note">T&amp;L@Biomed &middot; a free course hub &middot; edit <code>SITE_CONFIG</code> to publish updates</span>
+    <span class="footer-docs"><a href="paper.html" data-i18n="footer.paper">Technical paper</a> &middot; <a href="development.html" data-i18n="footer.dev">Development guide</a></span>
     <div class="footer-actions">
       <button class="link-btn" id="copy-link-btn" type="button">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg>
@@ -1162,6 +1165,8 @@ var LANGS = {
     "unlock.error": "That passcode is not recognised. Try again, or ask your instructor.",
     "footer.note": "T&L@Biomed · a free course hub · edit <code>SITE_CONFIG</code> to publish updates",
     "footer.copy": "Copy link",
+    "footer.paper": "Technical paper",
+    "footer.dev": "Development guide",
     "footer.lock": "Lock private sections",
     "footer.unlocked": "Private sections unlocked",
     "theme.toDark": "Dark mode",
@@ -1267,6 +1272,8 @@ var LANGS = {
     "unlock.error": "通行碼不正確。請重試，或向導師查詢。",
     "footer.note": "T&L@Biomed · 免費課程中心 · 編輯 <code>SITE_CONFIG</code> 發佈更新",
     "footer.copy": "複製連結",
+    "footer.paper": "技術報告",
+    "footer.dev": "開發指南",
     "footer.lock": "鎖定私人區塊",
     "footer.unlocked": "私人區塊已解鎖",
     "theme.toDark": "深色模式",
