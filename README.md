@@ -28,6 +28,7 @@ static host (GitHub Pages, Netlify, Cloudflare Pages) and it works.
 ```
 tlbiomed-site/
   index.html        the whole site (config + markup + logic)
+  paper.html        technical report with architecture, test & grade graphs
   package.json      test runner only
   tests/            BDD / TDD / smoke test suite (Node built-in, zero deps)
   README.md         this file
@@ -85,6 +86,16 @@ attach it later.)
   flags.
 - Chart years: the colour ramp supports up to 5 years before it cycles;
   keep past years ≤ 5 per chart view (the "All years" view shows them all).
+
+## Technical paper
+
+`paper.html` is a standalone technical report documenting the whole project:
+architecture diagram, feature catalogue, configuration & data model,
+internationalization, testing strategy (with test-distribution and commit
+graphs), sample grade data (live ECharts chart), deployment pipeline,
+security & limitations, and roadmap. It uses the same locked ECharts CDN
+and font mirror as the site, and is covered by the smoke suite. Open it
+directly in any browser, or print to PDF.
 
 ## Development
 
