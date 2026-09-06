@@ -5,11 +5,12 @@
 
 const test = require("node:test");
 const assert = require("node:assert/strict");
-const { loadHtml, loadTL, loadPaper } = require("./helpers/extract");
+const { loadHtml, loadTL, loadPaper, loadDev } = require("./helpers/extract");
 
 const html = loadHtml();
 const TL = loadTL();
 const paper = loadPaper();
+const dev = loadDev();
 
 test("index.html exists and starts with a doctype", () => {
   assert.match(html, /^<!DOCTYPE html>/i);
@@ -97,6 +98,32 @@ test("paper.html uses the locked ECharts CDN with SRI", () => {
 
 test("paper.html stylesheets only from the allowed font mirror", () => {
   const links = paper.match(/<link[^>]*rel="stylesheet"[^>]*>/g) || [];
+  assert.ok(links.length >= 1, "no stylesheet links found");
+  links.forEach((l) => {
+    assert.ok(l.includes("miaoda.feishu.cn/fonts/css2"), "disallowed stylesheet: " + l);
+  });
+});
+
+/* --- development.html --- */
+
+test("development.html exists and starts with a doctype", () => {
+  assert.match(dev, /^<!DOCTYPE html>/i);
+  assert.ok(dev.includes("Development Guide"));
+});
+
+test("development.html is self-contained (no local asset references)", () => {
+  const localRefs = dev.match(/(?:href|src)="(?!https?:\/\/|data:|#)[^"]*"/g) || [];
+  assert.deepEqual(localRefs, [], "found non-URL asset references: " + localRefs.join(", "));
+});
+
+test("development.html uses the locked ECharts CDN with SRI", () => {
+  const tag = dev.match(/<script src="https:\/\/cdn\.jsdelivr\.net\/npm\/echarts@5\.6\.0\/dist\/echarts\.min\.js"[^>]*><\/script>/);
+  assert.ok(tag, "echarts script tag missing or version changed");
+  assert.ok(tag[0].includes('integrity="sha384-pPi0zxBAoDu6+JXW/C68UZLvBUUtU+7zonhif43rqj7pxsGyqyqzcian2Rj37Rss"'), "SRI mismatch");
+});
+
+test("development.html stylesheets only from the allowed font mirror", () => {
+  const links = dev.match(/<link[^>]*rel="stylesheet"[^>]*>/g) || [];
   assert.ok(links.length >= 1, "no stylesheet links found");
   links.forEach((l) => {
     assert.ok(l.includes("miaoda.feishu.cn/fonts/css2"), "disallowed stylesheet: " + l);

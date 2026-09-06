@@ -6,6 +6,7 @@ const vm = require("vm");
 
 const HTML_PATH = path.join(__dirname, "..", "..", "index.html");
 const PAPER_PATH = path.join(__dirname, "..", "..", "paper.html");
+const DEV_PATH = path.join(__dirname, "..", "..", "development.html");
 const START = "/* ===APP-CORE-START=== */";
 const END = "/* ===APP-CORE-END=== */";
 
@@ -15,6 +16,10 @@ function loadHtml() {
 
 function loadPaper() {
   return fs.readFileSync(PAPER_PATH, "utf8");
+}
+
+function loadDev() {
+  return fs.readFileSync(DEV_PATH, "utf8");
 }
 
 function extractCoreScript(html) {
@@ -45,4 +50,4 @@ function loadTL() {
   return sandbox.window.TL;
 }
 
-module.exports = { loadHtml, extractCoreScript, loadTL, HTML_PATH, loadPaper, PAPER_PATH };
+module.exports = { loadHtml, extractCoreScript, loadTL, HTML_PATH, loadPaper, PAPER_PATH, loadDev, DEV_PATH };
