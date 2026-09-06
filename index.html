@@ -593,6 +593,23 @@ footer {
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+/* Global search */
+.global-search { position: relative; flex: 1 1 220px; min-width: 180px; }
+.global-search input { width: 100%; padding: 9px 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); color: var(--ink); font-family: var(--font-body); font-size: 14px; }
+.global-search input:focus { border-color: var(--primary); outline: none; }
+.search-results { position: absolute; top: calc(100% + 6px); left: 0; right: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow); max-height: 360px; overflow-y: auto; z-index: 100; }
+.search-group-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); padding: 10px 14px 4px; }
+.search-item { display: block; padding: 9px 14px; color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--line); }
+.search-item:hover { background: var(--primary-soft); text-decoration: none; }
+.search-item .si-title { font-weight: 500; font-size: 13px; }
+.search-item .si-desc { font-size: 12px; color: var(--ink-2); margin-top: 2px; }
+.search-empty { padding: 14px; color: var(--ink-3); font-size: 13px; }
+/* Print */
+@media print {
+  .masthead, .tabbar, footer, .banner, .global-search, #grade-mode-seg, #grade-seg { display: none !important; }
+  body { background: #fff; }
+  main { padding: 0; }
+}
 </style>
 </head>
 <body>
@@ -648,6 +665,10 @@ footer {
       <span data-i18n="tab.tutorials">Structured Tutorials</span>
       <span class="acc">TUT-04</span>
     </button>
+    <div class="global-search">
+      <input type="search" id="global-search" data-i18n-ph="search.placeholder" placeholder="Search notes & tutorials…" aria-label="Search notes and tutorials" autocomplete="off">
+      <div class="search-results hidden" id="search-results" role="listbox"></div>
+    </div>
   </div>
 </nav>
 
@@ -735,6 +756,7 @@ footer {
         <div class="results-time" id="res-time"></div>
         <div class="results-actions">
           <button class="btn" id="res-retry" data-i18n="quiz.retry" type="button">Try again</button>
+          <button class="btn secondary hidden" id="res-retry-wrong" data-i18n="quiz.retryWrong" type="button">Retry wrong only</button>
         </div>
       </div>
       <ul class="review-list" id="res-review"></ul>
@@ -770,6 +792,8 @@ footer {
         <span style="flex:1 1 100%;"></span>
         <button class="seg-btn" data-unit="counts" aria-pressed="true" data-i18n="grades.counts" type="button">Counts</button>
         <button class="seg-btn" data-unit="pct" aria-pressed="false" data-i18n="grades.pct" type="button">Percent</button>
+        <span style="flex:1 1 100%;"></span>
+        <button class="seg-btn" id="grade-print" data-i18n="grades.print" type="button">Print</button>
       </div>
       <div class="stat-chips" id="grade-stats"></div>
       <div class="card chart-wrap" id="grade-chart-card">
@@ -887,7 +911,9 @@ var SITE_CONFIG = {
     { title: "Week 5 — Immunology: innate & adaptive immunity", desc: "Slides, reading list and concept map.", url: "https://example.com/tlb-notes-week5", tags: ["week-5", "immunology"], sample: true },
     { title: "Week 6 — Pharmacology: principles of drug action", desc: "Lecture notes and problem set.", url: "https://example.com/tlb-notes-week6", tags: ["week-6", "pharmacology"], sample: true },
     { title: "Week 7 — Molecular genetics & genomics", desc: "Slides and worked examples.", url: "https://example.com/tlb-notes-week7", tags: ["week-7", "genetics"], sample: true },
-    { title: "Week 8 — Neurophysiology: CNS & PNS", desc: "Lecture notes and lab sheet.", url: "https://example.com/tlb-notes-week8", tags: ["week-8", "neuroscience"], sample: true }
+    { title: "Week 8 — Neurophysiology: CNS & PNS", desc: "Lecture notes and lab sheet.", url: "https://example.com/tlb-notes-week8", tags: ["week-8", "neuroscience"], sample: true },
+    { title: "Week 9 — Endocrinology: hormones & feedback", desc: "Slides and endocrine axis diagrams.", url: "https://example.com/tlb-notes-week9", tags: ["week-9", "endocrinology"], sample: true },
+    { title: "Week 10 — Renal physiology & fluid balance", desc: "Lecture notes and problem set.", url: "https://example.com/tlb-notes-week10", tags: ["week-10", "renal"], sample: true }
   ],
 
   /* Structured tutorials: grouped by topic, each item is a link.
@@ -931,7 +957,7 @@ var SITE_CONFIG = {
   quiz: {
     sample: true,
     title: "Mock Quiz — sample set",
-    intro: "Ten starter questions across cell biology, biochemistry, physiology, microbiology, immunology, pharmacology, genetics, haematology and neuroscience.",
+    intro: "Fifteen starter questions across cell biology, biochemistry, physiology, microbiology, immunology, pharmacology, genetics, haematology, neuroscience, endocrinology, renal and anatomy.",
     shuffle: false,
     shuffleOptions: true,
     questions: [
@@ -1004,7 +1030,12 @@ var SITE_CONFIG = {
         options: ["Platelet", "Erythrocyte", "Neutrophil", "Monocyte"],
         answerIndex: 1,
         explanation: "Erythrocytes (red blood cells) carry oxygen bound to haemoglobin."
-      }
+      },
+      { id: "q11", prompt: "Which hormone is secreted by the beta cells of the pancreatic islets?", options: ["Glucagon", "Insulin", "Somatostatin", "Amylase"], answerIndex: 1, explanation: "Beta cells secrete insulin; alpha cells secrete glucagon; delta cells secrete somatostatin." },
+      { id: "q12", prompt: "In the lungs, gas exchange occurs across the:", options: ["Trachea", "Bronchi", "Alveoli", "Pleura"], answerIndex: 2, explanation: "Alveoli are the thin-walled sacs where oxygen and carbon dioxide diffuse between air and blood." },
+      { id: "q13", prompt: "The functional unit of the kidney is the:", options: ["Neuron", "Nephron", "Glomerulus", "Collecting duct"], answerIndex: 1, explanation: "The nephron — glomerulus plus tubule — filters and modifies urine." },
+      { id: "q14", prompt: "The mitral (bicuspid) valve is located between the:", options: ["Right atrium and right ventricle", "Left atrium and left ventricle", "Right ventricle and pulmonary artery", "Left ventricle and aorta"], answerIndex: 1, explanation: "The mitral valve separates the left atrium from the left ventricle; the tricuspid valve is on the right." },
+      { id: "q15", prompt: "Which molecule is the primary energy currency of the cell?", options: ["NADH", "ATP", "Glucose", "Acetyl-CoA"], answerIndex: 1, explanation: "Adenosine triphosphate (ATP) stores readily releasable energy in its phosphate bonds." }
     ]
   },
 
@@ -1017,6 +1048,8 @@ var SITE_CONFIG = {
     title: "Grade distribution — past years",
     failBands: ["F"],
     years: [
+      { year: "AY2020-21", cohort: 140, distribution: { "A+": 5, "A": 15, "A-": 14, "B+": 18, "B": 22, "B-": 16, "C+": 15, "C": 14, "D": 11, "F": 10 } },
+      { year: "AY2021-22", cohort: 145, distribution: { "A+": 6, "A": 17, "A-": 15, "B+": 19, "B": 23, "B-": 17, "C+": 15, "C": 14, "D": 10, "F": 9 } },
       { year: "AY2022-23", cohort: 152, distribution: { "A+": 6, "A": 18, "A-": 16, "B+": 20, "B": 24, "B-": 17, "C+": 16, "C": 15, "D": 11, "F": 9 } },
       { year: "AY2023-24", cohort: 148, distribution: { "A+": 8, "A": 21, "A-": 15, "B+": 19, "B": 24, "B-": 16, "C+": 15, "C": 14, "D": 9, "F": 7 } },
       { year: "AY2024-25", cohort: 161, distribution: { "A+": 9, "A": 23, "A-": 17, "B+": 22, "B": 26, "B-": 18, "C+": 17, "C": 15, "D": 8, "F": 6 } }
@@ -1067,6 +1100,12 @@ var LANGS = {
     "quiz.correct": "Correct",
     "quiz.wrong": "Not quite",
     "quiz.retry": "Try again",
+    "quiz.retryWrong": "Retry wrong only",
+    "search.placeholder": "Search notes & tutorials…",
+    "search.noResults": "No matches for “{q}”",
+    "search.notes": "Notes",
+    "search.tutorials": "Tutorials",
+    "grades.print": "Print",
     "quiz.finished": "Finished in {t}",
     "review.ok": "<b>Correct</b> — your answer: {a}",
     "review.bad": "<b>Incorrect</b> — your answer: {a}",
@@ -1166,6 +1205,12 @@ var LANGS = {
     "quiz.correct": "正確",
     "quiz.wrong": "答錯了",
     "quiz.retry": "再試一次",
+    "quiz.retryWrong": "重答錯題",
+    "search.placeholder": "搜尋筆記及導修…",
+    "search.noResults": "找不到「{q}」的結果",
+    "search.notes": "筆記",
+    "search.tutorials": "導修",
+    "grades.print": "列印",
     "quiz.finished": "用時 {t}",
     "review.ok": "<b>正確</b> — 你的答案：{a}",
     "review.bad": "<b>答錯</b> — 你的答案：{a}",
@@ -1356,7 +1401,8 @@ var state = {
   lang: "en",
   quiz: { idx: 0, answers: {}, questions: [], started: false, shuffledOptions: [], timerStart: 0, timerId: null },
   notesFilter: "",
-  tutorialsFilter: ""
+  tutorialsFilter: "",
+  searchQuery: ""
 };
 var gradeState = { year: "__all__", mode: "chart", unit: "counts", chart: null, chartReady: false, metaRendered: false };
 
@@ -1659,11 +1705,14 @@ function renderQuizIntro() {
     ? fmt("quiz.statsSome", { b: h.best, n: h.attempts, s: h.attempts === 1 ? "" : "s" })
     : t("quiz.statsNone");
 }
-function startQuiz() {
+function startQuiz(onlyWrong) {
   var cfg = SITE_CONFIG.quiz;
   var qs = cfg.questions.slice();
+  if (onlyWrong && state.quiz.wrongIds && state.quiz.wrongIds.length) {
+    qs = qs.filter(function (q) { return state.quiz.wrongIds.indexOf(q.id) !== -1; });
+  }
   if (cfg.shuffle) qs = TL.shuffleArray(qs);
-  state.quiz = { idx: 0, answers: {}, questions: qs, started: true, shuffledOptions: [], timerStart: 0, timerId: null };
+  state.quiz = { idx: 0, answers: {}, questions: qs, started: true, shuffledOptions: [], timerStart: 0, timerId: null, wrongIds: state.quiz.wrongIds || [] };
   show("quiz-intro", false);
   show("quiz-results", false);
   show("quiz-run", true);
@@ -1773,6 +1822,9 @@ function renderResults() {
   h.attempts += 1;
   if (res.percent > h.best) h.best = res.percent;
   writeJson(HISTORY_KEY, h);
+
+  state.quiz.wrongIds = qs.filter(function (q) { return state.quiz.answers[q.id] !== q.answerIndex; }).map(function (q) { return q.id; });
+  show("res-retry-wrong", state.quiz.wrongIds.length > 0);
 
   var list = $("res-review");
   emptyNode(list);
@@ -2016,6 +2068,67 @@ function tryUnlock(passcode) {
 /* ============================================================
    Init (guarded so pure logic can run in Node tests)
    ============================================================ */
+function renderSearchResults() {
+  var wrap = $("search-results");
+  var q = (state.searchQuery || "").trim().toLowerCase();
+  if (!q) { wrap.classList.add("hidden"); emptyNode(wrap); return; }
+  var noteHits = (SITE_CONFIG.notes || []).filter(function (n) {
+    return (n.title + " " + (n.desc || "") + " " + (n.tags || []).join(" ")).toLowerCase().indexOf(q) !== -1;
+  });
+  var tutHits = [];
+  (SITE_CONFIG.tutorials || []).forEach(function (g) {
+    (g.items || []).forEach(function (item) {
+      if ((g.topic + " " + item.title + " " + (item.desc || "")).toLowerCase().indexOf(q) !== -1) {
+        tutHits.push({ topic: g.topic, item: item });
+      }
+    });
+  });
+  emptyNode(wrap);
+  function addLabel(text) {
+    var d = document.createElement("div");
+    d.className = "search-group-label";
+    d.textContent = text;
+    wrap.appendChild(d);
+  }
+  function addLink(url, titleHtml, desc) {
+    var a = document.createElement("a");
+    a.className = "search-item";
+    a.setAttribute("href", url || "#");
+    a.setAttribute("target", "_blank");
+    a.setAttribute("rel", "noopener");
+    var t = document.createElement("div");
+    t.className = "si-title";
+    t.innerHTML = titleHtml;
+    a.appendChild(t);
+    if (desc) {
+      var d2 = document.createElement("div");
+      d2.className = "si-desc";
+      d2.textContent = desc;
+      a.appendChild(d2);
+    }
+    wrap.appendChild(a);
+  }
+  if (noteHits.length) {
+    addLabel(t("search.notes") + " (" + noteHits.length + ")");
+    noteHits.forEach(function (n) {
+      addLink(n.url, escapeHtml(n.title), n.desc);
+    });
+  }
+  if (tutHits.length) {
+    addLabel(t("search.tutorials") + " (" + tutHits.length + ")");
+    tutHits.forEach(function (h2) {
+      addLink(h2.item.url, escapeHtml(h2.item.title) + ' <span class="tag" style="font-size:10px">' + escapeHtml(h2.topic) + "</span>", h2.item.desc);
+    });
+  }
+  if (!noteHits.length && !tutHits.length) {
+    var e = document.createElement("div");
+    e.className = "search-empty";
+    e.textContent = fmt("search.noResults", { q: state.searchQuery });
+    wrap.appendChild(e);
+  }
+  wrap.classList.remove("hidden");
+}
+
 function initApp() {
   state.lang = initialLang();
   applyTheme(currentTheme());
@@ -2028,9 +2141,15 @@ function initApp() {
     });
   });
 
-  $("quiz-start").addEventListener("click", startQuiz);
+  $("quiz-start").addEventListener("click", function () { startQuiz(false); });
   $("quiz-next").addEventListener("click", nextQuestion);
-  $("res-retry").addEventListener("click", startQuiz);
+  $("res-retry").addEventListener("click", function () { startQuiz(false); });
+  $("res-retry-wrong").addEventListener("click", function () { startQuiz(true); });
+  $("global-search").addEventListener("input", function () { state.searchQuery = this.value; renderSearchResults(); });
+  $("global-search").addEventListener("blur", function () { setTimeout(function () { var sr = $("search-results"); if (sr) sr.classList.add("hidden"); }, 200); });
+  $("global-search").addEventListener("focus", function () { if (this.value.trim()) renderSearchResults(); });
+  $("grade-print").addEventListener("click", function () { window.print(); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") { var sr = $("search-results"); if (sr) sr.classList.add("hidden"); } });
 
   $("notes-filter").addEventListener("input", function () {
     state.notesFilter = this.value;

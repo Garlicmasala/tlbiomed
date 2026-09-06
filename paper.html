@@ -65,7 +65,7 @@ li { margin-bottom: 5px; }
 <div class="meta">
   <span><b>Project</b> T&amp;L@Biomed</span>
   <span><b>Stack</b> HTML / CSS / vanilla JS</span>
-  <span><b>Tests</b> 48 / 48 passing</span>
+  <span><b>Tests</b> 52 / 52 passing</span>
   <span><b>Size</b> ~91 KB · 2,128 lines</span>
   <span><b>Languages</b> English · 繁體中文</span>
 </div>
@@ -73,12 +73,12 @@ li { margin-bottom: 5px; }
 <div class="stats-row">
   <div class="stat"><div class="v">1</div><div class="l">HTML file</div></div>
   <div class="stat"><div class="v">4</div><div class="l">Course tabs</div></div>
-  <div class="stat"><div class="v">48</div><div class="l">Automated tests</div></div>
+  <div class="stat"><div class="v">52</div><div class="l">Automated tests</div></div>
   <div class="stat"><div class="v">$0</div><div class="l">Hosting cost</div></div>
 </div>
 
 <div class="abstract">
-<b>Abstract.</b> T&amp;L@Biomed is a static course hub built for a university biomedicine teaching context. It delivers four sections — lecture notes, an interactive multiple-choice mock quiz, past grade distributions, and structured tutorials — inside a single self-contained <code>index.html</code> with no server, database, build step, or paid dependency. Private sections are gated by a client-side passcode; the quiz provides instant correct/wrong feedback, a timer, keyboard shortcuts, answer shuffling, and per-device attempt history; grade data is rendered as an interactive ECharts bar chart with chart/table and counts/percent toggles. The entire UI is bilingual (English and Traditional Chinese) with browser-language auto-detection. Quality is enforced by a 48-test BDD/TDD/smoke suite running in Node's built-in test runner, and deployment is a single <code>git push</code> via GitHub Actions. This paper documents the architecture, configuration, data model, internationalization, testing strategy, sample data, and deployment pipeline.
+<b>Abstract.</b> T&amp;L@Biomed is a static course hub built for a university biomedicine teaching context. It delivers four sections — lecture notes, an interactive multiple-choice mock quiz, past grade distributions, and structured tutorials — inside a single self-contained <code>index.html</code> with no server, database, build step, or paid dependency. Private sections are gated by a client-side passcode; the quiz provides instant correct/wrong feedback, a timer, keyboard shortcuts, answer shuffling, and per-device attempt history, and a retry-wrong-only mode; grade data is rendered as an interactive ECharts bar chart with chart/table and counts/percent toggles and one-click print; a site-wide search box finds notes and tutorials in one dropdown. The entire UI is bilingual (English and Traditional Chinese) with browser-language auto-detection. Quality is enforced by a 52-test BDD/TDD/smoke suite running in Node's built-in test runner, and deployment is a single <code>git push</code> via GitHub Actions. This paper documents the architecture, configuration, data model, internationalization, testing strategy, sample data, and deployment pipeline.
 </div>
 
 <nav class="toc">
@@ -167,9 +167,9 @@ li { margin-bottom: 5px; }
 
 <table>
 <tr><th>Section</th><th>Visibility</th><th>Key interactions</th><th>Sample content</th></tr>
-<tr><td><b>Notes</b></td><td>Private (passcode)</td><td>Link cards, live client-side filter, tags, sample badges</td><td>8 cards (weeks 1–8)</td></tr>
-<tr><td><b>Mock Quiz</b></td><td>Public</td><td>Instant correct/wrong feedback, per-question explanations, progress bar, timer, keyboard shortcuts (1–4 / Enter), question &amp; answer shuffling, score ring, full answer review, per-device attempt history</td><td>10 MCQ across 9 subjects</td></tr>
-<tr><td><b>Grade Distribution</b></td><td>Private (passcode)</td><td>ECharts grouped bar chart, year selector (single / all), chart/table toggle, counts/percent toggle, summary stat chips</td><td>3 academic years</td></tr>
+<tr><td><b>Notes</b></td><td>Private (passcode)</td><td>Link cards, live client-side filter, tags, sample badges</td><td>10 cards (weeks 1–10)</td></tr>
+<tr><td><b>Mock Quiz</b></td><td>Public</td><td>Instant correct/wrong feedback, per-question explanations, progress bar, timer, keyboard shortcuts (1–4 / Enter), question &amp; answer shuffling, score ring, full answer review, per-device attempt history</td><td>15 MCQ across 13 subjects</td></tr>
+<tr><td><b>Grade Distribution</b></td><td>Private (passcode)</td><td>ECharts grouped bar chart, year selector (single / all), chart/table toggle, counts/percent toggle, summary stat chips</td><td>5 academic years</td></tr>
 <tr><td><b>Structured Tutorials</b></td><td>Private (passcode)</td><td>Topic-grouped link lists, live filter, step counts</td><td>7 topics / 15 items</td></tr>
 </table>
 
@@ -179,6 +179,9 @@ li { margin-bottom: 5px; }
 <li><b>Dark mode.</b> CSS-variable theme toggle, persisted per device; ECharts re-renders with a dark-aware palette.</li>
 <li><b>Bilingual UI.</b> English and Traditional Chinese, auto-detected from <code>navigator.language</code>, switchable from the footer, persisted.</li>
 <li><b>Toasts &amp; copy-link.</b> Non-blocking notifications for unlock, lock, theme, language, and clipboard actions.</li>
+<li><b>Site-wide search.</b> A search box in the tab bar finds matching notes and tutorial items in a single dropdown, grouped by section, with direct links.</li>
+<li><b>Retry wrong only.</b> After a quiz attempt, students can re-attempt just the questions they missed — focused revision.</li>
+<li><b>Print grades.</b> One-click print/PDF export of the grade distribution; print CSS hides navigation and chrome.</li>
 <li><b>Responsive &amp; reduced-motion.</b> Mobile layout collapses the DNA masthead and hides keyboard hints; <code>prefers-reduced-motion</code> disables animations.</li>
 </ul>
 
@@ -205,7 +208,7 @@ li { margin-bottom: 5px; }
 
 <div class="figure">
 <div id="chart-i18n" class="chart"></div>
-<div class="caption">Figure 1 — i18n key coverage: 97 keys per language, 100% parity between English and Traditional Chinese (194 total strings).</div>
+<div class="caption">Figure 1 — i18n key coverage: 103 keys per language, 100% parity between English and Traditional Chinese (206 total strings).</div>
 </div>
 
 <p><b>Mechanics.</b> Static elements carry <code>data-i18n</code> (or <code>data-i18n-ph</code> for placeholders) and are re-rendered on language switch. Dynamic strings (question counters, verdicts, stat chips, toasts) use a <code>t(key)</code> / <code>fmt(key, vars)</code> pair with <code>{placeholder}</code> substitution. Initial language is read from <code>localStorage</code>, then auto-detected from the browser (<code>zh-*</code> → 中文), then the configured default. The choice is persisted and the document title and meta description update with it.</p>
@@ -215,7 +218,7 @@ li { margin-bottom: 5px; }
 
 <div class="figure">
 <div id="chart-tests" class="chart"></div>
-<div class="caption">Figure 2 — Distribution of the 48 automated tests across five suites (config.behavior 20, smoke 10, quiz 9, grades 5, i18n 4).</div>
+<div class="caption">Figure 2 — Distribution of the 52 automated tests across five suites (config.behavior 20, smoke 14, quiz 9, grades 5, i18n 4).</div>
 </div>
 
 <h3>6.1 What the suites guard</h3>
@@ -235,19 +238,21 @@ li { margin-bottom: 5px; }
 <p>Additionally, an HTML tag-balance helper verifies opening/closing tag parity on every run, and the full suite is re-executed after every change before commit. The current result is <b>48 / 48 passing</b>.</p>
 
 <h2 id="grades">7. Sample grade data</h2>
-<p>The shipped grade block contains three academic years of sample data (152, 148, and 161 students respectively), all marked <code>sample: true</code>. The chart below is rendered by the same ECharts configuration the live site uses — a flat, accessible grouped bar with shared tooltip and a dark-aware palette.</p>
+<p>The shipped grade block contains five academic years of sample data (140, 145, 152, 148, and 161 students respectively), all marked <code>sample: true</code>. The chart below is rendered by the same ECharts configuration the live site uses — a flat, accessible grouped bar with shared tooltip and a dark-aware palette.</p>
 
 <div class="figure">
 <div id="chart-grades" class="chart" style="min-height:360px"></div>
-<div class="caption">Figure 4 — Sample grade distribution by band across AY2022-23, AY2023-24, and AY2024-25 (counts). Pass rates rise from 94.1% to 96.3% across the three years.</div>
+<div class="caption">Figure 4 — Sample grade distribution by band across AY2020-21 through AY2024-25 (counts, 5 years, 746 students total). Pass rates rise from 92.9% to 96.3% across the five years.</div>
 </div>
 
 <table>
 <tr><th>Year</th><th>Cohort</th><th>Pass</th><th>Fail</th><th>Pass rate</th><th>Most common band</th></tr>
+<tr><td>AY2020-21</td><td>140</td><td>130</td><td>10</td><td>92.9%</td><td>B</td></tr>
+<tr><td>AY2021-22</td><td>145</td><td>136</td><td>9</td><td>93.8%</td><td>B</td></tr>
 <tr><td>AY2022-23</td><td>152</td><td>143</td><td>9</td><td>94.1%</td><td>B</td></tr>
 <tr><td>AY2023-24</td><td>148</td><td>141</td><td>7</td><td>95.3%</td><td>B</td></tr>
 <tr><td>AY2024-25</td><td>161</td><td>155</td><td>6</td><td>96.3%</td><td>B</td></tr>
-<tr><td><b>Total</b></td><td><b>461</b></td><td><b>439</b></td><td><b>22</b></td><td><b>95.2%</b></td><td>B</td></tr>
+<tr><td><b>Total</b></td><td><b>746</b></td><td><b>705</b></td><td><b>41</b></td><td><b>94.5%</b></td><td>B</td></tr>
 </table>
 
 <h2 id="deployment">8. Deployment pipeline</h2>
@@ -305,7 +310,7 @@ li { margin-bottom: 5px; }
 </ul>
 
 <div class="footer">
-T&amp;L@Biomed Technical Paper · Generated from the project repository · 48/48 tests passing · Single-file static site · MIT-style use for course materials
+T&amp;L@Biomed Technical Paper · Generated from the project repository · 52/52 tests passing · Single-file static site · MIT-style use for course materials
 </div>
 
 </article>
@@ -328,7 +333,7 @@ T&amp;L@Biomed Technical Paper · Generated from the project repository · 48/48
     grid: baseGrid(),
     xAxis: { type: "category", data: ["English", "繁體中文"], axisLine: { lineStyle: { color: axis } }, axisLabel: { color: label, fontFamily: "IBM Plex Mono, monospace", fontSize: 12 } },
     yAxis: { type: "value", name: "translated strings", nameTextStyle: { color: label, fontSize: 11 }, axisLabel: { color: label, fontFamily: "IBM Plex Mono, monospace", fontSize: 11 }, splitLine: { lineStyle: { color: split } } },
-    series: [{ type: "bar", barMaxWidth: 80, data: [97, 97], itemStyle: { color: palette[1] }, label: { show: true, position: "top", fontFamily: "IBM Plex Mono, monospace", fontSize: 12, color: label } }]
+    series: [{ type: "bar", barMaxWidth: 80, data: [103, 103], itemStyle: { color: palette[1] }, label: { show: true, position: "top", fontFamily: "IBM Plex Mono, monospace", fontSize: 12, color: label } }]
   });
 
   // Figure 2: test distribution donut
@@ -344,7 +349,7 @@ T&amp;L@Biomed Technical Paper · Generated from the project repository · 48/48
       label: { fontFamily: "IBM Plex Mono, monospace", fontSize: 11, color: label, formatter: "{b}\n{c}" },
       data: [
         { value: 20, name: "config.behavior" },
-        { value: 10, name: "smoke" },
+        { value: 14, name: "smoke" },
         { value: 9, name: "quiz" },
         { value: 5, name: "grades" },
         { value: 4, name: "i18n" }
@@ -366,6 +371,8 @@ T&amp;L@Biomed Technical Paper · Generated from the project repository · 48/48
   // Figure 4: grade distribution
   var bands = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "D", "F"];
   var years = [
+    { name: "AY2020-21", data: [5, 15, 14, 18, 22, 16, 15, 14, 11, 10] },
+    { name: "AY2021-22", data: [6, 17, 15, 19, 23, 17, 15, 14, 10, 9] },
     { name: "AY2022-23", data: [6, 18, 16, 20, 24, 17, 16, 15, 11, 9] },
     { name: "AY2023-24", data: [8, 21, 15, 19, 24, 16, 15, 14, 9, 7] },
     { name: "AY2024-25", data: [9, 23, 17, 22, 26, 18, 17, 15, 8, 6] }

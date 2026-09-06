@@ -27,7 +27,8 @@ test("exposes the interactive feature elements", () => {
     "quiz-timer", "quiz-stats", "res-ring", "res-time",
     "notes-filter", "tutorials-filter",
     "grade-mode-seg", "grade-table",
-    "toast-wrap", "theme-btn", "copy-link-btn", "lang-btn"
+    "toast-wrap", "theme-btn", "copy-link-btn", "lang-btn",
+    "global-search", "search-results", "res-retry-wrong", "grade-print"
   ].forEach((id) => {
     assert.ok(html.includes('id="' + id + '"'), "missing id " + id);
   });
