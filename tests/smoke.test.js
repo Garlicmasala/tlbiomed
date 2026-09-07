@@ -17,8 +17,8 @@ test("index.html exists and starts with a doctype", () => {
   assert.match(html, /<html lang="en">/);
 });
 
-test("exposes the four course tabs as routes", () => {
-  ["notes", "quiz", "grades", "tutorials"].forEach((r) => {
+test("exposes the five course tabs as routes", () => {
+  ["notes", "quiz", "grades", "tutorials", "guide"].forEach((r) => {
     assert.ok(html.includes('data-route="' + r + '"'), "missing route " + r);
   });
 });
@@ -29,7 +29,8 @@ test("exposes the interactive feature elements", () => {
     "notes-filter", "tutorials-filter",
     "grade-mode-seg", "grade-table",
     "toast-wrap", "theme-btn", "copy-link-btn", "lang-btn",
-    "global-search", "search-results", "res-retry-wrong", "grade-print"
+    "global-search",
+    "view-guide", "search-results", "res-retry-wrong", "grade-print"
   ].forEach((id) => {
     assert.ok(html.includes('id="' + id + '"'), "missing id " + id);
   });
