@@ -118,7 +118,7 @@ li { margin-bottom: 5px; }
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#0E6B5C"/></marker>
   </defs>
   <rect x="40" y="30" width="720" height="360" rx="14" fill="#F2F6F3" stroke="#DCE6E1"/>
-  <text x="60" y="58" font-size="13" font-weight="600" fill="#0A4F44" font-family="IBM Plex Mono, monospace">index.html  (single file, ~91 KB)</text>
+  <text x="60" y="58" font-size="13" font-weight="600" fill="#0A4F44" font-family="IBM Plex Mono, monospace">index.html  (single file, ~123 KB)</text>
 
   <rect x="70" y="80" width="160" height="70" rx="10" fill="#FFFFFF" stroke="#0E6B5C" stroke-width="1.5"/>
   <text x="150" y="108" text-anchor="middle" font-size="13" font-weight="600" fill="#0E6B5C">SITE_CONFIG</text>
@@ -218,7 +218,7 @@ li { margin-bottom: 5px; }
 
 <div class="figure">
 <div id="chart-tests" class="chart"></div>
-<div class="caption">Figure 2 — Distribution of the 56 automated tests across five suites (config.behavior 20, smoke 14, quiz 9, grades 5, i18n 4).</div>
+<div class="caption">Figure 2 — Distribution of the 56 automated tests across five suites (config.behavior 20, smoke 18, quiz 9, grades 5, i18n 4).</div>
 </div>
 
 <h3>6.1 What the suites guard</h3>
@@ -232,7 +232,7 @@ li { margin-bottom: 5px; }
 
 <div class="figure">
 <div id="chart-commits" class="chart"></div>
-<div class="caption">Figure 3 — Commit growth: 8 commits, 4,014 net insertions. Initial scaffold (a8cdd7b), interactivity (0abd8fe), subjects + i18n (cb85dec), paper (0cd9612), search + retry (170660b), dev guide (0348f6b), footer links (f008aca), study guide (15302ec).</div>
+<div class="caption">Figure 3 — Commit growth: 12 commits, 4,252 net insertions. Initial scaffold (a8cdd7b), interactivity (0abd8fe), subjects + i18n (cb85dec), paper (0cd9612), search + retry (170660b), dev guide (0348f6b), footer links (f008aca), study guide (15302ec), docs sync (75c04fe), expansion (ece24c7, d75a98e), topic filter (98b88f6).</div>
 </div>
 
 <p>Additionally, an HTML tag-balance helper verifies opening/closing tag parity on every run, and the full suite is re-executed after every change before commit. The current result is <b>56 / 56 passing</b>.</p>
@@ -363,9 +363,9 @@ T&amp;L@Biomed Technical Paper · Generated from the project repository · 56/56
     color: palette,
     tooltip: { trigger: "axis" },
     grid: baseGrid(),
-    xAxis: { type: "category", data: ["a8cdd7b\ninitial", "0abd8fe\ninteractivity", "cb85dec\nsubjects + i18n", "0cd9612\npaper", "170660b\nsearch + retry", "0348f6b\ndev guide", "f008aca\nfooter links", "15302ec\nstudy guide"], axisLine: { lineStyle: { color: axis } }, axisLabel: { color: label, fontFamily: "IBM Plex Mono, monospace", fontSize: 10, interval: 0 } },
+    xAxis: { type: "category", data: ["a8cdd7b\ninitial", "0abd8fe\ninteractivity", "cb85dec\nsubjects + i18n", "0cd9612\npaper", "170660b\nsearch + retry", "0348f6b\ndev guide", "f008aca\nfooter links", "15302ec\nstudy guide", "75c04fe\ndocs sync", "ece24c7\nexpand", "d75a98e\nexpand", "98b88f6\ntopic filter"], axisLine: { lineStyle: { color: axis } }, axisLabel: { color: label, fontFamily: "IBM Plex Mono, monospace", fontSize: 10, interval: 0 } },
     yAxis: { type: "value", name: "lines added", nameTextStyle: { color: label, fontSize: 11 }, axisLabel: { color: label, fontFamily: "IBM Plex Mono, monospace", fontSize: 11 }, splitLine: { lineStyle: { color: split } } },
-    series: [{ type: "bar", barMaxWidth: 60, data: [2022, 487, 402, 436, 127, 414, 8, 118], itemStyle: { color: palette[2] }, label: { show: true, position: "top", fontFamily: "IBM Plex Mono, monospace", fontSize: 11, color: label } }]
+    series: [{ type: "bar", barMaxWidth: 60, data: [2022, 487, 402, 436, 127, 414, 8, 118, 30, 68, 21, 119], itemStyle: { color: palette[2] }, label: { show: true, position: "top", fontFamily: "IBM Plex Mono, monospace", fontSize: 11, color: label } }]
   });
 
   // Figure 4: grade distribution

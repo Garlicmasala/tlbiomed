@@ -64,9 +64,9 @@ li { margin-bottom: 5px; }
 <div class="meta">
   <span><b>Project</b> T&amp;L@Biomed</span>
   <span><b>Stack</b> HTML / CSS / vanilla JS</span>
-  <span><b>Commits</b> 8</span>
+  <span><b>Commits</b> 12</span>
   <span><b>Tests</b> 56 / 56</span>
-  <span><b>Code</b> 2,246 lines · 52 functions</span>
+  <span><b>Code</b> 2,522 lines · 53 functions</span>
 </div>
 
 <div class="stats-row">
@@ -141,7 +141,7 @@ li { margin-bottom: 5px; }
 </svg>
 
 <h2 id="commits">4. Commit history &amp; growth</h2>
-<p>The project evolved over 8 commits across two days, each adding a meaningful layer. The chart below shows lines added per commit (net insertions).</p>
+<p>The project evolved over 12 commits across three days, each adding a meaningful layer. The chart below shows lines added per commit (net insertions).</p>
 
 <div class="figure">
 <div id="chart-commits" class="chart"></div>
@@ -158,6 +158,10 @@ li { margin-bottom: 5px; }
 <tr><td><code>0348f6b</code></td><td>2026-09-06</td><td>Development guide (<code>development.html</code>) with workflow diagrams, test evolution, code metrics and ADRs; 4 new smoke tests</td><td>+414</td></tr>
 <tr><td><code>f008aca</code></td><td>2026-09-06</td><td>Footer links to paper and dev guide (EN + zh); smoke test allows same-deploy .html links</td><td>+8</td></tr>
 <tr><td><code>15302ec</code></td><td>2026-09-07</td><td>Study Guide tab with bilingual educational instruction; 24 i18n keys per language</td><td>+118</td></tr>
+<tr><td><code>75c04fe</code></td><td>2026-09-07</td><td>Docs sync: 5 tabs, 56 tests, 157 i18n keys; commit graphs refreshed</td><td>+30</td></tr>
+<tr><td><code>ece24c7</code></td><td>2026-09-08</td><td>Content expansion: 14 notes (Weeks 1–14), 25 quiz Qs, 10 tutorial groups, 6 study-guide cards; i18n 136</td><td>+68</td></tr>
+<tr><td><code>d75a98e</code></td><td>2026-09-08</td><td>Content round 2: quiz 25→35, 3 reference notes, Medical Statistics tutorial group</td><td>+21</td></tr>
+<tr><td><code>98b88f6</code></td><td>2026-09-08</td><td>Quiz topic filter: 18 subject chips, topic tags on all questions, quiz 35→40; i18n 157</td><td>+119</td></tr>
 </table>
 
 <h2 id="test-evolution">5. Test suite evolution</h2>
@@ -165,7 +169,7 @@ li { margin-bottom: 5px; }
 
 <div class="figure">
 <div id="chart-tests" class="chart"></div>
-<div class="caption">Figure 2 — Test suite composition (56 tests). BDD behavior tests (20) guard content integrity; smoke tests (14) guard the shipped artifact; TDD tests (quiz 9, grades 5, i18n 4) guard pure logic.</div>
+<div class="caption">Figure 2 — Test suite composition (56 tests). BDD behavior tests (20) guard content integrity; smoke tests (18) guard the shipped artifact; TDD tests (quiz 9, grades 5, i18n 4) guard pure logic.</div>
 </div>
 
 <h3>5.1 How the sandbox works</h3>
@@ -182,19 +186,19 @@ return sandbox.window.TL;  // evaluateQuestion, computeScore, gradeStats, bandSo
 
 <div class="figure">
 <div id="chart-content" class="chart"></div>
-<div class="caption">Figure 3 — Sample content growth across commits. Notes (4→8→10), quiz questions (5→10→15), grade years (3→5). All content is marked <code>sample: true</code> until the instructor replaces it.</div>
+<div class="caption">Figure 3 — Sample content growth across commits. Notes (4→17), quiz questions (5→40), grade years (3→5). All content is marked <code>sample: true</code> until the instructor replaces it.</div>
 </div>
 
 <h2 id="metrics">7. Code metrics</h2>
 <div class="figure">
 <div id="chart-metrics" class="chart"></div>
-<div class="caption">Figure 4 — Approximate line distribution in <code>index.html</code> (2,246 lines total). CSS design system ~26%, config &amp; i18n ~22%, core logic ~34%, markup ~18%.</div>
+<div class="caption">Figure 4 — Approximate line distribution in <code>index.html</code> (2,522 lines total). CSS design system ~26%, config &amp; i18n ~22%, core logic ~34%, markup ~18%.</div>
 </div>
 
 <table>
 <tr><th>Metric</th><th>Value</th><th>Notes</th></tr>
-<tr><td>Total lines</td><td>2,246</td><td><code>index.html</code> single file</td></tr>
-<tr><td>Functions</td><td>52</td><td>All in core script; ~14 are pure logic (TL.*)</td></tr>
+<tr><td>Total lines</td><td>2,522</td><td><code>index.html</code> single file</td></tr>
+<tr><td>Functions</td><td>53</td><td>All in core script; 10 are pure logic (TL.*)</td></tr>
 <tr><td>i18n keys</td><td>157 / language</td><td>314 total strings (EN + 中文)</td></tr>
 <tr><td>Test files</td><td>5</td><td>quiz, grades, config.behavior, smoke, i18n</td></tr>
 <tr><td>Test helpers</td><td>3</td><td>extract (vm sandbox), check-html (tag balance), patch-scaffold</td></tr>
@@ -208,7 +212,7 @@ return sandbox.window.TL;  // evaluateQuestion, computeScore, gradeStats, bandSo
 <div class="adr">
 <h4>ADR-01: Single self-contained HTML file <span class="status">Accepted</span></h4>
 <p><b>Decision:</b> The entire site — markup, styles, logic, config, i18n — lives in one <code>index.html</code>.</p>
-<p><b>Why:</b> Zero build step, zero dependency installation, trivial deployment (copy one file), trivial backup, and the instructor can open it in any text editor. The tradeoff — a large file (~95 KB) — is acceptable for a course hub of this scale.</p>
+<p><b>Why:</b> Zero build step, zero dependency installation, trivial deployment (copy one file), trivial backup, and the instructor can open it in any text editor. The tradeoff — a large file (~123 KB) — is acceptable for a course hub of this scale.</p>
 </div>
 
 <div class="adr">
@@ -308,7 +312,7 @@ return sandbox.window.TL;  // evaluateQuestion, computeScore, gradeStats, bandSo
 <p>The included workflow (<code>.github/workflows/deploy.yml</code>) triggers on every push to <code>main</code> and on manual <code>workflow_dispatch</code>. It uses <code>actions/configure-pages@v5</code>, <code>upload-pages-artifact@v3</code> (uploading <code>./index.html</code>), and <code>deploy-pages@v4</code>. No build step is required — the artifact is the file itself.</p>
 
 <div class="footer">
-T&amp;L@Biomed Development Guide · Generated from the project repository · 56/56 tests passing · 8 commits · 2,246 lines · Single-file static site
+T&amp;L@Biomed Development Guide · Generated from the project repository · 56/56 tests passing · 12 commits · 2,522 lines · Single-file static site
 </div>
 
 </article>
@@ -326,9 +330,9 @@ T&amp;L@Biomed Development Guide · Generated from the project repository · 56/
     color: palette,
     tooltip: { trigger: "axis" },
     grid: grid(),
-    xAxis: { type: "category", data: ["a8cdd7b\ninitial", "0abd8fe\ninteractivity", "cb85dec\nsubjects+i18n", "0cd9612\npaper", "170660b\nsearch+retry", "0348f6b\ndev guide", "f008aca\nfooter links", "15302ec\nstudy guide"], axisLine: { lineStyle: { color: axis } }, axisLabel: { color: label, fontFamily: "IBM Plex Mono, monospace", fontSize: 10, interval: 0 } },
+    xAxis: { type: "category", data: ["a8cdd7b\ninitial", "0abd8fe\ninteractivity", "cb85dec\nsubjects+i18n", "0cd9612\npaper", "170660b\nsearch+retry", "0348f6b\ndev guide", "f008aca\nfooter links", "15302ec\nstudy guide", "75c04fe\ndocs sync", "ece24c7\nexpand", "d75a98e\nexpand", "98b88f6\ntopic filter"], axisLine: { lineStyle: { color: axis } }, axisLabel: { color: label, fontFamily: "IBM Plex Mono, monospace", fontSize: 10, interval: 0 } },
     yAxis: { type: "value", name: "lines added", nameTextStyle: { color: label, fontSize: 11 }, axisLabel: { color: label, fontFamily: "IBM Plex Mono, monospace", fontSize: 11 }, splitLine: { lineStyle: { color: split } } },
-    series: [{ type: "bar", barMaxWidth: 50, data: [2022, 487, 402, 436, 127, 414, 8, 118], itemStyle: { color: palette[2] }, label: { show: true, position: "top", fontFamily: "IBM Plex Mono, monospace", fontSize: 11, color: label } }]
+    series: [{ type: "bar", barMaxWidth: 50, data: [2022, 487, 402, 436, 127, 414, 8, 118, 30, 68, 21, 119], itemStyle: { color: palette[2] }, label: { show: true, position: "top", fontFamily: "IBM Plex Mono, monospace", fontSize: 11, color: label } }]
   });
 
   // Figure 2: tests
@@ -353,12 +357,12 @@ T&amp;L@Biomed Development Guide · Generated from the project repository · 56/
     tooltip: { trigger: "axis" },
     legend: { bottom: 0, textStyle: { color: label, fontSize: 12 } },
     grid: grid(),
-    xAxis: { type: "category", data: ["a8cdd7b\ninitial", "cb85dec\nexpand", "170660b\nall"], axisLine: { lineStyle: { color: axis } }, axisLabel: { color: label, fontFamily: "IBM Plex Mono, monospace", fontSize: 10, interval: 0 } },
+    xAxis: { type: "category", data: ["a8cdd7b\ninitial", "cb85dec\nexpand", "170660b\nall", "98b88f6\nnow"], axisLine: { lineStyle: { color: axis } }, axisLabel: { color: label, fontFamily: "IBM Plex Mono, monospace", fontSize: 10, interval: 0 } },
     yAxis: { type: "value", minInterval: 1, name: "count", nameTextStyle: { color: label, fontSize: 11 }, axisLabel: { color: label, fontFamily: "IBM Plex Mono, monospace", fontSize: 11 }, splitLine: { lineStyle: { color: split } } },
     series: [
-      { name: "Notes", type: "bar", stack: "total", data: [4, 8, 10], itemStyle: { color: palette[0] } },
-      { name: "Quiz questions", type: "bar", stack: "total", data: [5, 10, 15], itemStyle: { color: palette[1] } },
-      { name: "Grade years", type: "bar", stack: "total", data: [3, 3, 5], itemStyle: { color: palette[2] } }
+      { name: "Notes", type: "bar", stack: "total", data: [4, 8, 10, 17], itemStyle: { color: palette[0] } },
+      { name: "Quiz questions", type: "bar", stack: "total", data: [5, 10, 15, 40], itemStyle: { color: palette[1] } },
+      { name: "Grade years", type: "bar", stack: "total", data: [3, 3, 5, 5], itemStyle: { color: palette[2] } }
     ]
   });
 
