@@ -26,6 +26,7 @@ test("exposes the five course tabs as routes", () => {
 test("exposes the interactive feature elements", () => {
   [
     "quiz-timer", "quiz-stats", "res-ring", "res-time",
+    "quiz-topic-filter",
     "notes-filter", "tutorials-filter",
     "grade-mode-seg", "grade-table",
     "toast-wrap", "theme-btn", "copy-link-btn", "lang-btn",
