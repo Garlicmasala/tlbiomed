@@ -1002,7 +1002,10 @@ var SITE_CONFIG = {
     { title: "Week 11 — Reproduction & development", desc: "Slides, embryology diagrams and reading list.", url: "https://example.com/tlb-notes-week11", tags: ["week-11", "reproduction"], sample: true },
     { title: "Week 12 — Cancer biology & oncogenes", desc: "Lecture notes and hallmarks of cancer summary.", url: "https://example.com/tlb-notes-week12", tags: ["week-12", "cancer"], sample: true },
     { title: "Week 13 — Infectious disease & clinical microbiology", desc: "Slides and antimicrobial stewardship notes.", url: "https://example.com/tlb-notes-week13", tags: ["week-13", "infectious-disease"], sample: true },
-    { title: "Week 14 — Revision & integrated case studies", desc: "Consolidation notes and past-paper walkthroughs.", url: "https://example.com/tlb-notes-week14", tags: ["week-14", "revision"], sample: true }
+    { title: "Week 14 — Revision & integrated case studies", desc: "Consolidation notes and past-paper walkthroughs.", url: "https://example.com/tlb-notes-week14", tags: ["week-14", "revision"], sample: true },
+    { title: "Normal lab values — quick reference", desc: "Haematology, biochemistry and endocrine reference ranges.", url: "https://example.com/tlb-ref-labvalues", tags: ["reference", "lab-values"], sample: true },
+    { title: "Medical abbreviations glossary", desc: "The abbreviations used on ward rounds and in notes.", url: "https://example.com/tlb-ref-abbreviations", tags: ["reference", "glossary"], sample: true },
+    { title: "Essay & short-answer question guide", desc: "Structuring answers for written exams and SBQs.", url: "https://example.com/tlb-ref-writing", tags: ["reference", "writing", "revision"], sample: true }
   ],
 
   /* Structured tutorials: grouped by topic, each item is a link.
@@ -1048,6 +1051,10 @@ var SITE_CONFIG = {
     { topic: "Endocrinology", note: "2 steps", items: [
       { title: "The HPA axis, step by step", desc: "Hypothalamus, pituitary, adrenal — and the feedback loops.", url: "https://example.com/tut-hpa", sample: true },
       { title: "Diabetes mellitus: type 1 vs type 2", desc: "Pathophysiology and diagnosis at a glance.", url: "https://example.com/tut-diabetes", sample: true }
+    ] },
+    { topic: "Medical Statistics", note: "2 steps", items: [
+      { title: "Sensitivity & specificity made simple", desc: "Two-by-two tables and what the numbers mean.", url: "https://example.com/tut-sens-spec", sample: true },
+      { title: "Reading a forest plot", desc: "Point estimates, confidence intervals and heterogeneity.", url: "https://example.com/tut-forest-plot", sample: true }
     ] }
   ],
 
@@ -1058,7 +1065,7 @@ var SITE_CONFIG = {
   quiz: {
     sample: true,
     title: "Mock Quiz — sample set",
-    intro: "Twenty-five starter questions across cell biology, biochemistry, physiology, microbiology, immunology, pharmacology, genetics, haematology, neuroscience, endocrinology, renal, anatomy, cancer biology and medical statistics.",
+    intro: "Thirty-five starter questions across cell biology, biochemistry, physiology, microbiology, immunology, pharmacology, genetics, haematology, neuroscience, endocrinology, renal, anatomy, cancer biology, medical statistics, respiratory, reproductive, musculoskeletal and clinical chemistry.",
     shuffle: false,
     shuffleOptions: true,
     questions: [
@@ -1146,7 +1153,17 @@ var SITE_CONFIG = {
       { id: "q22", prompt: "Which white blood cell increases most in a parasitic infection?", options: ["Neutrophil", "Lymphocyte", "Eosinophil", "Monocyte"], answerIndex: 2, explanation: "Eosinophils defend against parasites and drive allergic responses." },
       { id: "q23", prompt: "The primary mechanism of action of penicillins is:", options: ["Inhibition of protein synthesis", "Inhibition of DNA gyrase", "Disruption of the cell membrane", "Inhibition of cell-wall synthesis"], answerIndex: 3, explanation: "Penicillins block peptidoglycan cross-linking, weakening the bacterial cell wall." },
       { id: "q24", prompt: "A drug that binds to a receptor and produces a response is called a(n):", options: ["Antagonist", "Inhibitor", "Agonist", "Placebo"], answerIndex: 2, explanation: "Agonists activate their receptor; antagonists block it without producing a response." },
-      { id: "q25", prompt: "Which process describes the movement of water across a semipermeable membrane?", options: ["Diffusion", "Active transport", "Facilitated diffusion", "Osmosis"], answerIndex: 3, explanation: "Osmosis is the net movement of water down its concentration gradient across a semipermeable membrane." }
+      { id: "q25", prompt: "Which process describes the movement of water across a semipermeable membrane?", options: ["Diffusion", "Active transport", "Facilitated diffusion", "Osmosis"], answerIndex: 3, explanation: "Osmosis is the net movement of water down its concentration gradient across a semipermeable membrane." },
+      { id: "q26", prompt: "Which measure is the air remaining in the lungs after a maximal expiration?", options: ["Tidal volume", "Vital capacity", "Residual volume", "Inspiratory reserve volume"], answerIndex: 2, explanation: "Residual volume cannot be expired voluntarily — it keeps the alveoli from collapsing." },
+      { id: "q27", prompt: "The corpus luteum predominantly secretes which hormone in the luteal phase?", options: ["Oestrogen", "Progesterone", "FSH", "hCG"], answerIndex: 1, explanation: "The corpus luteum secretes progesterone, which maintains the uterine lining for implantation." },
+      { id: "q28", prompt: "Which of the following is a muscle of mastication?", options: ["Masseter", "Sartorius", "Deltoid", "Trapezius"], answerIndex: 0, explanation: "The masseter is one of the four muscles of mastication, elevating the mandible." },
+      { id: "q29", prompt: "Which lipoprotein is commonly called the “bad cholesterol”?", options: ["HDL cholesterol", "Triglycerides", "LDL cholesterol", "Total cholesterol"], answerIndex: 2, explanation: "LDL cholesterol delivers cholesterol to tissues; high levels are associated with atherosclerosis." },
+      { id: "q30", prompt: "Which organism is the most common cause of community-acquired pneumonia?", options: ["Staphylococcus aureus", "Streptococcus pneumoniae", "Haemophilus influenzae", "Mycoplasma pneumoniae"], answerIndex: 1, explanation: "Streptococcus pneumoniae is the leading bacterial cause of community-acquired pneumonia." },
+      { id: "q31", prompt: "Which cancer screening test uses the PSA blood marker?", options: ["Colorectal", "Breast", "Prostate", "Cervical"], answerIndex: 2, explanation: "PSA (prostate-specific antigen) is used in prostate cancer screening and monitoring." },
+      { id: "q32", prompt: "Which immunoglobulin crosses the placenta and protects the newborn?", options: ["IgA", "IgM", "IgG", "IgE"], answerIndex: 2, explanation: "IgG is actively transported across the placenta, providing passive immunity at birth." },
+      { id: "q33", prompt: "First-pass metabolism of an oral drug occurs mainly in the:", options: ["Kidney", "Liver", "Lung", "Gut wall"], answerIndex: 1, explanation: "The liver metabolises much of an absorbed dose before it reaches the systemic circulation." },
+      { id: "q34", prompt: "Which substance is normally completely reabsorbed by the proximal tubule?", options: ["Urea", "Glucose", "Potassium", "Creatinine"], answerIndex: 1, explanation: "Glucose is fully reabsorbed in the proximal tubule via sodium-glucose cotransporters until the transport maximum is exceeded." },
+      { id: "q35", prompt: "The tibia and fibula are bones of the:", options: ["Lower leg", "Upper limb", "Forearm", "Thorax"], answerIndex: 0, explanation: "The tibia and fibula form the skeleton of the lower leg (crus)." }
     ]
   },
 
