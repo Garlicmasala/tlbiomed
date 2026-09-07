@@ -908,6 +908,23 @@ footer {
           <li data-i18n="guide.grades3">Use the cohort median as your benchmark, not the maximum.</li>
         </ul>
       </article>
+      <article class="card guide-card">
+        <h3 data-i18n="guide.examTitle">Exam strategy</h3>
+        <ul>
+          <li data-i18n="guide.exam1">Scan the whole paper for the first minute before answering anything.</li>
+          <li data-i18n="guide.exam2">Answer easy questions first; flag the hard ones and return later.</li>
+          <li data-i18n="guide.exam3">In MCQs, eliminate two options before choosing — turn guessing into deciding.</li>
+          <li data-i18n="guide.exam4">Keep a running clock: about one mark per minute is a sound default.</li>
+        </ul>
+      </article>
+      <article class="card guide-card">
+        <h3 data-i18n="guide.wellTitle">Wellbeing during exams</h3>
+        <ul>
+          <li data-i18n="guide.well1">Aim for 7–9 hours of sleep in the exam week — memory consolidates during sleep.</li>
+          <li data-i18n="guide.well2">Take short movement breaks every 45–60 minutes of study.</li>
+          <li data-i18n="guide.well3">Stay hydrated and eat regular meals; caffeine after noon can cost you sleep.</li>
+        </ul>
+      </article>
     </div>
     <div class="guide-note" data-i18n="guide.note">Tip: ten minutes of retrieval practice beats an hour of re-reading. Study in short, focused sessions.</div>
   </section>
@@ -981,7 +998,11 @@ var SITE_CONFIG = {
     { title: "Week 7 — Molecular genetics & genomics", desc: "Slides and worked examples.", url: "https://example.com/tlb-notes-week7", tags: ["week-7", "genetics"], sample: true },
     { title: "Week 8 — Neurophysiology: CNS & PNS", desc: "Lecture notes and lab sheet.", url: "https://example.com/tlb-notes-week8", tags: ["week-8", "neuroscience"], sample: true },
     { title: "Week 9 — Endocrinology: hormones & feedback", desc: "Slides and endocrine axis diagrams.", url: "https://example.com/tlb-notes-week9", tags: ["week-9", "endocrinology"], sample: true },
-    { title: "Week 10 — Renal physiology & fluid balance", desc: "Lecture notes and problem set.", url: "https://example.com/tlb-notes-week10", tags: ["week-10", "renal"], sample: true }
+    { title: "Week 10 — Renal physiology & fluid balance", desc: "Lecture notes and problem set.", url: "https://example.com/tlb-notes-week10", tags: ["week-10", "renal"], sample: true },
+    { title: "Week 11 — Reproduction & development", desc: "Slides, embryology diagrams and reading list.", url: "https://example.com/tlb-notes-week11", tags: ["week-11", "reproduction"], sample: true },
+    { title: "Week 12 — Cancer biology & oncogenes", desc: "Lecture notes and hallmarks of cancer summary.", url: "https://example.com/tlb-notes-week12", tags: ["week-12", "cancer"], sample: true },
+    { title: "Week 13 — Infectious disease & clinical microbiology", desc: "Slides and antimicrobial stewardship notes.", url: "https://example.com/tlb-notes-week13", tags: ["week-13", "infectious-disease"], sample: true },
+    { title: "Week 14 — Revision & integrated case studies", desc: "Consolidation notes and past-paper walkthroughs.", url: "https://example.com/tlb-notes-week14", tags: ["week-14", "revision"], sample: true }
   ],
 
   /* Structured tutorials: grouped by topic, each item is a link.
@@ -1015,6 +1036,18 @@ var SITE_CONFIG = {
     { topic: "Haematology", note: "2 steps", items: [
       { title: "Reading a full blood count", desc: "RBC, WBC, platelets — normal ranges and what they mean.", url: "https://example.com/tut-fbc", sample: true },
       { title: "The coagulation cascade, simplified", desc: "Intrinsic, extrinsic and common pathways.", url: "https://example.com/tut-coag", sample: true }
+    ] },
+    { topic: "Anatomy", note: "2 steps", items: [
+      { title: "Surface anatomy & regional landmarks", desc: "The structures you can find on the body surface.", url: "https://example.com/tut-surface-anatomy", sample: true },
+      { title: "Thoracic & abdominal imaging basics", desc: "Reading chest and abdominal films with confidence.", url: "https://example.com/tut-imaging", sample: true }
+    ] },
+    { topic: "Genetics & Genomics", note: "2 steps", items: [
+      { title: "Reading a karyotype", desc: "Chromosome pairs, banding and common abnormalities.", url: "https://example.com/tut-karyotype", sample: true },
+      { title: "Pedigree analysis in Mendelian inheritance", desc: "Autosomal vs X-linked, dominant vs recessive.", url: "https://example.com/tut-pedigree", sample: true }
+    ] },
+    { topic: "Endocrinology", note: "2 steps", items: [
+      { title: "The HPA axis, step by step", desc: "Hypothalamus, pituitary, adrenal — and the feedback loops.", url: "https://example.com/tut-hpa", sample: true },
+      { title: "Diabetes mellitus: type 1 vs type 2", desc: "Pathophysiology and diagnosis at a glance.", url: "https://example.com/tut-diabetes", sample: true }
     ] }
   ],
 
@@ -1025,7 +1058,7 @@ var SITE_CONFIG = {
   quiz: {
     sample: true,
     title: "Mock Quiz — sample set",
-    intro: "Fifteen starter questions across cell biology, biochemistry, physiology, microbiology, immunology, pharmacology, genetics, haematology, neuroscience, endocrinology, renal and anatomy.",
+    intro: "Twenty-five starter questions across cell biology, biochemistry, physiology, microbiology, immunology, pharmacology, genetics, haematology, neuroscience, endocrinology, renal, anatomy, cancer biology and medical statistics.",
     shuffle: false,
     shuffleOptions: true,
     questions: [
@@ -1103,7 +1136,17 @@ var SITE_CONFIG = {
       { id: "q12", prompt: "In the lungs, gas exchange occurs across the:", options: ["Trachea", "Bronchi", "Alveoli", "Pleura"], answerIndex: 2, explanation: "Alveoli are the thin-walled sacs where oxygen and carbon dioxide diffuse between air and blood." },
       { id: "q13", prompt: "The functional unit of the kidney is the:", options: ["Neuron", "Nephron", "Glomerulus", "Collecting duct"], answerIndex: 1, explanation: "The nephron — glomerulus plus tubule — filters and modifies urine." },
       { id: "q14", prompt: "The mitral (bicuspid) valve is located between the:", options: ["Right atrium and right ventricle", "Left atrium and left ventricle", "Right ventricle and pulmonary artery", "Left ventricle and aorta"], answerIndex: 1, explanation: "The mitral valve separates the left atrium from the left ventricle; the tricuspid valve is on the right." },
-      { id: "q15", prompt: "Which molecule is the primary energy currency of the cell?", options: ["NADH", "ATP", "Glucose", "Acetyl-CoA"], answerIndex: 1, explanation: "Adenosine triphosphate (ATP) stores readily releasable energy in its phosphate bonds." }
+      { id: "q15", prompt: "Which molecule is the primary energy currency of the cell?", options: ["NADH", "ATP", "Glucose", "Acetyl-CoA"], answerIndex: 1, explanation: "Adenosine triphosphate (ATP) stores readily releasable energy in its phosphate bonds." },
+      { id: "q16", prompt: "Which bone forms the main structural framework of the upper arm?", options: ["Tibia", "Radius", "Femur", "Humerus"], answerIndex: 3, explanation: "The humerus is the long bone of the upper arm, articulating with the scapula and the radius/ulna." },
+      { id: "q17", prompt: "A condition that appears in every generation and affects males and females equally is most likely:", options: ["Autosomal dominant", "Autosomal recessive", "X-linked recessive", "Mitochondrial"], answerIndex: 0, explanation: "Autosomal dominant traits appear in every generation and affect both sexes equally; recessive traits often skip generations." },
+      { id: "q18", prompt: "Cortisol secretion from the adrenal cortex is directly stimulated by:", options: ["Aldosterone", "ACTH", "TSH", "Insulin"], answerIndex: 1, explanation: "Adrenocorticotropic hormone (ACTH) from the anterior pituitary drives cortisol release." },
+      { id: "q19", prompt: "Which hormone most directly increases water reabsorption in the collecting duct?", options: ["Aldosterone", "ADH (vasopressin)", "Atrial natriuretic peptide", "Parathyroid hormone"], answerIndex: 1, explanation: "ADH inserts aquaporins in the collecting duct, concentrating the urine." },
+      { id: "q20", prompt: "A hallmark of cancer cells is:", options: ["Contact inhibition", "Terminal differentiation", "Evasion of apoptosis", "Fully restored DNA repair"], answerIndex: 2, explanation: "Evading apoptosis lets damaged cells survive and accumulate — one of the hallmarks of cancer." },
+      { id: "q21", prompt: "The median of the dataset 3, 5, 7, 9, 24.8 is:", options: ["24.8", "5", "7", "9"], answerIndex: 2, explanation: "With five values the median is the middle one — 7 — and is far more robust than the mean here." },
+      { id: "q22", prompt: "Which white blood cell increases most in a parasitic infection?", options: ["Neutrophil", "Lymphocyte", "Eosinophil", "Monocyte"], answerIndex: 2, explanation: "Eosinophils defend against parasites and drive allergic responses." },
+      { id: "q23", prompt: "The primary mechanism of action of penicillins is:", options: ["Inhibition of protein synthesis", "Inhibition of DNA gyrase", "Disruption of the cell membrane", "Inhibition of cell-wall synthesis"], answerIndex: 3, explanation: "Penicillins block peptidoglycan cross-linking, weakening the bacterial cell wall." },
+      { id: "q24", prompt: "A drug that binds to a receptor and produces a response is called a(n):", options: ["Antagonist", "Inhibitor", "Agonist", "Placebo"], answerIndex: 2, explanation: "Agonists activate their receptor; antagonists block it without producing a response." },
+      { id: "q25", prompt: "Which process describes the movement of water across a semipermeable membrane?", options: ["Diffusion", "Active transport", "Facilitated diffusion", "Osmosis"], answerIndex: 3, explanation: "Osmosis is the net movement of water down its concentration gradient across a semipermeable membrane." }
     ]
   },
 
@@ -1171,6 +1214,15 @@ var LANGS = {
     "guide.grades2": "D and above counts as a pass; bands sort from A+ down to F.",
     "guide.grades3": "Use the cohort median as your benchmark, not the maximum.",
     "guide.note": "Tip: ten minutes of retrieval practice beats an hour of re-reading. Study in short, focused sessions.",
+    "guide.examTitle": "Exam strategy",
+    "guide.exam1": "Scan the whole paper for the first minute before answering anything.",
+    "guide.exam2": "Answer easy questions first; flag the hard ones and return later.",
+    "guide.exam3": "In MCQs, eliminate two options before choosing — turn guessing into deciding.",
+    "guide.exam4": "Keep a running clock: about one mark per minute is a sound default.",
+    "guide.wellTitle": "Wellbeing during exams",
+    "guide.well1": "Aim for 7–9 hours of sleep in the exam week — memory consolidates during sleep.",
+    "guide.well2": "Take short movement breaks every 45–60 minutes of study.",
+    "guide.well3": "Stay hydrated and eat regular meals; caffeine after noon can cost you sleep.",
     "notes.eyebrow": "TLB / Notes",
     "notes.title": "Notes",
     "notes.desc": "Curated links to lecture notes, readings and references.",
@@ -1302,6 +1354,15 @@ var LANGS = {
     "guide.grades2": "D 或以上為合格；等級由 A+ 至 F 排列。",
     "guide.grades3": "以全班中位數為基準，而非最高分。",
     "guide.note": "小貼士：十分鐘的提取練習勝過一小時的重讀。每次學習宜短而專注。",
+    "guide.examTitle": "應試策略",
+    "guide.exam1": "開考第一分鐘先掃讀全卷，再開始作答。",
+    "guide.exam2": "先做容易的題目，難題先標記，稍後再回頭。",
+    "guide.exam3": "選擇題先排除兩個選項再作答——把猜題變成決策。",
+    "guide.exam4": "留意時間：大約每分鐘一分，是穩妥的基準。",
+    "guide.wellTitle": "考試期間的作息",
+    "guide.well1": "考試週爭取 7–9 小時睡眠——記憶在睡眠中鞏固。",
+    "guide.well2": "每溫習 45–60 分鐘便短暫活動休息。",
+    "guide.well3": "保持水分與定時進餐；下午過後攝取咖啡因或影響睡眠。",
     "notes.eyebrow": "TLB / 筆記",
     "notes.title": "筆記",
     "notes.desc": "精選連結：講義、閱讀材料及參考資料。",
