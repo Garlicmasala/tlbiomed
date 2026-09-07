@@ -65,20 +65,20 @@ li { margin-bottom: 5px; }
 <div class="meta">
   <span><b>Project</b> T&amp;L@Biomed</span>
   <span><b>Stack</b> HTML / CSS / vanilla JS</span>
-  <span><b>Tests</b> 52 / 52 passing</span>
+  <span><b>Tests</b> 56 / 56 passing</span>
   <span><b>Size</b> ~91 KB · 2,128 lines</span>
   <span><b>Languages</b> English · 繁體中文</span>
 </div>
 
 <div class="stats-row">
   <div class="stat"><div class="v">1</div><div class="l">HTML file</div></div>
-  <div class="stat"><div class="v">4</div><div class="l">Course tabs</div></div>
-  <div class="stat"><div class="v">52</div><div class="l">Automated tests</div></div>
+  <div class="stat"><div class="v">5</div><div class="l">Course tabs</div></div>
+  <div class="stat"><div class="v">56</div><div class="l">Automated tests</div></div>
   <div class="stat"><div class="v">$0</div><div class="l">Hosting cost</div></div>
 </div>
 
 <div class="abstract">
-<b>Abstract.</b> T&amp;L@Biomed is a static course hub built for a university biomedicine teaching context. It delivers four sections — lecture notes, an interactive multiple-choice mock quiz, past grade distributions, and structured tutorials — inside a single self-contained <code>index.html</code> with no server, database, build step, or paid dependency. Private sections are gated by a client-side passcode; the quiz provides instant correct/wrong feedback, a timer, keyboard shortcuts, answer shuffling, and per-device attempt history, and a retry-wrong-only mode; grade data is rendered as an interactive ECharts bar chart with chart/table and counts/percent toggles and one-click print; a site-wide search box finds notes and tutorials in one dropdown. The entire UI is bilingual (English and Traditional Chinese) with browser-language auto-detection. Quality is enforced by a 52-test BDD/TDD/smoke suite running in Node's built-in test runner, and deployment is a single <code>git push</code> via GitHub Actions. This paper documents the architecture, configuration, data model, internationalization, testing strategy, sample data, and deployment pipeline.
+<b>Abstract.</b> T&amp;L@Biomed is a static course hub built for a university biomedicine teaching context. It delivers five sections — lecture notes, an interactive multiple-choice mock quiz, past grade distributions, structured tutorials, and a study guide — inside a single self-contained <code>index.html</code> with no server, database, build step, or paid dependency. Private sections are gated by a client-side passcode; the quiz provides instant correct/wrong feedback, a timer, keyboard shortcuts, answer shuffling, and per-device attempt history, and a retry-wrong-only mode; grade data is rendered as an interactive ECharts bar chart with chart/table and counts/percent toggles and one-click print; a site-wide search box finds notes and tutorials in one dropdown. The entire UI is bilingual (English and Traditional Chinese) with browser-language auto-detection. Quality is enforced by a 56-test BDD/TDD/smoke suite running in Node's built-in test runner, and deployment is a single <code>git push</code> via GitHub Actions. This paper documents the architecture, configuration, data model, internationalization, testing strategy, sample data, and deployment pipeline.
 </div>
 
 <nav class="toc">
@@ -208,7 +208,7 @@ li { margin-bottom: 5px; }
 
 <div class="figure">
 <div id="chart-i18n" class="chart"></div>
-<div class="caption">Figure 1 — i18n key coverage: 103 keys per language, 100% parity between English and Traditional Chinese (206 total strings).</div>
+<div class="caption">Figure 1 — i18n key coverage: 127 keys per language, 100% parity between English and Traditional Chinese (206 total strings).</div>
 </div>
 
 <p><b>Mechanics.</b> Static elements carry <code>data-i18n</code> (or <code>data-i18n-ph</code> for placeholders) and are re-rendered on language switch. Dynamic strings (question counters, verdicts, stat chips, toasts) use a <code>t(key)</code> / <code>fmt(key, vars)</code> pair with <code>{placeholder}</code> substitution. Initial language is read from <code>localStorage</code>, then auto-detected from the browser (<code>zh-*</code> → 中文), then the configured default. The choice is persisted and the document title and meta description update with it.</p>
@@ -218,7 +218,7 @@ li { margin-bottom: 5px; }
 
 <div class="figure">
 <div id="chart-tests" class="chart"></div>
-<div class="caption">Figure 2 — Distribution of the 52 automated tests across five suites (config.behavior 20, smoke 14, quiz 9, grades 5, i18n 4).</div>
+<div class="caption">Figure 2 — Distribution of the 56 automated tests across five suites (config.behavior 20, smoke 14, quiz 9, grades 5, i18n 4).</div>
 </div>
 
 <h3>6.1 What the suites guard</h3>
@@ -232,10 +232,10 @@ li { margin-bottom: 5px; }
 
 <div class="figure">
 <div id="chart-commits" class="chart"></div>
-<div class="caption">Figure 3 — Commit growth: 3 commits, 3,064 net insertions. Initial scaffold (a8cdd7b), interactivity layer (0abd8fe), expanded subjects + i18n (cb85dec).</div>
+<div class="caption">Figure 3 — Commit growth: 8 commits, 4,014 net insertions. Initial scaffold (a8cdd7b), interactivity (0abd8fe), subjects + i18n (cb85dec), paper (0cd9612), search + retry (170660b), dev guide (0348f6b), footer links (f008aca), study guide (15302ec).</div>
 </div>
 
-<p>Additionally, an HTML tag-balance helper verifies opening/closing tag parity on every run, and the full suite is re-executed after every change before commit. The current result is <b>48 / 48 passing</b>.</p>
+<p>Additionally, an HTML tag-balance helper verifies opening/closing tag parity on every run, and the full suite is re-executed after every change before commit. The current result is <b>56 / 56 passing</b>.</p>
 
 <h2 id="grades">7. Sample grade data</h2>
 <p>The shipped grade block contains five academic years of sample data (140, 145, 152, 148, and 161 students respectively), all marked <code>sample: true</code>. The chart below is rendered by the same ECharts configuration the live site uses — a flat, accessible grouped bar with shared tooltip and a dark-aware palette.</p>
@@ -267,7 +267,7 @@ li { margin-bottom: 5px; }
 
 <rect x="170" y="70" width="110" height="60" rx="10" fill="#FFFFFF" stroke="#0E6B5C" stroke-width="1.5"/>
 <text x="225" y="98" font-weight="600" fill="#0E6B5C">npm test</text>
-<text x="225" y="116" font-size="10" fill="#50646A">48 / 48 gate</text>
+<text x="225" y="116" font-size="10" fill="#50646A">56 / 56 gate</text>
 
 <rect x="320" y="70" width="110" height="60" rx="10" fill="#FFFFFF" stroke="#0E6B5C" stroke-width="1.5"/>
 <text x="375" y="98" font-weight="600" fill="#0E6B5C">git push</text>
@@ -310,7 +310,7 @@ li { margin-bottom: 5px; }
 </ul>
 
 <div class="footer">
-T&amp;L@Biomed Technical Paper · Generated from the project repository · 52/52 tests passing · Single-file static site · MIT-style use for course materials
+T&amp;L@Biomed Technical Paper · Generated from the project repository · 56/56 tests passing · Single-file static site · MIT-style use for course materials
 </div>
 
 </article>
@@ -333,7 +333,7 @@ T&amp;L@Biomed Technical Paper · Generated from the project repository · 52/52
     grid: baseGrid(),
     xAxis: { type: "category", data: ["English", "繁體中文"], axisLine: { lineStyle: { color: axis } }, axisLabel: { color: label, fontFamily: "IBM Plex Mono, monospace", fontSize: 12 } },
     yAxis: { type: "value", name: "translated strings", nameTextStyle: { color: label, fontSize: 11 }, axisLabel: { color: label, fontFamily: "IBM Plex Mono, monospace", fontSize: 11 }, splitLine: { lineStyle: { color: split } } },
-    series: [{ type: "bar", barMaxWidth: 80, data: [103, 103], itemStyle: { color: palette[1] }, label: { show: true, position: "top", fontFamily: "IBM Plex Mono, monospace", fontSize: 12, color: label } }]
+    series: [{ type: "bar", barMaxWidth: 80, data: [127, 127], itemStyle: { color: palette[1] }, label: { show: true, position: "top", fontFamily: "IBM Plex Mono, monospace", fontSize: 12, color: label } }]
   });
 
   // Figure 2: test distribution donut
@@ -349,7 +349,7 @@ T&amp;L@Biomed Technical Paper · Generated from the project repository · 52/52
       label: { fontFamily: "IBM Plex Mono, monospace", fontSize: 11, color: label, formatter: "{b}\n{c}" },
       data: [
         { value: 20, name: "config.behavior" },
-        { value: 14, name: "smoke" },
+        { value: 18, name: "smoke" },
         { value: 9, name: "quiz" },
         { value: 5, name: "grades" },
         { value: 4, name: "i18n" }
@@ -363,9 +363,9 @@ T&amp;L@Biomed Technical Paper · Generated from the project repository · 52/52
     color: palette,
     tooltip: { trigger: "axis" },
     grid: baseGrid(),
-    xAxis: { type: "category", data: ["a8cdd7b\ninitial", "0abd8fe\ninteractivity", "cb85dec\nsubjects + i18n"], axisLine: { lineStyle: { color: axis } }, axisLabel: { color: label, fontFamily: "IBM Plex Mono, monospace", fontSize: 10, interval: 0 } },
+    xAxis: { type: "category", data: ["a8cdd7b\ninitial", "0abd8fe\ninteractivity", "cb85dec\nsubjects + i18n", "0cd9612\npaper", "170660b\nsearch + retry", "0348f6b\ndev guide", "f008aca\nfooter links", "15302ec\nstudy guide"], axisLine: { lineStyle: { color: axis } }, axisLabel: { color: label, fontFamily: "IBM Plex Mono, monospace", fontSize: 10, interval: 0 } },
     yAxis: { type: "value", name: "lines added", nameTextStyle: { color: label, fontSize: 11 }, axisLabel: { color: label, fontFamily: "IBM Plex Mono, monospace", fontSize: 11 }, splitLine: { lineStyle: { color: split } } },
-    series: [{ type: "bar", barMaxWidth: 60, data: [2022, 534, 508], itemStyle: { color: palette[2] }, label: { show: true, position: "top", fontFamily: "IBM Plex Mono, monospace", fontSize: 11, color: label } }]
+    series: [{ type: "bar", barMaxWidth: 60, data: [2022, 487, 402, 436, 127, 414, 8, 118], itemStyle: { color: palette[2] }, label: { show: true, position: "top", fontFamily: "IBM Plex Mono, monospace", fontSize: 11, color: label } }]
   });
 
   // Figure 4: grade distribution

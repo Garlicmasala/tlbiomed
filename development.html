@@ -64,8 +64,8 @@ li { margin-bottom: 5px; }
 <div class="meta">
   <span><b>Project</b> T&amp;L@Biomed</span>
   <span><b>Stack</b> HTML / CSS / vanilla JS</span>
-  <span><b>Commits</b> 5</span>
-  <span><b>Tests</b> 52 / 52</span>
+  <span><b>Commits</b> 8</span>
+  <span><b>Tests</b> 56 / 56</span>
   <span><b>Code</b> 2,246 lines · 52 functions</span>
 </div>
 
@@ -122,7 +122,7 @@ li { margin-bottom: 5px; }
 <rect x="200" y="80" width="130" height="70" rx="10" fill="#FFFFFF" stroke="#0E6B5C" stroke-width="1.5"/>
 <text x="265" y="105" font-weight="600" fill="#0E6B5C">npm test</text>
 <text x="265" y="125" font-size="11" fill="#50646A">BDD 20 · TDD 18</text>
-<text x="265" y="140" font-size="11" fill="#50646A">Smoke 14 = 52</text>
+<text x="265" y="140" font-size="11" fill="#50646A">Smoke 18 = 56</text>
 
 <rect x="370" y="80" width="130" height="70" rx="10" fill="#FFFFFF" stroke="#0E6B5C" stroke-width="1.5"/>
 <text x="435" y="110" font-weight="600" fill="#0E6B5C">git commit</text>
@@ -141,7 +141,7 @@ li { margin-bottom: 5px; }
 </svg>
 
 <h2 id="commits">4. Commit history &amp; growth</h2>
-<p>The project evolved over 5 commits on a single day, each adding a meaningful layer. The chart below shows lines added per commit (net insertions).</p>
+<p>The project evolved over 8 commits across two days, each adding a meaningful layer. The chart below shows lines added per commit (net insertions).</p>
 
 <div class="figure">
 <div id="chart-commits" class="chart"></div>
@@ -155,14 +155,17 @@ li { margin-bottom: 5px; }
 <tr><td><code>cb85dec</code></td><td>2026-09-06</td><td>Expanded subjects (8 notes, 7 tutorial groups, 10 quiz questions) + full English/Traditional-Chinese i18n with auto-detect</td><td>+402</td></tr>
 <tr><td><code>0cd9612</code></td><td>2026-09-06</td><td>Technical paper (<code>paper.html</code>) with architecture, test, grade, i18n and deployment graphs; 4 new smoke tests (52 total)</td><td>+436</td></tr>
 <tr><td><code>170660b</code></td><td>2026-09-06</td><td>Site-wide search, quiz retry-wrong-only, grade print/PDF; expanded content (10 notes, 15 Qs, 5 grade years); updated paper</td><td>+127</td></tr>
+<tr><td><code>0348f6b</code></td><td>2026-09-06</td><td>Development guide (<code>development.html</code>) with workflow diagrams, test evolution, code metrics and ADRs; 4 new smoke tests</td><td>+414</td></tr>
+<tr><td><code>f008aca</code></td><td>2026-09-06</td><td>Footer links to paper and dev guide (EN + zh); smoke test allows same-deploy .html links</td><td>+8</td></tr>
+<tr><td><code>15302ec</code></td><td>2026-09-07</td><td>Study Guide tab with bilingual educational instruction; 24 i18n keys per language</td><td>+118</td></tr>
 </table>
 
 <h2 id="test-evolution">5. Test suite evolution</h2>
-<p>The suite started at 48 tests in the initial commit and grew to 52 when the technical paper was added (4 new smoke tests for <code>paper.html</code>). The breakdown by category has remained stable — the majority are BDD behavior tests that guard content integrity.</p>
+<p>The suite started at 48 tests in the initial commit and grew to 52 when the technical paper was added (4 new smoke tests), then to 56 with this development guide (4 more smoke tests). The breakdown by category has remained stable — the majority are BDD behavior tests that guard content integrity.</p>
 
 <div class="figure">
 <div id="chart-tests" class="chart"></div>
-<div class="caption">Figure 2 — Test suite composition (52 tests). BDD behavior tests (20) guard content integrity; smoke tests (14) guard the shipped artifact; TDD tests (quiz 9, grades 5, i18n 4) guard pure logic.</div>
+<div class="caption">Figure 2 — Test suite composition (56 tests). BDD behavior tests (20) guard content integrity; smoke tests (14) guard the shipped artifact; TDD tests (quiz 9, grades 5, i18n 4) guard pure logic.</div>
 </div>
 
 <h3>5.1 How the sandbox works</h3>
@@ -192,7 +195,7 @@ return sandbox.window.TL;  // evaluateQuestion, computeScore, gradeStats, bandSo
 <tr><th>Metric</th><th>Value</th><th>Notes</th></tr>
 <tr><td>Total lines</td><td>2,246</td><td><code>index.html</code> single file</td></tr>
 <tr><td>Functions</td><td>52</td><td>All in core script; ~14 are pure logic (TL.*)</td></tr>
-<tr><td>i18n keys</td><td>103 / language</td><td>206 total strings (EN + 中文)</td></tr>
+<tr><td>i18n keys</td><td>127 / language</td><td>254 total strings (EN + 中文)</td></tr>
 <tr><td>Test files</td><td>5</td><td>quiz, grades, config.behavior, smoke, i18n</td></tr>
 <tr><td>Test helpers</td><td>3</td><td>extract (vm sandbox), check-html (tag balance), patch-scaffold</td></tr>
 <tr><td>External requests</td><td>2</td><td>ECharts JS (jsDelivr + SRI), font CSS (miaoda mirror)</td></tr>
@@ -262,7 +265,7 @@ return sandbox.window.TL;  // evaluateQuestion, computeScore, gradeStats, bandSo
 <li>Add a test in the appropriate suite (<code>quiz.test.js</code>, <code>grades.test.js</code>, etc.).</li>
 <li>Add the DOM wiring and markup.</li>
 <li>Add the element ID to the smoke test's interactive elements list.</li>
-<li>Run <code>npm test</code> — all 52+ must pass.</li>
+<li>Run <code>npm test</code> — all 56+ must pass.</li>
 <li>Update <code>paper.html</code> and this document if the feature is significant.</li>
 </ol>
 
@@ -279,7 +282,7 @@ return sandbox.window.TL;  // evaluateQuestion, computeScore, gradeStats, bandSo
 
 <rect x="160" y="70" width="110" height="60" rx="10" fill="#FFFFFF" stroke="#0E6B5C" stroke-width="1.5"/>
 <text x="215" y="98" font-weight="600" fill="#0E6B5C">npm test</text>
-<text x="215" y="116" font-size="10" fill="#50646A">52 / 52 gate</text>
+<text x="215" y="116" font-size="10" fill="#50646A">56 / 56 gate</text>
 
 <rect x="300" y="70" width="110" height="60" rx="10" fill="#FFFFFF" stroke="#0E6B5C" stroke-width="1.5"/>
 <text x="355" y="98" font-weight="600" fill="#0E6B5C">git push</text>
@@ -305,7 +308,7 @@ return sandbox.window.TL;  // evaluateQuestion, computeScore, gradeStats, bandSo
 <p>The included workflow (<code>.github/workflows/deploy.yml</code>) triggers on every push to <code>main</code> and on manual <code>workflow_dispatch</code>. It uses <code>actions/configure-pages@v5</code>, <code>upload-pages-artifact@v3</code> (uploading <code>./index.html</code>), and <code>deploy-pages@v4</code>. No build step is required — the artifact is the file itself.</p>
 
 <div class="footer">
-T&amp;L@Biomed Development Guide · Generated from the project repository · 52/52 tests passing · 5 commits · 2,246 lines · Single-file static site
+T&amp;L@Biomed Development Guide · Generated from the project repository · 56/56 tests passing · 8 commits · 2,246 lines · Single-file static site
 </div>
 
 </article>
@@ -323,9 +326,9 @@ T&amp;L@Biomed Development Guide · Generated from the project repository · 52/
     color: palette,
     tooltip: { trigger: "axis" },
     grid: grid(),
-    xAxis: { type: "category", data: ["a8cdd7b\ninitial", "0abd8fe\ninteractivity", "cb85dec\nsubjects+i18n", "0cd9612\npaper", "170660b\nsearch+retry"], axisLine: { lineStyle: { color: axis } }, axisLabel: { color: label, fontFamily: "IBM Plex Mono, monospace", fontSize: 10, interval: 0 } },
+    xAxis: { type: "category", data: ["a8cdd7b\ninitial", "0abd8fe\ninteractivity", "cb85dec\nsubjects+i18n", "0cd9612\npaper", "170660b\nsearch+retry", "0348f6b\ndev guide", "f008aca\nfooter links", "15302ec\nstudy guide"], axisLine: { lineStyle: { color: axis } }, axisLabel: { color: label, fontFamily: "IBM Plex Mono, monospace", fontSize: 10, interval: 0 } },
     yAxis: { type: "value", name: "lines added", nameTextStyle: { color: label, fontSize: 11 }, axisLabel: { color: label, fontFamily: "IBM Plex Mono, monospace", fontSize: 11 }, splitLine: { lineStyle: { color: split } } },
-    series: [{ type: "bar", barMaxWidth: 50, data: [2022, 487, 402, 436, 127], itemStyle: { color: palette[2] }, label: { show: true, position: "top", fontFamily: "IBM Plex Mono, monospace", fontSize: 11, color: label } }]
+    series: [{ type: "bar", barMaxWidth: 50, data: [2022, 487, 402, 436, 127, 414, 8, 118], itemStyle: { color: palette[2] }, label: { show: true, position: "top", fontFamily: "IBM Plex Mono, monospace", fontSize: 11, color: label } }]
   });
 
   // Figure 2: tests
@@ -336,7 +339,7 @@ T&amp;L@Biomed Development Guide · Generated from the project repository · 52/
     legend: { bottom: 0, textStyle: { color: label, fontSize: 12 } },
     series: [{ type: "pie", radius: ["42%", "68%"], center: ["50%", "46%"], avoidLabelOverlap: true, itemStyle: { borderColor: "#fff", borderWidth: 2 }, label: { fontFamily: "IBM Plex Mono, monospace", fontSize: 11, color: label, formatter: "{b}\n{c}" }, data: [
       { value: 20, name: "BDD behavior" },
-      { value: 14, name: "Smoke" },
+      { value: 18, name: "Smoke" },
       { value: 9, name: "Quiz logic" },
       { value: 5, name: "Grades logic" },
       { value: 4, name: "i18n" }
