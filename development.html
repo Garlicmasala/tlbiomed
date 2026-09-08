@@ -141,7 +141,7 @@ li { margin-bottom: 5px; }
 </svg>
 
 <h2 id="commits">4. Commit history &amp; growth</h2>
-<p>The project evolved over 17 commits across three days, each adding a meaningful layer. The chart below shows lines added per commit (net insertions).</p>
+<p>The project evolved over 19 commits across three days, each adding a meaningful layer. The chart below shows lines added per commit (net insertions).</p>
 
 <div class="figure">
 <div id="chart-commits" class="chart"></div>
@@ -167,6 +167,8 @@ li { margin-bottom: 5px; }
 <tr><td><code>74e89d0</code></td><td>2026-09-08</td><td>Deploy all site pages (index/paper/development) to Pages artifact</td><td>+5</td></tr>
 <tr><td><code>7e78938</code></td><td>2026-09-08</td><td>Enable Pages (source: GitHub Actions) — trigger deploy</td><td>+0</td></tr>
 <tr><td><code>1485931</code></td><td>2026-09-08</td><td>Fix Pages artifact: upload site root (single path)</td><td>+1</td></tr>
+<tr><td><code>f008c29</code></td><td>2026-09-08</td><td>Docs expansion: quiz-taxonomy (topic×difficulty) and difficulty figures, deployment-migration callout (paper); ADR-07–11, difficulty dimension, postmortem (dev guide)</td><td>+139</td></tr>
+<tr><td><code>9813f75</code></td><td>2026-09-08</td><td>Docs expansion round 2: startup sequence, verbatim deploy.yml, access-model figure (paper); artifact-footprint chart, PowerShell quirks (dev guide)</td><td>+96</td></tr>
 </table>
 
 <h2 id="test-evolution">5. Test suite evolution</h2>
@@ -222,7 +224,7 @@ return sandbox.window.TL;  // evaluateQuestion, computeScore, gradeStats, bandSo
 
 <div class="figure">
 <div id="chart-footprint" class="chart"></div>
-<div class="caption">Figure 6 — Artifact footprint across the three HTML pages: index.html carries the app (2,537 lines · 125.9 KB); paper.html and development.html document it (533 lines · 40.8 KB and 481 lines · 40.3 KB).</div>
+<div class="caption">Figure 6 — Artifact footprint across the three HTML pages: index.html carries the app (2,537 lines · 125.9 KB); paper.html and development.html document it (559 lines · 43.2 KB and 495 lines · 41.9 KB).</div>
 </div>
 
 <h2 id="adrs">8. Architecture decision records</h2>
@@ -291,6 +293,18 @@ return sandbox.window.TL;  // evaluateQuestion, computeScore, gradeStats, bandSo
 <h4>ADR-11: Pages artifact is the site root <span class="status">Accepted</span></h4>
 <p><b>Decision:</b> The workflow uploads <code>.</code> (the site root) as the Pages artifact. <code>upload-pages-artifact</code> accepts exactly one path, so a curated file list is not possible without an intermediate staging step.</p>
 <p><b>Why:</b> Simplicity wins over a tidy artifact: the repo is public, so serving <code>README.md</code>, <code>CHANGELOG.md</code> and <code>tests/</code> alongside the three HTML pages costs nothing and adds no risk.</p>
+</div>
+
+<div class="adr">
+<h4>ADR-12: Token-based visual design with dark mode <span class="status">Accepted</span></h4>
+<p><b>Decision:</b> All colours, spacing and type live in CSS custom properties; a light/dark theme toggle flips the token set, and ECharts re-renders with a dark-aware palette.</p>
+<p><b>Why:</b> A lab/medical green palette keeps the hub calm and readable in lecture contexts; tokens make restyling a data edit, and the theme preference persists per device with zero backend.</p>
+</div>
+
+<div class="adr">
+<h4>ADR-13: Accessibility-first chrome <span class="status">Accepted</span></h4>
+<p><b>Decision:</b> Tabs use ARIA roles (<code>role="tab"</code> / <code>role="tabpanel"</code> + <code>aria-selected</code>); the quiz is keyboard-complete (1–4 select, Enter submit); a print stylesheet hides chrome; <code>prefers-reduced-motion</code> disables animations.</p>
+<p><b>Why:</b> The site is used in lecture theatres and on any student device; keyboard and print paths cost little code but widen who can actually use it. No emoji and a restrained palette keep it classroom-appropriate.</p>
 </div>
 
 <h2 id="environment">9. Development environment &amp; quirks</h2>
@@ -374,7 +388,7 @@ return sandbox.window.TL;  // evaluateQuestion, computeScore, gradeStats, bandSo
 <p><b>Lessons.</b> (1) Verify Pages is enabled before debugging the workflow itself. (2) <code>upload-pages-artifact</code> takes exactly one path — for a curated artifact, stage files into a temp directory and upload that. (3) Push-to-deploy means the instructor's update loop is just: edit <code>SITE_CONFIG</code> → <code>npm test</code> → <code>git push</code>.</p>
 
 <div class="footer">
-T&amp;L@Biomed Development Guide · Generated from the project repository · 56/56 tests passing · 17 commits · 2,537 lines · Single-file static site
+T&amp;L@Biomed Development Guide · Generated from the project repository · 56/56 tests passing · 19 commits · 2,537 lines · Single-file static site
 </div>
 
 </article>
@@ -392,9 +406,9 @@ T&amp;L@Biomed Development Guide · Generated from the project repository · 56/
     color: palette,
     tooltip: { trigger: "axis" },
     grid: grid(),
-    xAxis: { type: "category", data: ["a8cdd7b\ninitial", "0abd8fe\ninteractivity", "cb85dec\nsubjects+i18n", "0cd9612\npaper", "170660b\nsearch+retry", "0348f6b\ndev guide", "f008aca\nfooter", "15302ec\nstudy guide", "75c04fe\ndocs sync", "ece24c7\nexpand", "d75a98e\nexpand", "98b88f6\ntopic filter", "4f79c5f\ndocs sync", "f9b59a8\ndifficulty", "74e89d0\npages artifact", "7e78938\npages retrigger", "1485931\nartifact fix"], axisLine: { lineStyle: { color: axis } }, axisLabel: { color: label, fontFamily: "IBM Plex Mono, monospace", fontSize: 10, interval: 0 } },
+    xAxis: { type: "category", data: ["a8cdd7b\ninitial", "0abd8fe\ninteractivity", "cb85dec\nsubjects+i18n", "0cd9612\npaper", "170660b\nsearch+retry", "0348f6b\ndev guide", "f008aca\nfooter", "15302ec\nstudy guide", "75c04fe\ndocs sync", "ece24c7\nexpand", "d75a98e\nexpand", "98b88f6\ntopic filter", "4f79c5f\ndocs sync", "f9b59a8\ndifficulty", "74e89d0\npages artifact", "7e78938\npages retrigger", "1485931\nartifact fix", "f008c29\ndocs expand", "9813f75\ndocs expand 2"], axisLine: { lineStyle: { color: axis } }, axisLabel: { color: label, fontFamily: "IBM Plex Mono, monospace", fontSize: 10, interval: 0 } },
     yAxis: { type: "value", name: "lines added", nameTextStyle: { color: label, fontSize: 11 }, axisLabel: { color: label, fontFamily: "IBM Plex Mono, monospace", fontSize: 11 }, splitLine: { lineStyle: { color: split } } },
-    series: [{ type: "bar", barMaxWidth: 50, data: [2022, 534, 508, 436, 150, 414, 8, 118, 30, 68, 21, 119, 25, 63, 5, 0, 1], itemStyle: { color: palette[2] }, label: { show: true, position: "top", fontFamily: "IBM Plex Mono, monospace", fontSize: 11, color: label } }]
+    series: [{ type: "bar", barMaxWidth: 50, data: [2022, 534, 508, 436, 150, 414, 8, 118, 30, 68, 21, 119, 25, 63, 5, 0, 1, 139, 96], itemStyle: { color: palette[2] }, label: { show: true, position: "top", fontFamily: "IBM Plex Mono, monospace", fontSize: 11, color: label } }]
   });
 
   // Figure 2: tests
@@ -468,8 +482,8 @@ T&amp;L@Biomed Development Guide · Generated from the project repository · 56/
       { type: "value", name: "KB", nameTextStyle: { color: label, fontSize: 11 }, axisLabel: { color: label, fontFamily: "IBM Plex Mono, monospace", fontSize: 11 }, splitLine: { show: false } }
     ],
     series: [
-      { name: "lines", type: "bar", data: [2537, 533, 481], itemStyle: { color: palette[0] }, label: { show: true, position: "top", fontFamily: "IBM Plex Mono, monospace", fontSize: 10, color: label } },
-      { name: "KB", type: "bar", yAxisIndex: 1, data: [125.9, 40.8, 40.3], itemStyle: { color: palette[1] }, label: { show: true, position: "top", fontFamily: "IBM Plex Mono, monospace", fontSize: 10, color: label } }
+      { name: "lines", type: "bar", data: [2537, 559, 495], itemStyle: { color: palette[0] }, label: { show: true, position: "top", fontFamily: "IBM Plex Mono, monospace", fontSize: 10, color: label } },
+      { name: "KB", type: "bar", yAxisIndex: 1, data: [125.9, 43.2, 41.9], itemStyle: { color: palette[1] }, label: { show: true, position: "top", fontFamily: "IBM Plex Mono, monospace", fontSize: 10, color: label } }
     ]
   });
 

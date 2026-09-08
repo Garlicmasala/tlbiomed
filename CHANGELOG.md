@@ -6,6 +6,8 @@ commit hash — full history via `git log`. Test counts refer to `npm test`
 
 ## 2026-09-08
 
+- **9813f75** — Docs expansion round 2: paper adds startup sequence, verbatim deploy.yml and an access-model figure; dev guide adds an artifact-footprint chart and three PowerShell quirks.
+- **f008c29** — Docs expansion: paper adds quiz-taxonomy (topic×difficulty) and difficulty figures plus a deployment-migration callout; dev guide adds ADR-07–11, a difficulty-dimension section and a deployment postmortem.
 - **1485931** — Fix Pages artifact: upload the site root (single path); deploy goes green.
 - **7e78938** — Enable Pages (source: GitHub Actions); retrigger deploy.
 - **74e89d0** — Deploy all three site pages (index / paper / development) via the Pages artifact.

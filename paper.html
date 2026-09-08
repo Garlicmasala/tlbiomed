@@ -182,6 +182,7 @@ li { margin-bottom: 5px; }
 <tr><td><b>Mock Quiz</b></td><td>Public</td><td>Instant correct/wrong feedback, per-question explanations, progress bar, timer, keyboard shortcuts (1–4 / Enter), question &amp; answer shuffling, topic filter chips, difficulty tags (basic / intermediate / advanced), score ring, full answer review, per-device attempt history</td><td>45 MCQ across 19 subjects</td></tr>
 <tr><td><b>Grade Distribution</b></td><td>Private (passcode)</td><td>ECharts grouped bar chart, year selector (single / all), chart/table toggle, counts/percent toggle, summary stat chips</td><td>5 academic years</td></tr>
 <tr><td><b>Structured Tutorials</b></td><td>Private (passcode)</td><td>Topic-grouped link lists, live filter, step counts</td><td>11 topics / 23 items</td></tr>
+<tr><td><b>Study Guide</b></td><td>Public</td><td>Bilingual exam-guide article, print stylesheet support, direct deep link (<code>#guide</code>)</td><td>1 guide (workflow, evidence-based study methods, quiz &amp; grade guidance)</td></tr>
 </table>
 
 <h3>3.1 Cross-cutting features</h3>
@@ -195,6 +196,15 @@ li { margin-bottom: 5px; }
 <li><b>Topic filter &amp; difficulty.</b> A chip row filters the question pool by any of the 19 subjects; every question shows a topic·difficulty tag while answering.</li>
 <li><b>Print grades.</b> One-click print/PDF export of the grade distribution; print CSS hides navigation and chrome.</li>
 <li><b>Responsive &amp; reduced-motion.</b> Mobile layout collapses the DNA masthead and hides keyboard hints; <code>prefers-reduced-motion</code> disables animations.</li>
+</ul>
+
+<h3>3.2 Accessibility</h3>
+<ul>
+<li><b>ARIA tab semantics.</b> The tab bar uses <code>role="tab"</code> / <code>role="tabpanel"</code> pairs with live <code>aria-selected</code> state, so assistive technology announces the active view.</li>
+<li><b>Keyboard-first quiz.</b> Keys 1–4 select an answer and Enter submits, so the quiz is fully usable without a mouse; keyboard hints are hidden on narrow screens.</li>
+<li><b>Print stylesheet.</b> <code>@media print</code> rules hide navigation and chrome — the study guide and grade export print cleanly.</li>
+<li><b>Reduced motion.</b> <code>prefers-reduced-motion</code> disables animations; the layout collapses responsively to phone widths.</li>
+<li><b>Contrast &amp; colour.</b> The token palette keeps comfortable text/background contrast in both themes, and colour is never the only channel — charts keep axis labels and tooltips.</li>
 </ul>
 
 <h2 id="config">4. Configuration &amp; data model</h2>
@@ -257,7 +267,7 @@ li { margin-bottom: 5px; }
 
 <div class="figure">
 <div id="chart-commits" class="chart"></div>
-<div class="caption">Figure 5 — Commit growth: 17 commits, 4,522 lines added. Initial scaffold (a8cdd7b), interactivity (0abd8fe), subjects + i18n (cb85dec), paper (0cd9612), search + retry (170660b), dev guide (0348f6b), footer links (f008aca), study guide (15302ec), docs sync (75c04fe), expansion (ece24c7, d75a98e), topic filter (98b88f6), docs sync (4f79c5f), difficulty (f9b59a8), Pages setup (74e89d0, 7e78938, 1485931).</div>
+<div class="caption">Figure 5 — Commit growth: 19 commits, 4,757 lines added. Initial scaffold (a8cdd7b), interactivity (0abd8fe), subjects + i18n (cb85dec), paper (0cd9612), search + retry (170660b), dev guide (0348f6b), footer links (f008aca), study guide (15302ec), docs sync (75c04fe), expansion (ece24c7, d75a98e), topic filter (98b88f6), docs sync (4f79c5f), difficulty (f9b59a8), Pages setup (74e89d0, 7e78938, 1485931), docs expansion (f008c29, 9813f75).</div>
 </div>
 
 <p>Additionally, an HTML tag-balance helper verifies opening/closing tag parity on every run, and the full suite is re-executed after every change before commit. The current result is <b>56 / 56 passing</b>.</p>
@@ -283,6 +293,11 @@ li { margin-bottom: 5px; }
 <div class="figure">
 <div id="chart-passrate" class="chart" style="min-height:300px"></div>
 <div class="caption">Figure 7 — Pass rate by academic year (92.9% → 96.3%), computed from the sample cohorts.</div>
+</div>
+
+<div class="figure">
+<div id="chart-cohort" class="chart" style="min-height:300px"></div>
+<div class="caption">Figure 8 — Cohort size by academic year: 140 → 161 students across five years (746 total).</div>
 </div>
 
 <h2 id="deployment">8. Deployment pipeline</h2>
@@ -374,7 +389,7 @@ jobs:
 
 <div class="figure">
 <div id="chart-access" class="chart" style="min-height:300px"></div>
-<div class="caption">Figure 8 — Access model: three views gated by passcode, two public by design.</div>
+<div class="caption">Figure 9 — Access model: three views gated by passcode, two public by design.</div>
 </div>
 
 <h2 id="roadmap">10. Roadmap</h2>
@@ -440,9 +455,9 @@ T&amp;L@Biomed Technical Paper · Generated from the project repository · 56/56
     color: palette,
     tooltip: { trigger: "axis" },
     grid: baseGrid(),
-    xAxis: { type: "category", data: ["a8cdd7b\ninitial", "0abd8fe\ninteractivity", "cb85dec\nsubjects+i18n", "0cd9612\npaper", "170660b\nsearch+retry", "0348f6b\ndev guide", "f008aca\nfooter", "15302ec\nstudy guide", "75c04fe\ndocs sync", "ece24c7\nexpand", "d75a98e\nexpand", "98b88f6\ntopic filter", "4f79c5f\ndocs sync", "f9b59a8\ndifficulty", "74e89d0\npages artifact", "7e78938\npages retrigger", "1485931\nartifact fix"], axisLine: { lineStyle: { color: axis } }, axisLabel: { color: label, fontFamily: "IBM Plex Mono, monospace", fontSize: 10, interval: 0 } },
+    xAxis: { type: "category", data: ["a8cdd7b\ninitial", "0abd8fe\ninteractivity", "cb85dec\nsubjects+i18n", "0cd9612\npaper", "170660b\nsearch+retry", "0348f6b\ndev guide", "f008aca\nfooter", "15302ec\nstudy guide", "75c04fe\ndocs sync", "ece24c7\nexpand", "d75a98e\nexpand", "98b88f6\ntopic filter", "4f79c5f\ndocs sync", "f9b59a8\ndifficulty", "74e89d0\npages artifact", "7e78938\npages retrigger", "1485931\nartifact fix", "f008c29\ndocs expand", "9813f75\ndocs expand 2"], axisLine: { lineStyle: { color: axis } }, axisLabel: { color: label, fontFamily: "IBM Plex Mono, monospace", fontSize: 10, interval: 0 } },
     yAxis: { type: "value", name: "lines added", nameTextStyle: { color: label, fontSize: 11 }, axisLabel: { color: label, fontFamily: "IBM Plex Mono, monospace", fontSize: 11 }, splitLine: { lineStyle: { color: split } } },
-    series: [{ type: "bar", barMaxWidth: 60, data: [2022, 534, 508, 436, 150, 414, 8, 118, 30, 68, 21, 119, 25, 63, 5, 0, 1], itemStyle: { color: palette[2] }, label: { show: true, position: "top", fontFamily: "IBM Plex Mono, monospace", fontSize: 11, color: label } }]
+    series: [{ type: "bar", barMaxWidth: 60, data: [2022, 534, 508, 436, 150, 414, 8, 118, 30, 68, 21, 119, 25, 63, 5, 0, 1, 139, 96], itemStyle: { color: palette[2] }, label: { show: true, position: "top", fontFamily: "IBM Plex Mono, monospace", fontSize: 11, color: label } }]
   });
 
   // Figure 4: grade distribution
@@ -511,7 +526,7 @@ T&amp;L@Biomed Technical Paper · Generated from the project repository · 56/56
     series: [{ type: "line", smooth: true, data: [92.9, 93.8, 94.1, 95.3, 96.3], itemStyle: { color: palette[1] }, lineStyle: { color: palette[1], width: 2 }, areaStyle: { color: "rgba(14,107,92,0.12)" }, label: { show: true, position: "top", fontFamily: "IBM Plex Mono, monospace", fontSize: 11, color: label, formatter: "{c}%" } }]
   });
 
-    // Figure 8: access model (public vs gated views)
+    // Figure 9: access model (public vs gated views)
   var c8 = echarts.init(document.getElementById("chart-access"));
   c8.setOption({
     color: ["#C97F1B", "#2F8877", "#C97F1B", "#C97F1B", "#2F8877"],
@@ -525,7 +540,18 @@ T&amp;L@Biomed Technical Paper · Generated from the project repository · 56/56
     ] }]
   });
 
-  window.addEventListener("resize", function () { [c1, c2, c3, c4, c5, c6, c7, c8].forEach(function (c) { c.resize(); }); });
+    // Figure 8: cohort size trend
+  var c9 = echarts.init(document.getElementById("chart-cohort"));
+  c9.setOption({
+    color: palette,
+    tooltip: { trigger: "axis", triggerOn: "click", renderMode: "richText", confine: true },
+    grid: { left: "4%", right: "4%", top: 30, bottom: 30, containLabel: true },
+    xAxis: { type: "category", data: ["AY2020-21", "AY2021-22", "AY2022-23", "AY2023-24", "AY2024-25"], axisLine: { lineStyle: { color: axis } }, axisLabel: { color: label, fontFamily: "IBM Plex Mono, monospace", fontSize: 11 } },
+    yAxis: { type: "value", minInterval: 1, name: "students", nameTextStyle: { color: label, fontSize: 11 }, axisLabel: { color: label, fontFamily: "IBM Plex Mono, monospace", fontSize: 11 }, splitLine: { lineStyle: { color: split } } },
+    series: [{ type: "bar", barMaxWidth: 44, data: [140, 145, 152, 148, 161], itemStyle: { color: palette[2] }, label: { show: true, position: "top", fontFamily: "IBM Plex Mono, monospace", fontSize: 11, color: label } }]
+  });
+
+  window.addEventListener("resize", function () { [c1, c2, c3, c4, c5, c6, c7, c8, c9].forEach(function (c) { c.resize(); }); });
 })();
 </script>
 </body>
