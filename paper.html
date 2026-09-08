@@ -168,7 +168,7 @@ li { margin-bottom: 5px; }
 <table>
 <tr><th>Section</th><th>Visibility</th><th>Key interactions</th><th>Sample content</th></tr>
 <tr><td><b>Notes</b></td><td>Private (passcode)</td><td>Link cards, live client-side filter, tags, sample badges</td><td>17 cards (weeks 1–14 + 3 reference)</td></tr>
-<tr><td><b>Mock Quiz</b></td><td>Public</td><td>Instant correct/wrong feedback, per-question explanations, progress bar, timer, keyboard shortcuts (1–4 / Enter), question &amp; answer shuffling, score ring, full answer review, per-device attempt history</td><td>45 MCQ across 19 subjects</td></tr>
+<tr><td><b>Mock Quiz</b></td><td>Public</td><td>Instant correct/wrong feedback, per-question explanations, progress bar, timer, keyboard shortcuts (1–4 / Enter), question &amp; answer shuffling, topic filter chips, difficulty tags (basic / intermediate / advanced), score ring, full answer review, per-device attempt history</td><td>45 MCQ across 19 subjects</td></tr>
 <tr><td><b>Grade Distribution</b></td><td>Private (passcode)</td><td>ECharts grouped bar chart, year selector (single / all), chart/table toggle, counts/percent toggle, summary stat chips</td><td>5 academic years</td></tr>
 <tr><td><b>Structured Tutorials</b></td><td>Private (passcode)</td><td>Topic-grouped link lists, live filter, step counts</td><td>11 topics / 23 items</td></tr>
 </table>
@@ -181,6 +181,7 @@ li { margin-bottom: 5px; }
 <li><b>Toasts &amp; copy-link.</b> Non-blocking notifications for unlock, lock, theme, language, and clipboard actions.</li>
 <li><b>Site-wide search.</b> A search box in the tab bar finds matching notes and tutorial items in a single dropdown, grouped by section, with direct links.</li>
 <li><b>Retry wrong only.</b> After a quiz attempt, students can re-attempt just the questions they missed — focused revision.</li>
+<li><b>Topic filter &amp; difficulty.</b> A chip row filters the question pool by any of the 19 subjects; every question shows a topic·difficulty tag while answering.</li>
 <li><b>Print grades.</b> One-click print/PDF export of the grade distribution; print CSS hides navigation and chrome.</li>
 <li><b>Responsive &amp; reduced-motion.</b> Mobile layout collapses the DNA masthead and hides keyboard hints; <code>prefers-reduced-motion</code> disables animations.</li>
 </ul>
@@ -195,7 +196,7 @@ li { margin-bottom: 5px; }
 <tr><td><code>language</code></td><td><code>{ default, detect }</code></td><td>Default UI language and browser auto-detect flag</td></tr>
 <tr><td><code>notes</code></td><td>array of <code>{ title, desc, url, tags, sample }</code></td><td>Note link cards</td></tr>
 <tr><td><code>tutorials</code></td><td>array of <code>{ topic, note, items: [{ title, desc, url, sample }] }</code></td><td>Topic-grouped tutorial links</td></tr>
-<tr><td><code>quiz</code></td><td><code>{ title, intro, shuffle, shuffleOptions, questions: [...] }</code></td><td>Mock quiz; each question <code>{ id, prompt, options[2–6], answerIndex, explanation }</code></td></tr>
+<tr><td><code>quiz</code></td><td><code>{ title, intro, shuffle, shuffleOptions, questions: [...] }</code></td><td>Mock quiz; each question <code>{ id, topic, difficulty, prompt, options[2–6], answerIndex, explanation }</code></td></tr>
 <tr><td><code>grades</code></td><td><code>{ failBands, years: [{ year, cohort, distribution }] }</code></td><td>Past grade distributions; counts must sum to <code>cohort</code></td></tr>
 </table>
 
@@ -203,12 +204,25 @@ li { margin-bottom: 5px; }
 <b>Sample flag convention.</b> Every built-in content entry carries <code>sample: true</code>. While any sample flag remains, a yellow banner reminds the instructor to replace the content. Deleting the flags silences the banner automatically — no separate toggle needed.
 </div>
 
+<h3>4.1 Quiz question bank &amp; taxonomy</h3>
+<p>The shipped bank holds <b>45 questions</b> spread across <b>19 topics</b> and three difficulty bands (<code>basic</code>, <code>intermediate</code>, <code>advanced</code>). Topics and difficulties are plain data on each question — the filter chips and the topic·difficulty tag are derived from that data at render time, so the UI can never drift from the bank. The matrix below shows how the bank is covered: anatomy, microbiology and haematology are the basic-weighted topics, while cancer biology leans advanced.</p>
+
+<div class="figure">
+<div id="chart-taxonomy" class="chart" style="min-height:380px"></div>
+<div class="caption">Figure 1 — Question bank coverage: 45 questions across 19 topics, stacked by difficulty (basic 16 · intermediate 23 · advanced 6).</div>
+</div>
+
+<div class="figure">
+<div id="chart-difficulty" class="chart" style="min-height:300px"></div>
+<div class="caption">Figure 2 — Difficulty split of the 45-question bank.</div>
+</div>
+
 <h2 id="i18n">5. Internationalization</h2>
 <p>The UI chrome (not the course content, which the instructor authors in their chosen language) is fully translated. Strings live in a flat <code>LANGS</code> dictionary; adding a third language means appending one dictionary with the same keys. Translation lookups fall back English → the raw key, so a missing string never crashes the page.</p>
 
 <div class="figure">
 <div id="chart-i18n" class="chart"></div>
-<div class="caption">Figure 1 — i18n key coverage: 163 keys per language, 100% parity between English and Traditional Chinese (326 total strings).</div>
+<div class="caption">Figure 3 — i18n key coverage: 163 keys per language, 100% parity between English and Traditional Chinese (326 total strings).</div>
 </div>
 
 <p><b>Mechanics.</b> Static elements carry <code>data-i18n</code> (or <code>data-i18n-ph</code> for placeholders) and are re-rendered on language switch. Dynamic strings (question counters, verdicts, stat chips, toasts) use a <code>t(key)</code> / <code>fmt(key, vars)</code> pair with <code>{placeholder}</code> substitution. Initial language is read from <code>localStorage</code>, then auto-detected from the browser (<code>zh-*</code> → 中文), then the configured default. The choice is persisted and the document title and meta description update with it.</p>
@@ -218,7 +232,7 @@ li { margin-bottom: 5px; }
 
 <div class="figure">
 <div id="chart-tests" class="chart"></div>
-<div class="caption">Figure 2 — Distribution of the 56 automated tests across five suites (config.behavior 20, smoke 18, quiz 9, grades 5, i18n 4).</div>
+<div class="caption">Figure 4 — Distribution of the 56 automated tests across five suites (config.behavior 20, smoke 18, quiz 9, grades 5, i18n 4).</div>
 </div>
 
 <h3>6.1 What the suites guard</h3>
@@ -232,7 +246,7 @@ li { margin-bottom: 5px; }
 
 <div class="figure">
 <div id="chart-commits" class="chart"></div>
-<div class="caption">Figure 3 — Commit growth: 17 commits, 4,522 lines added. Initial scaffold (a8cdd7b), interactivity (0abd8fe), subjects + i18n (cb85dec), paper (0cd9612), search + retry (170660b), dev guide (0348f6b), footer links (f008aca), study guide (15302ec), docs sync (75c04fe), expansion (ece24c7, d75a98e), topic filter (98b88f6), docs sync (4f79c5f), difficulty (f9b59a8), Pages setup (74e89d0, 7e78938, 1485931).</div>
+<div class="caption">Figure 5 — Commit growth: 17 commits, 4,522 lines added. Initial scaffold (a8cdd7b), interactivity (0abd8fe), subjects + i18n (cb85dec), paper (0cd9612), search + retry (170660b), dev guide (0348f6b), footer links (f008aca), study guide (15302ec), docs sync (75c04fe), expansion (ece24c7, d75a98e), topic filter (98b88f6), docs sync (4f79c5f), difficulty (f9b59a8), Pages setup (74e89d0, 7e78938, 1485931).</div>
 </div>
 
 <p>Additionally, an HTML tag-balance helper verifies opening/closing tag parity on every run, and the full suite is re-executed after every change before commit. The current result is <b>56 / 56 passing</b>.</p>
@@ -242,7 +256,7 @@ li { margin-bottom: 5px; }
 
 <div class="figure">
 <div id="chart-grades" class="chart" style="min-height:360px"></div>
-<div class="caption">Figure 4 — Sample grade distribution by band across AY2020-21 through AY2024-25 (counts, 5 years, 746 students total). Pass rates rise from 92.9% to 96.3% across the five years.</div>
+<div class="caption">Figure 6 — Sample grade distribution by band across AY2020-21 through AY2024-25 (counts, 5 years, 746 students total). Pass rates rise from 92.9% to 96.3% across the five years.</div>
 </div>
 
 <table>
@@ -254,6 +268,11 @@ li { margin-bottom: 5px; }
 <tr><td>AY2024-25</td><td>161</td><td>155</td><td>6</td><td>96.3%</td><td>B</td></tr>
 <tr><td><b>Total</b></td><td><b>746</b></td><td><b>705</b></td><td><b>41</b></td><td><b>94.5%</b></td><td>B</td></tr>
 </table>
+
+<div class="figure">
+<div id="chart-passrate" class="chart" style="min-height:300px"></div>
+<div class="caption">Figure 7 — Pass rate by academic year (92.9% → 96.3%), computed from the sample cohorts.</div>
+</div>
 
 <h2 id="deployment">8. Deployment pipeline</h2>
 <p>The site is fully static and deploys to any static host. The recommended path is GitHub Pages via the included GitHub Actions workflow — every push to <code>main</code> builds and publishes automatically, matching the instructor's "I'll update quiz and grades when needed" workflow.</p>
@@ -290,6 +309,10 @@ li { margin-bottom: 5px; }
 </svg>
 
 <p>The workflow (<code>.github/workflows/deploy.yml</code>) uses <code>actions/configure-pages@v5</code>, <code>upload-pages-artifact@v3</code> (uploading the site root), and <code>deploy-pages@v4</code>, triggered on every push to <code>main</code> and on manual <code>workflow_dispatch</code>. No build step is required.</p>
+
+<div class="callout">
+<b>Deployment migration (2026-09-08).</b> The site was originally previewed through Netlify Drop. On 2026-09-08 the service suspended the anonymous preview (<code>This site is suspended</code>) and began CAPTCHA-gating its upload page, so the project moved to GitHub Pages. The workflow needed three iterations: first it uploaded a three-file list (<code>upload-pages-artifact</code> rejects multi-path inputs), then Pages was enabled with <code>Source: GitHub Actions</code>, and finally the artifact path was set to the site root — which is also why <code>README.md</code> and the <code>tests/</code> folder are served alongside the three HTML pages (harmless on a public repo). Every push since then deploys in about a minute.
+</div>
 
 <h2 id="security">9. Security &amp; limitations</h2>
 <ul>
@@ -390,7 +413,51 @@ T&amp;L@Biomed Technical Paper · Generated from the project repository · 56/56
     })
   });
 
-  window.addEventListener("resize", function () { [c1, c2, c3, c4].forEach(function (c) { c.resize(); }); });
+    // Figure 5: question bank taxonomy (topic x difficulty, stacked)
+  var tNames = ["Genetics","Cell biology","Biochemistry","Pharmacology","Renal","Anatomy","Microbiology","Physiology","Immunology","Neuroscience","Haematology","Endocrinology","Respiratory","Cancer biology","Medical statistics","Reproductive","Musculoskeletal","Clinical chemistry","Infectious disease"];
+  var tBasic = [1,0,1,0,0,3,2,1,0,1,2,0,1,0,1,1,2,0,0];
+  var tInter = [3,3,1,2,3,0,0,1,1,1,0,1,1,0,1,1,0,2,2];
+  var tAdv   = [0,0,1,1,0,0,0,0,1,0,0,1,0,2,0,0,0,0,0];
+  var c5 = echarts.init(document.getElementById("chart-taxonomy"));
+  c5.setOption({
+    color: palette,
+    tooltip: { trigger: "axis", axisPointer: { type: "shadow" }, confine: true },
+    legend: { top: 0, itemWidth: 14, itemHeight: 8, textStyle: { color: label, fontSize: 11 } },
+    grid: { left: "4%", right: "4%", top: 30, bottom: 30, containLabel: true },
+    xAxis: { type: "value", minInterval: 1, name: "questions", nameTextStyle: { color: label, fontSize: 11 }, axisLabel: { color: label, fontFamily: "IBM Plex Mono, monospace", fontSize: 11 }, splitLine: { lineStyle: { color: split } } },
+    yAxis: { type: "category", data: tNames, axisLine: { lineStyle: { color: axis } }, axisLabel: { color: label, fontSize: 11 } },
+    series: [
+      { name: "basic", type: "bar", stack: "t", barMaxWidth: 18, data: tBasic, itemStyle: { color: "#9CC9BC" } },
+      { name: "intermediate", type: "bar", stack: "t", data: tInter, itemStyle: { color: "#2F8877" } },
+      { name: "advanced", type: "bar", stack: "t", data: tAdv, itemStyle: { color: "#0A4F44" } }
+    ]
+  });
+
+  // Figure 6: difficulty split
+  var c6 = echarts.init(document.getElementById("chart-difficulty"));
+  c6.setOption({
+    color: ["#9CC9BC", "#2F8877", "#0A4F44"],
+    tooltip: { trigger: "item", triggerOn: "click", renderMode: "richText", confine: true, formatter: "{b}: {c} questions ({d}%)" },
+    legend: { bottom: 0, itemWidth: 14, itemHeight: 8, textStyle: { color: label, fontSize: 11 } },
+    series: [{ type: "pie", radius: ["42%", "68%"], center: ["50%", "46%"], avoidLabelOverlap: true, itemStyle: { borderColor: "#fff", borderWidth: 2 }, label: { fontFamily: "IBM Plex Mono, monospace", fontSize: 11, color: label, formatter: "{b}\n{c}" }, data: [
+      { value: 16, name: "basic" },
+      { value: 23, name: "intermediate" },
+      { value: 6, name: "advanced" }
+    ] }]
+  });
+
+  // Figure 7: pass rate trend
+  var c7 = echarts.init(document.getElementById("chart-passrate"));
+  c7.setOption({
+    color: palette,
+    tooltip: { trigger: "axis", triggerOn: "click", renderMode: "richText", confine: true },
+    grid: { left: "4%", right: "4%", top: 30, bottom: 30, containLabel: true },
+    xAxis: { type: "category", data: ["AY2020-21", "AY2021-22", "AY2022-23", "AY2023-24", "AY2024-25"], axisLine: { lineStyle: { color: axis } }, axisLabel: { color: label, fontFamily: "IBM Plex Mono, monospace", fontSize: 11 } },
+    yAxis: { type: "value", min: 90, max: 100, name: "pass rate (%)", nameTextStyle: { color: label, fontSize: 11 }, axisLabel: { color: label, fontFamily: "IBM Plex Mono, monospace", fontSize: 11 }, splitLine: { lineStyle: { color: split } } },
+    series: [{ type: "line", smooth: true, data: [92.9, 93.8, 94.1, 95.3, 96.3], itemStyle: { color: palette[1] }, lineStyle: { color: palette[1], width: 2 }, areaStyle: { color: "rgba(14,107,92,0.12)" }, label: { show: true, position: "top", fontFamily: "IBM Plex Mono, monospace", fontSize: 11, color: label, formatter: "{c}%" } }]
+  });
+
+  window.addEventListener("resize", function () { [c1, c2, c3, c4, c5, c6, c7].forEach(function (c) { c.resize(); }); });
 })();
 </script>
 </body>

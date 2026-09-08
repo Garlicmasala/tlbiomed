@@ -194,10 +194,18 @@ return sandbox.window.TL;  // evaluateQuestion, computeScore, gradeStats, bandSo
 <div class="caption">Figure 3 — Sample content growth across commits. Notes (4→17), quiz questions (5→45), grade years (3→5). All content is marked <code>sample: true</code> until the instructor replaces it.</div>
 </div>
 
+<h3>6.1 The difficulty dimension (round 4)</h3>
+<p>Round 4 (<code>f9b59a8</code>) added a <code>difficulty</code> field to every question and grew the bank from 40 to 45 questions. Difficulty is a deliberate design axis: the three bands keep the bank usable for self-assessment (basic recall → application → synthesis), and each question's topic·difficulty tag is shown live while answering. Coverage at HEAD: <b>16 basic · 23 intermediate · 6 advanced</b>.</p>
+
+<div class="figure">
+<div id="chart-difficulty" class="chart" style="min-height:300px"></div>
+<div class="caption">Figure 4 — Difficulty split of the 45-question bank at HEAD.</div>
+</div>
+
 <h2 id="metrics">7. Code metrics</h2>
 <div class="figure">
 <div id="chart-metrics" class="chart"></div>
-<div class="caption">Figure 4 — Approximate line distribution in <code>index.html</code> (2,537 lines total). CSS design system ~26%, config &amp; i18n ~22%, core logic ~34%, markup ~18%.</div>
+<div class="caption">Figure 5 — Approximate line distribution in <code>index.html</code> (2,537 lines total). CSS design system ~26%, config &amp; i18n ~22%, core logic ~34%, markup ~18%.</div>
 </div>
 
 <table>
@@ -248,6 +256,36 @@ return sandbox.window.TL;  // evaluateQuestion, computeScore, gradeStats, bandSo
 <h4>ADR-06: GitHub Pages via Actions (primary) <span class="status">Accepted</span></h4>
 <p><b>Decision:</b> Primary deployment is GitHub Pages via the included Actions workflow (<code>git push</code> → automatic deploy). Netlify Drop was the original fallback for quick previews; its anonymous deploys were suspended in September 2026, so GitHub Pages is the only maintained path.</p>
 <p><b>Why:</b> Both are free. GitHub Pages gives automatic deployment on every push (matching the instructor's "I'll update quiz and grades when needed" workflow) and never expires. Netlify Drop used to give instant preview URLs without a GitHub account, but anonymous drops expired after 1 hour, were rate-limited, and the service suspended them entirely in September 2026 — preview only, never permanence.</p>
+</div>
+
+<div class="adr">
+<h4>ADR-07: Hash-based routing, no router library <span class="status">Accepted</span></h4>
+<p><b>Decision:</b> Views are plain <code>&lt;section data-route&gt;</code> blocks shown and hidden by a small hash router; the tab bar and the <code>GATED</code> list decide which views need the passcode.</p>
+<p><b>Why:</b> Zero dependencies, no server rewrites on any static host, and deep links (<code>#notes</code>, <code>#quiz</code>) survive refresh and sharing.</p>
+</div>
+
+<div class="adr">
+<h4>ADR-08: Topic &amp; difficulty live in the question data <span class="status">Accepted</span></h4>
+<p><b>Decision:</b> Each question carries <code>topic</code> and <code>difficulty</code>; the filter chips and the topic·difficulty tag are derived from the bank at render time.</p>
+<p><b>Why:</b> The UI cannot drift from the data — adding a question with a new topic automatically adds its chip and tag, and removing the last question of a topic removes both.</p>
+</div>
+
+<div class="adr">
+<h4>ADR-09: Flat i18n dictionary with parity tests <span class="status">Accepted</span></h4>
+<p><b>Decision:</b> All UI strings live in one flat <code>LANGS</code> object (163 keys per language at HEAD); lookups fall back English → raw key.</p>
+<p><b>Why:</b> A missing or mistyped key fails the i18n suite instead of the page; adding a language is appending one dictionary with the same keys.</p>
+</div>
+
+<div class="adr">
+<h4>ADR-10: Attempt history in localStorage <span class="status">Accepted</span></h4>
+<p><b>Decision:</b> Best score and attempt count persist per device in <code>localStorage</code> behind a <code>try/catch</code> (private mode), and never leave the browser.</p>
+<p><b>Why:</b> Zero backend and zero privacy surface — no analytics, no accounts, nothing stored server-side; history is per student device by design.</p>
+</div>
+
+<div class="adr">
+<h4>ADR-11: Pages artifact is the site root <span class="status">Accepted</span></h4>
+<p><b>Decision:</b> The workflow uploads <code>.</code> (the site root) as the Pages artifact. <code>upload-pages-artifact</code> accepts exactly one path, so a curated file list is not possible without an intermediate staging step.</p>
+<p><b>Why:</b> Simplicity wins over a tidy artifact: the repo is public, so serving <code>README.md</code>, <code>CHANGELOG.md</code> and <code>tests/</code> alongside the three HTML pages costs nothing and adds no risk.</p>
 </div>
 
 <h2 id="environment">9. Development environment &amp; quirks</h2>
@@ -314,7 +352,18 @@ return sandbox.window.TL;  // evaluateQuestion, computeScore, gradeStats, bandSo
 <text x="400" y="170" text-anchor="middle" font-size="11" fill="#7C8F93" font-family="IBM Plex Mono, monospace">Alternative: Cloudflare Pages / Vercel — any static host works; Netlify Drop is discontinued.</text>
 </svg>
 
-<p>The included workflow (<code>.github/workflows/deploy.yml</code>) triggers on every push to <code>main</code> and on manual <code>workflow_dispatch</code>. It uses <code>actions/configure-pages@v5</code>, <code>upload-pages-artifact@v3</code> (uploading <code>./index.html</code>), and <code>deploy-pages@v4</code>. No build step is required — the artifact is the file itself.</p>
+<p>The included workflow (<code>.github/workflows/deploy.yml</code>) triggers on every push to <code>main</code> and on manual <code>workflow_dispatch</code>. It uses <code>actions/configure-pages@v5</code>, <code>upload-pages-artifact@v3</code> (uploading <code>./index.html</code>), and <code>deploy-pages@v4</code>. No build step is required — the artifact is the site root.</p>
+
+<h2 id="postmortem">12. Deployment incident postmortem (2026-09-08)</h2>
+<p><b>What happened.</b> The site had been previewed through Netlify Drop. On 2026-09-08, Drop suspended the anonymous preview (<code>This site is suspended</code>) and its upload page started serving a CAPTCHA, ending the anonymous path — which had always expired after ~1 hour and carried a daily upload limit.</p>
+<p><b>Migration.</b> The project moved to GitHub Pages. Three workflow runs tell the story:</p>
+<table>
+<tr><th>Commit</th><th>Outcome</th><th>Fix</th></tr>
+<tr><td><code>74e89d0</code></td><td>Stuck at Setup Pages — Pages not enabled for the repo</td><td>Settings → Pages → Source: <b>GitHub Actions</b> (done in the browser)</td></tr>
+<tr><td><code>7e78938</code></td><td>Stuck at Upload artifact — <code>upload-pages-artifact</code> rejects a multi-line path list</td><td>Artifact path changed from a three-file list to the site root</td></tr>
+<tr><td><code>1485931</code></td><td><b>Success</b> — live at <code>garlicmasala.github.io/tlbiomed/</code></td><td>—</td></tr>
+</table>
+<p><b>Lessons.</b> (1) Verify Pages is enabled before debugging the workflow itself. (2) <code>upload-pages-artifact</code> takes exactly one path — for a curated artifact, stage files into a temp directory and upload that. (3) Push-to-deploy means the instructor's update loop is just: edit <code>SITE_CONFIG</code> → <code>npm test</code> → <code>git push</code>.</p>
 
 <div class="footer">
 T&amp;L@Biomed Development Guide · Generated from the project repository · 56/56 tests passing · 17 commits · 2,537 lines · Single-file static site
@@ -385,7 +434,20 @@ T&amp;L@Biomed Development Guide · Generated from the project repository · 56/
     ] }]
   });
 
-  window.addEventListener("resize", function () { [c1, c2, c3, c4].forEach(function (c) { c.resize(); }); });
+    // Figure 4: difficulty split (section 6.1)
+  var c5 = echarts.init(document.getElementById("chart-difficulty"));
+  c5.setOption({
+    color: ["#9CC9BC", "#2F8877", "#0A4F44"],
+    tooltip: { trigger: "item", triggerOn: "click", renderMode: "richText", confine: true, formatter: "{b}: {c} questions ({d}%)" },
+    legend: { bottom: 0, itemWidth: 14, itemHeight: 8, textStyle: { color: label, fontSize: 11 } },
+    series: [{ type: "pie", radius: ["42%", "68%"], center: ["50%", "46%"], avoidLabelOverlap: true, itemStyle: { borderColor: "#fff", borderWidth: 2 }, label: { fontFamily: "IBM Plex Mono, monospace", fontSize: 11, color: label, formatter: "{b}\n{c}" }, data: [
+      { value: 16, name: "basic" },
+      { value: 23, name: "intermediate" },
+      { value: 6, name: "advanced" }
+    ] }]
+  });
+
+  window.addEventListener("resize", function () { [c1, c2, c3, c4, c5].forEach(function (c) { c.resize(); }); });
 })();
 </script>
 </body>
