@@ -4,6 +4,10 @@ All changes to T&L@Biomed, newest first. Each entry names the abbreviated
 commit hash — full history via `git log`. Test counts refer to `npm test`
 (64 at HEAD).
 
+## 2026-09-09
+
+- **eafbc3d** — UX round: quiz intro is now bilingual (copy lives in `LANGS["quiz.intro"]`, i18n 163 → 164 keys per language); switching language mid-quiz re-renders the running question (counter, topic·difficulty tag, answer feedback) and the results review; grades “All years” shows the aggregate modal band across all selected years instead of the first year’s; docs synced (paper i18n mechanics note, dev metrics, README, footprint).
+
 ## 2026-09-08
 
 - **9813f75** — Docs expansion round 2: paper adds startup sequence, verbatim deploy.yml and an access-model figure; dev guide adds an artifact-footprint chart and three PowerShell quirks.
