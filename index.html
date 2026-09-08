@@ -1079,7 +1079,7 @@ var SITE_CONFIG = {
   /* Mock quiz: multiple choice. answerIndex counts from 0.
      shuffle reorders questions; shuffleOptions reorders answers
      within each question (correctness is tracked automatically).
-     Set sample to false once you replace the questions. */
+     Set sample to false once you replace the questions. The visible intro copy lives in LANGS["quiz.intro"] (bilingual); keep intro: "" to hide it. */
   quiz: {
     sample: true,
     title: "Mock Quiz — sample set",
@@ -1283,6 +1283,7 @@ var LANGS = {
     "quiz.desc": "Multiple choice, instant feedback. Pick an answer to see whether you got it right.",
     "quiz.banner": "<strong>Sample questions.</strong> Replace the <code>quiz</code> block in <code>SITE_CONFIG</code> to publish your own.",
     "quiz.start": "Start the quiz",
+    "quiz.intro": "Forty-five starter questions across cell biology, biochemistry, physiology, microbiology, immunology, pharmacology, genetics, haematology, neuroscience, endocrinology, renal, anatomy, cancer biology, medical statistics, respiratory, reproductive, musculoskeletal, infectious disease and clinical chemistry.",
     "quiz.qnum": "Question {c} of {t}",
     "quiz.next": "Next question",
     "quiz.seeResults": "See results",
@@ -1448,6 +1449,7 @@ var LANGS = {
     "quiz.desc": "多項選擇題，即時回饋。選取答案即知對錯。",
     "quiz.banner": "<strong>範例題目。</strong>替換 <code>SITE_CONFIG</code> 中的 <code>quiz</code> 區塊以發佈你自己的題目。",
     "quiz.start": "開始測驗",
+    "quiz.intro": "四十五道入門題目，涵蓋細胞生物學、生物化學、生理學、微生物學、免疫學、藥理學、遺傳學、血液學、神經科學、內分泌學、腎臟、解剖學、癌症生物學、醫學統計、呼吸系統、生殖系統、肌肉骨骼、傳染病及臨床化學。",
     "quiz.qnum": "第 {c} 題，共 {t} 題",
     "quiz.next": "下一題",
     "quiz.seeResults": "查看結果",
@@ -1780,6 +1782,25 @@ function applyI18n() {
     $("quiz-qnum").textContent = fmt("quiz.qnum", { c: state.quiz.idx + 1, t: total });
     var last = state.quiz.idx + 1 >= total;
     $("quiz-next").textContent = last ? t("quiz.seeResults") : t("quiz.next");
+    var q = state.quiz.questions[state.quiz.idx];
+    var dlMap = { basic: "quiz.diffBasic", intermediate: "quiz.diffInter", advanced: "quiz.diffAdv" };
+    var dlKey = q.difficulty ? dlMap[q.difficulty] : "";
+    $("quiz-topic-tag").textContent = [q.topic ? t("quiz.topic." + q.topic) : "", dlKey ? t(dlKey) : ""].filter(Boolean).join(" · ");
+    if (state.quiz.answers[q.id] !== undefined) {
+      var ok = state.quiz.answers[q.id] === q.answerIndex;
+      var fb = $("quiz-feedback");
+      fb.className = "feedback " + (ok ? "fb-ok" : "fb-bad");
+      fb.innerHTML = "<strong>" + (ok ? t("quiz.correct") : t("quiz.wrong")) + "</strong>" +
+        (q.explanation ? escapeHtml(q.explanation) : "");
+    }
+  }
+  if (!$("quiz-results").classList.contains("hidden")) {
+    var res = TL.computeScore(state.quiz.questions, state.quiz.answers);
+    $("res-score").textContent = res.correct + " / " + res.total;
+    $("res-percent").textContent = res.percent + "%";
+    $("res-verdict").textContent = verdictFor(res.percent);
+    $("res-time").textContent = fmt("quiz.finished", { t: TL.formatDuration(elapsedSeconds()) });
+    renderReviewList();
   }
 }
 function toggleLang() {
@@ -1963,7 +1984,7 @@ function renderQuizIntro() {
   show("quiz-run", false);
   show("quiz-results", false);
   $("quiz-title").textContent = cfg.title || t("quiz.title");
-  $("quiz-intro-text").textContent = cfg.intro || "";
+  $("quiz-intro-text").textContent = cfg.intro ? t("quiz.intro") : "";
   var meta = $("quiz-meta");
   meta.innerHTML = "";
   var pool = cfg.questions.slice();
@@ -2134,6 +2155,10 @@ function renderResults() {
   state.quiz.wrongIds = qs.filter(function (q) { return state.quiz.answers[q.id] !== q.answerIndex; }).map(function (q) { return q.id; });
   show("res-retry-wrong", state.quiz.wrongIds.length > 0);
 
+  renderReviewList();
+}
+function renderReviewList() {
+  var qs = state.quiz.questions;
   var list = $("res-review");
   emptyNode(list);
   qs.forEach(function (q) {
@@ -2229,18 +2254,24 @@ function renderGradeStats() {
   var years = selectedYears();
   var failBands = SITE_CONFIG.grades.failBands || [];
   var total = 0, pass = 0;
-  var modePool = [];
+  var bandTotals = {};
   years.forEach(function (y) {
     var s = TL.gradeStats(y, failBands);
     total += s.total; pass += s.pass;
-    if (s.modeBand) modePool.push(s.modeBand);
+    Object.keys(y.distribution || {}).forEach(function (b) {
+      bandTotals[b] = (bandTotals[b] || 0) + (y.distribution[b] || 0);
+    });
+  });
+  var modeBand = null, maxN = -1;
+  Object.keys(bandTotals).forEach(function (b) {
+    if (bandTotals[b] > maxN) { maxN = bandTotals[b]; modeBand = b; }
   });
   var passRate = total ? Math.round((pass / total) * 1000) / 10 : 0;
   var chips = [
     { label: years.length === 1 ? t("grades.chipCohort") : t("grades.chipCohortAll"), value: total, unit: t("grades.unitStudents") },
     { label: t("grades.chipPass"), value: passRate, unit: t("grades.unitPct") },
     { label: t("grades.chipFail"), value: total - pass, unit: t("grades.unitStudents") },
-    { label: t("grades.chipMode"), value: modePool[0] || "—", unit: t("grades.unitBand") }
+    { label: t("grades.chipMode"), value: modeBand || "—", unit: t("grades.unitBand") }
   ];
   var wrap = $("grade-stats");
   emptyNode(wrap);

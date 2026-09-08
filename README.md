@@ -25,7 +25,7 @@ deploys automatically via GitHub Actions.
 - Attempt history: best score and attempt count are stored on the student's own device (localStorage) — nothing leaves the browser.
 - Grade distribution: chart/table view toggle, counts/percent toggle, year selector (single / all), one-click print/PDF.
 - Dark mode: footer toggle, remembered per device.
-- Multilingual: English and 繁體中文 (163 UI keys per language), auto-detected from the browser and switchable in the footer (remembered per device).
+- Multilingual: English and 繁體中文 (164 UI keys per language), auto-detected from the browser and switchable in the footer (remembered per device).
 - Toasts and a "Copy link" button in the footer for sharing the site.
 
 ## Project layout

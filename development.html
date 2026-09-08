@@ -214,7 +214,7 @@ return sandbox.window.TL;  // evaluateQuestion, computeScore, gradeStats, bandSo
 <tr><th>Metric</th><th>Value</th><th>Notes</th></tr>
 <tr><td>Total lines</td><td>2,537</td><td><code>index.html</code> single file</td></tr>
 <tr><td>Functions</td><td>53</td><td>All in core script; 10 are pure logic (TL.*)</td></tr>
-<tr><td>i18n keys</td><td>163 / language</td><td>326 total strings (EN + 中文)</td></tr>
+<tr><td>i18n keys</td><td>164 / language</td><td>328 total strings (EN + 中文)</td></tr>
 <tr><td>Test files</td><td>5</td><td>quiz, grades, config.behavior, smoke, i18n</td></tr>
 <tr><td>Test helpers</td><td>3</td><td>extract (vm sandbox), check-html (tag balance), patch-scaffold</td></tr>
 <tr><td>External requests</td><td>2</td><td>ECharts JS (jsDelivr + SRI), font CSS (miaoda mirror)</td></tr>
@@ -224,7 +224,7 @@ return sandbox.window.TL;  // evaluateQuestion, computeScore, gradeStats, bandSo
 
 <div class="figure">
 <div id="chart-footprint" class="chart"></div>
-<div class="caption">Figure 6 — Artifact footprint across the three HTML pages: index.html carries the app (2,555 lines · 127.4 KB); paper.html and development.html document it (560 lines · 43.8 KB and 495 lines · 42.0 KB).</div>
+<div class="caption">Figure 6 — Artifact footprint across the three HTML pages: index.html carries the app (2,586 lines · 129.6 KB); paper.html and development.html document it (560 lines · 43.9 KB and 495 lines · 42.0 KB).</div>
 </div>
 
 <h2 id="adrs">8. Architecture decision records</h2>
@@ -279,7 +279,7 @@ return sandbox.window.TL;  // evaluateQuestion, computeScore, gradeStats, bandSo
 
 <div class="adr">
 <h4>ADR-09: Flat i18n dictionary with parity tests <span class="status">Accepted</span></h4>
-<p><b>Decision:</b> All UI strings live in one flat <code>LANGS</code> object (163 keys per language at HEAD); lookups fall back English → raw key.</p>
+<p><b>Decision:</b> All UI strings live in one flat <code>LANGS</code> object (164 keys per language at HEAD); lookups fall back English → raw key.</p>
 <p><b>Why:</b> A missing or mistyped key fails the i18n suite instead of the page; adding a language is appending one dictionary with the same keys.</p>
 </div>
 
@@ -326,7 +326,7 @@ return sandbox.window.TL;  // evaluateQuestion, computeScore, gradeStats, bandSo
 <p>All content is in <code>SITE_CONFIG</code> at the top of <code>index.html</code>. Adding a note, question, or grade year is a data edit — no code changes needed. After editing, run <code>npm test</code> to verify the content is well-formed (valid answer, counts sum to cohort, real URLs), then commit and push.</p>
 
 <h3>10.2 Adding a language</h3>
-<p>Add a new dictionary to <code>LANGS</code> with the same 163 keys as <code>en</code>. The i18n test suite automatically verifies key parity — if a key is missing, the test fails. Update <code>SITE_CONFIG.language</code> if the new language should be a default or auto-detected.</p>
+<p>Add a new dictionary to <code>LANGS</code> with the same 164 keys as <code>en</code>. The i18n test suite automatically verifies key parity — if a key is missing, the test fails. Update <code>SITE_CONFIG.language</code> if the new language should be a default or auto-detected.</p>
 
 <h3>10.3 Adding a feature</h3>
 <ol>
@@ -482,8 +482,8 @@ T&amp;L@Biomed Development Guide · Generated from the project repository · 64/
       { type: "value", name: "KB", nameTextStyle: { color: label, fontSize: 11 }, axisLabel: { color: label, fontFamily: "IBM Plex Mono, monospace", fontSize: 11 }, splitLine: { show: false } }
     ],
     series: [
-      { name: "lines", type: "bar", data: [2555, 560, 495], itemStyle: { color: palette[0] }, label: { show: true, position: "top", fontFamily: "IBM Plex Mono, monospace", fontSize: 10, color: label } },
-      { name: "KB", type: "bar", yAxisIndex: 1, data: [127.4, 43.8, 42.0], itemStyle: { color: palette[1] }, label: { show: true, position: "top", fontFamily: "IBM Plex Mono, monospace", fontSize: 10, color: label } }
+      { name: "lines", type: "bar", data: [2586, 560, 495], itemStyle: { color: palette[0] }, label: { show: true, position: "top", fontFamily: "IBM Plex Mono, monospace", fontSize: 10, color: label } },
+      { name: "KB", type: "bar", yAxisIndex: 1, data: [129.6, 43.9, 42.0], itemStyle: { color: palette[1] }, label: { show: true, position: "top", fontFamily: "IBM Plex Mono, monospace", fontSize: 10, color: label } }
     ]
   });
 
