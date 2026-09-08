@@ -82,6 +82,8 @@ body {
 .hidden { display: none !important; }
 a { color: var(--primary); text-decoration: none; }
 a:hover { text-decoration: underline; }
+::selection { background: var(--primary-soft); color: inherit; }
+input::placeholder, textarea::placeholder { color: var(--ink-3); opacity: 1; }
 :focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; border-radius: 4px; }
 code, .mono { font-family: var(--font-mono); }
 
@@ -160,7 +162,7 @@ p { margin: 0 0 .9em; }
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
-  transition: background .15s ease, color .15s ease, border-color .15s ease;
+  transition: background .15s ease, color .15s ease, border-color .15s ease, transform .15s ease;
 }
 .tab svg { width: 17px; height: 17px; flex: 0 0 auto; }
 .tab .acc {
@@ -170,11 +172,12 @@ p { margin: 0 0 .9em; }
   color: var(--ink-3);
   text-transform: uppercase;
 }
-.tab:hover { border-color: var(--primary); color: var(--primary); }
+.tab:hover { border-color: var(--primary); color: var(--primary); transform: translateY(-1px); }
 .tab[aria-selected="true"] {
   background: var(--primary);
   border-color: var(--primary);
   color: #FFFFFF;
+  box-shadow: 0 2px 10px rgba(20,50,58,.18);
 }
 .tab[aria-selected="true"] .acc { color: #BFDED4; }
 .tab .lock-dot { width: 12px; height: 12px; }
@@ -356,8 +359,9 @@ main { max-width: 980px; margin: 0 auto; padding: 26px 16px 60px; }
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
-  transition: background .15s ease, border-color .15s ease;
+  transition: background .15s ease, border-color .15s ease, transform .15s ease;
 }
+.btn:active { transform: translateY(1px); }
 .btn:hover { background: var(--primary-strong); border-color: var(--primary-strong); text-decoration: none; }
 .btn.secondary { background: var(--surface); color: var(--primary); }
 .btn.secondary:hover { background: var(--primary-soft); border-color: var(--primary); }
@@ -387,9 +391,10 @@ main { max-width: 980px; margin: 0 auto; padding: 26px 16px 60px; }
   font-family: var(--font-body);
   font-size: 15px;
   cursor: pointer;
-  transition: border-color .15s ease, background .15s ease;
+  transition: border-color .15s ease, background .15s ease, transform .15s ease, box-shadow .15s ease;
 }
-.opt:hover:not(:disabled) { border-color: var(--primary); }
+.opt:hover:not(:disabled) { border-color: var(--primary); transform: translateY(-1px); box-shadow: 0 0 0 3px var(--primary-soft); }
+.opt:not(:disabled):hover .opt-key { background: var(--primary); color: #FFFFFF; }
 .opt:disabled { cursor: default; }
 .opt-key {
   font-family: var(--font-mono);
@@ -405,6 +410,10 @@ main { max-width: 980px; margin: 0 auto; padding: 26px 16px 60px; }
   justify-content: center;
   flex: 0 0 auto;
 }
+.opt-status { margin-left: auto; flex: 0 0 auto; display: inline-flex; align-items: center; }
+.opt-status svg { width: 19px; height: 19px; }
+.opt.is-correct .opt-status { color: var(--ok); }
+.opt.is-wrong .opt-status { color: var(--bad); }
 .opt.is-correct { border-color: var(--ok); background: var(--ok-soft); }
 .opt.is-correct .opt-key { background: var(--ok); color: #FFFFFF; }
 .opt.is-wrong { border-color: var(--bad); background: var(--bad-soft); animation: shake .28s ease; }
@@ -602,7 +611,7 @@ footer {
 /* Global search */
 .global-search { position: relative; flex: 1 1 220px; min-width: 180px; }
 .global-search input { width: 100%; padding: 9px 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); color: var(--ink); font-family: var(--font-body); font-size: 14px; }
-.global-search input:focus { border-color: var(--primary); outline: none; }
+.global-search:focus-within input { border-color: var(--primary); outline: none; box-shadow: 0 0 0 3px var(--primary-soft); }
 .search-results { position: absolute; top: calc(100% + 6px); left: 0; right: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow); max-height: 360px; overflow-y: auto; z-index: 100; }
 .search-group-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); padding: 10px 14px 4px; }
 .search-item { display: block; padding: 9px 14px; color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--line); }
@@ -760,7 +769,7 @@ footer {
       <div class="qmeta" id="quiz-topic-tag"></div>
       <div class="qprompt" id="quiz-prompt"></div>
       <div class="options" id="quiz-options"></div>
-      <div class="feedback hidden" id="quiz-feedback"></div>
+      <div class="feedback hidden" id="quiz-feedback" role="status" aria-live="polite"></div>
       <div class="quiz-next">
         <button class="btn secondary hidden" id="quiz-next" data-i18n="quiz.next" type="button">Next question</button>
       </div>
@@ -2067,6 +2076,15 @@ function choose(i) {
   buttons.forEach(function (b) {
     var idx = Number(b.dataset.i);
     b.disabled = true;
+    if (idx === correctShuffled || idx === i) {
+      var st = document.createElement("span");
+      st.className = "opt-status";
+      st.setAttribute("aria-hidden", "true");
+      st.innerHTML = (idx === correctShuffled)
+        ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12l5 5L20 6"></path></svg>'
+        : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"></path></svg>';
+      b.appendChild(st);
+    }
     if (idx === correctShuffled) b.classList.add("is-correct");
     else if (idx === i) b.classList.add("is-wrong");
   });

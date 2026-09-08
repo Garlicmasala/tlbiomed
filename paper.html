@@ -204,7 +204,8 @@ li { margin-bottom: 5px; }
 <li><b>Keyboard-first quiz.</b> Keys 1–4 select an answer and Enter submits, so the quiz is fully usable without a mouse; keyboard hints are hidden on narrow screens.</li>
 <li><b>Print stylesheet.</b> <code>@media print</code> rules hide navigation and chrome — the study guide and grade export print cleanly.</li>
 <li><b>Reduced motion.</b> <code>prefers-reduced-motion</code> disables animations; the layout collapses responsively to phone widths.</li>
-<li><b>Contrast &amp; colour.</b> The token palette keeps comfortable text/background contrast in both themes, and colour is never the only channel — charts keep axis labels and tooltips.</li>
+<li><b>Contrast &amp; colour.</b> The token palette keeps comfortable text/background contrast in both themes, and colour is never the only channel — charts keep axis labels and tooltips, and quiz answers gain an inline check/cross icon (SVG, not colour alone) after you answer.</li>
+<li><b>Live announcements &amp; focus.</b> Quiz feedback is a polite live region (<code>role="status"</code> + <code>aria-live</code>) so screen readers hear right/wrong; the global search box shows a <code>:focus-within</code> glow ring on top of the global <code>:focus-visible</code> outline.</li>
 </ul>
 
 <h2 id="config">4. Configuration &amp; data model</h2>
