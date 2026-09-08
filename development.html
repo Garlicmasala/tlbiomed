@@ -220,6 +220,11 @@ return sandbox.window.TL;  // evaluateQuestion, computeScore, gradeStats, bandSo
 <tr><td>Test runtime</td><td>~0.5 s</td><td><code>npm test</code> on a typical machine</td></tr>
 </table>
 
+<div class="figure">
+<div id="chart-footprint" class="chart"></div>
+<div class="caption">Figure 6 — Artifact footprint across the three HTML pages: index.html carries the app (2,537 lines · 125.9 KB); paper.html and development.html document it (533 lines · 40.8 KB and 481 lines · 40.3 KB).</div>
+</div>
+
 <h2 id="adrs">8. Architecture decision records</h2>
 
 <div class="adr">
@@ -294,6 +299,9 @@ return sandbox.window.TL;  // evaluateQuestion, computeScore, gradeStats, bandSo
 <li><b>PowerShell <code>curl</code> alias.</b> PowerShell aliases <code>curl</code> to <code>Invoke-WebRequest</code>, which has different flags. Use <code>curl.exe</code> explicitly for curl-style commands.</li>
 <li><b>Inline Node scripts with regex.</b> Passing JavaScript with regex or special characters via <code>node -e "..."</code> in PowerShell frequently mangles quotes and parentheses. Write a temp <code>.js</code> file and run it instead.</li>
 <li><b>CRLF/LF.</b> Git on Windows may convert LF to CRLF on checkout (<code>warning: LF will be replaced by CRLF</code>). This is cosmetic and doesn't affect the site, but it inflates file byte counts slightly.</li>
+<li><b>PowerShell has no <code>&amp;&amp;</code>.</b> Chain commands with <code>;</code> or separate tool calls; a compound line that uses <code>&amp;&amp;</code> fails to parse.</li>
+<li><b><code>$HOME</code> is read-only in PowerShell.</b> It is an automatic variable — use another name (e.g. <code>$h1</code>) for your own paths.</li>
+<li><b><code>git push</code> writes progress to stderr.</b> PowerShell renders it as a red <code>NativeCommandError</code> and reports exit 1 even on success — look for the <code>old..new main -&gt; main</code> line to confirm the push actually landed.</li>
 <li><b>Edit/Write tool timeouts.</b> On Windows, the file edit/write tools occasionally time out (likely antivirus scanning large HTML files). When this happens, writing a Node patch script and running it via Bash is a reliable fallback.</li>
 <li><b>Netlify anonymous Drop limits (historical).</b> Anonymous (unclaimed) Netlify Drop sites expired after 1 hour and were subject to a daily upload limit. As of September 2026 the service suspends anonymous deploys and CAPTCHA-gates the upload page, so this path is no longer usable.</li>
 <li><b>Browser automation iframe.</b> Netlify Drop's file input lives inside a <code>storage.html</code> iframe — the automation had to target that iframe before uploading (moot since Drop is suspended; kept for history).</li>
@@ -447,7 +455,25 @@ T&amp;L@Biomed Development Guide · Generated from the project repository · 56/
     ] }]
   });
 
-  window.addEventListener("resize", function () { [c1, c2, c3, c4, c5].forEach(function (c) { c.resize(); }); });
+    // Figure 6: artifact footprint (lines + KB)
+  var c6 = echarts.init(document.getElementById("chart-footprint"));
+  c6.setOption({
+    color: palette,
+    tooltip: { trigger: "axis", axisPointer: { type: "shadow" }, triggerOn: "click", renderMode: "richText", confine: true },
+    legend: { top: 0, itemWidth: 14, itemHeight: 8, textStyle: { color: label, fontSize: 11 } },
+    grid: { left: "4%", right: "4%", top: 50, bottom: 30, containLabel: true },
+    xAxis: { type: "category", data: ["index.html", "paper.html", "development.html"], axisLine: { lineStyle: { color: axis } }, axisLabel: { color: label, fontFamily: "IBM Plex Mono, monospace", fontSize: 11 } },
+    yAxis: [
+      { type: "value", name: "lines", nameTextStyle: { color: label, fontSize: 11 }, axisLabel: { color: label, fontFamily: "IBM Plex Mono, monospace", fontSize: 11 }, splitLine: { lineStyle: { color: split } } },
+      { type: "value", name: "KB", nameTextStyle: { color: label, fontSize: 11 }, axisLabel: { color: label, fontFamily: "IBM Plex Mono, monospace", fontSize: 11 }, splitLine: { show: false } }
+    ],
+    series: [
+      { name: "lines", type: "bar", data: [2537, 533, 481], itemStyle: { color: palette[0] }, label: { show: true, position: "top", fontFamily: "IBM Plex Mono, monospace", fontSize: 10, color: label } },
+      { name: "KB", type: "bar", yAxisIndex: 1, data: [125.9, 40.8, 40.3], itemStyle: { color: palette[1] }, label: { show: true, position: "top", fontFamily: "IBM Plex Mono, monospace", fontSize: 10, color: label } }
+    ]
+  });
+
+  window.addEventListener("resize", function () { [c1, c2, c3, c4, c5, c6].forEach(function (c) { c.resize(); }); });
 })();
 </script>
 </body>

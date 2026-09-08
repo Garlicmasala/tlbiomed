@@ -163,6 +163,17 @@ li { margin-bottom: 5px; }
 
 <p><b>Layer responsibilities.</b> <code>SITE_CONFIG</code> is the single source of truth for all published content (notes, quiz, grades, tutorials) and settings (passcode, language). <code>LANGS</code> holds every UI string in both languages. The pure-logic core (<code>window.TL</code>) contains only deterministic functions — scoring, grade statistics, band sorting, array shuffling, duration formatting, and translation lookups — with no DOM access. The DOM layer wires that logic to the five views, handles routing (hash-based), theme and language toggles, and the passcode gate. CSS is a token-based design system with light/dark variants. All markup is static HTML; dynamic lists are rendered by the DOM layer from config.</p>
 
+<h3>2.1 Startup sequence</h3>
+<p>What happens when a student opens the page:</p>
+<ol>
+<li><b>Parse data.</b> <code>SITE_CONFIG</code> and <code>LANGS</code> are read — plain data at the top of the file, so parsing is instant and can never throw.</li>
+<li><b>Resolve language.</b> <code>localStorage</code> choice → browser detection (<code>zh-*</code> → 繁中) → configured default; the choice is persisted and the document title and meta description update with it.</li>
+<li><b>Route.</b> The hash router shows the view matching <code>location.hash</code>, falling back to the configured default view.</li>
+<li><b>Gate.</b> If the target view is in <code>GATED</code> and a passcode is set, the unlock screen is shown until the passcode matches.</li>
+<li><b>Render.</b> Static chrome gets <code>data-i18n</code> applied; dynamic lists (notes, quiz options, grade tables, tutorial groups) render from config; the ECharts grade charts initialise.</li>
+<li><b>Listen.</b> Tab bar, language and theme toggles, quiz interaction, search and print are wired.</li>
+</ol>
+
 <h2 id="features">3. Feature catalogue</h2>
 
 <table>
@@ -310,6 +321,41 @@ li { margin-bottom: 5px; }
 
 <p>The workflow (<code>.github/workflows/deploy.yml</code>) uses <code>actions/configure-pages@v5</code>, <code>upload-pages-artifact@v3</code> (uploading the site root), and <code>deploy-pages@v4</code>, triggered on every push to <code>main</code> and on manual <code>workflow_dispatch</code>. No build step is required.</p>
 
+<p>The complete workflow at HEAD (commit <code>1485931</code>):</p>
+<pre><code>name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Upload artifact (site pages)
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4</code></pre>
+
 <div class="callout">
 <b>Deployment migration (2026-09-08).</b> The site was originally previewed through Netlify Drop. On 2026-09-08 the service suspended the anonymous preview (<code>This site is suspended</code>) and began CAPTCHA-gating its upload page, so the project moved to GitHub Pages. The workflow needed three iterations: first it uploaded a three-file list (<code>upload-pages-artifact</code> rejects multi-path inputs), then Pages was enabled with <code>Source: GitHub Actions</code>, and finally the artifact path was set to the site root — which is also why <code>README.md</code> and the <code>tests/</code> folder are served alongside the three HTML pages (harmless on a public repo). Every push since then deploys in about a minute.
 </div>
@@ -322,6 +368,14 @@ li { margin-bottom: 5px; }
 <li><b>Anonymous hosting expiry.</b> Netlify Drop's anonymous deploys (hourly expiry, daily upload limits) were suspended in September 2026 and its upload page is now CAPTCHA-gated; GitHub Pages is the permanent path.</li>
 <li><b>Grade chart colour ramp.</b> Supports up to 5 years before cycling; keep "All years" views within that range.</li>
 </ul>
+
+<h3>9.1 Access model</h3>
+<p>Two of the five views are fully public; three sit behind the passcode gate. The gate list (<code>GATED</code>) drives the unlock screen, and an empty <code>SITE_CONFIG.passcode</code> disables the gate entirely (all views public). Quiz and Study Guide stay public by design — students should self-assess and read the exam guide without needing a code.</p>
+
+<div class="figure">
+<div id="chart-access" class="chart" style="min-height:300px"></div>
+<div class="caption">Figure 8 — Access model: three views gated by passcode, two public by design.</div>
+</div>
 
 <h2 id="roadmap">10. Roadmap</h2>
 <ul>
@@ -457,7 +511,21 @@ T&amp;L@Biomed Technical Paper · Generated from the project repository · 56/56
     series: [{ type: "line", smooth: true, data: [92.9, 93.8, 94.1, 95.3, 96.3], itemStyle: { color: palette[1] }, lineStyle: { color: palette[1], width: 2 }, areaStyle: { color: "rgba(14,107,92,0.12)" }, label: { show: true, position: "top", fontFamily: "IBM Plex Mono, monospace", fontSize: 11, color: label, formatter: "{c}%" } }]
   });
 
-  window.addEventListener("resize", function () { [c1, c2, c3, c4, c5, c6, c7].forEach(function (c) { c.resize(); }); });
+    // Figure 8: access model (public vs gated views)
+  var c8 = echarts.init(document.getElementById("chart-access"));
+  c8.setOption({
+    color: ["#C97F1B", "#2F8877", "#C97F1B", "#C97F1B", "#2F8877"],
+    tooltip: { trigger: "item", triggerOn: "click", renderMode: "richText", confine: true, formatter: "{b}" },
+    series: [{ type: "pie", radius: ["40%", "66%"], center: ["50%", "46%"], avoidLabelOverlap: true, itemStyle: { borderColor: "#fff", borderWidth: 2 }, label: { fontSize: 11, color: label, formatter: "{b}" }, labelLayout: { hideOverlap: true }, data: [
+      { value: 1, name: "Notes (gated)" },
+      { value: 1, name: "Mock Quiz (public)" },
+      { value: 1, name: "Grade Distribution (gated)" },
+      { value: 1, name: "Structured Tutorials (gated)" },
+      { value: 1, name: "Study Guide (public)" }
+    ] }]
+  });
+
+  window.addEventListener("resize", function () { [c1, c2, c3, c4, c5, c6, c7, c8].forEach(function (c) { c.resize(); }); });
 })();
 </script>
 </body>
