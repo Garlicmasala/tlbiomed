@@ -2,7 +2,7 @@
 
 All changes to T&L@Biomed, newest first. Each entry names the abbreviated
 commit hash — full history via `git log`. Test counts refer to `npm test`
-(56 at HEAD).
+(64 at HEAD).
 
 ## 2026-09-08
 

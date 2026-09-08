@@ -65,7 +65,7 @@ li { margin-bottom: 5px; }
 <div class="meta">
   <span><b>Project</b> T&amp;L@Biomed</span>
   <span><b>Stack</b> HTML / CSS / vanilla JS</span>
-  <span><b>Tests</b> 56 / 56 passing</span>
+  <span><b>Tests</b> 64 / 64 passing</span>
   <span><b>Size</b> ~126 KB · 2,537 lines</span>
   <span><b>Languages</b> English · 繁體中文</span>
 </div>
@@ -253,12 +253,12 @@ li { margin-bottom: 5px; }
 
 <div class="figure">
 <div id="chart-tests" class="chart"></div>
-<div class="caption">Figure 4 — Distribution of the 56 automated tests across five suites (config.behavior 20, smoke 18, quiz 9, grades 5, i18n 4).</div>
+<div class="caption">Figure 4 — Distribution of the 64 automated tests across five suites (config.behavior 28, smoke 18, quiz 9, grades 5, i18n 4).</div>
 </div>
 
 <h3>6.1 What the suites guard</h3>
 <ul>
-<li><b>config.behavior (20 tests)</b> — every quiz question is well-formed with a valid answer and unique ID; grade counts sum to their stated cohort; all links are real <code>http(s)</code> URLs; passcode and language config are valid; sample bank has ≥8 questions.</li>
+<li><b>config.behavior (28 tests)</b> — every quiz question is well-formed with a valid answer and unique ID; grade counts sum to their stated cohort; all links are real <code>http(s)</code> URLs; passcode and language config are valid; sample bank has ≥8 questions; taxonomy invariants — every question has a known topic and a valid difficulty, all three difficulty bands are represented, and every topic and band has bilingual labels.</li>
 <li><b>smoke (18 tests)</b> — single-file self-containment, locked ECharts CDN with SRI, allowed font mirror only, no emoji, no <code>scrollIntoView</code> / ES modules, all interactive element IDs present, pure-logic API exposed.</li>
 <li><b>quiz (9 tests)</b> — answer evaluation, score computation to one decimal, band sorting (A+ &gt; A &gt; A- &gt; … &gt; F), Fisher–Yates shuffle non-mutation, duration formatting.</li>
 <li><b>grades (5 tests)</b> — per-year statistics (total, pass, fail, pass rate, mode band), band ordering, fail-band handling.</li>
@@ -270,7 +270,7 @@ li { margin-bottom: 5px; }
 <div class="caption">Figure 5 — Commit growth: 19 commits, 4,757 lines added. Initial scaffold (a8cdd7b), interactivity (0abd8fe), subjects + i18n (cb85dec), paper (0cd9612), search + retry (170660b), dev guide (0348f6b), footer links (f008aca), study guide (15302ec), docs sync (75c04fe), expansion (ece24c7, d75a98e), topic filter (98b88f6), docs sync (4f79c5f), difficulty (f9b59a8), Pages setup (74e89d0, 7e78938, 1485931), docs expansion (f008c29, 9813f75).</div>
 </div>
 
-<p>Additionally, an HTML tag-balance helper verifies opening/closing tag parity on every run, and the full suite is re-executed after every change before commit. The current result is <b>56 / 56 passing</b>.</p>
+<p>Additionally, an HTML tag-balance helper verifies opening/closing tag parity on every run, and the full suite is re-executed after every change before commit. The current result is <b>64 / 64 passing</b>.</p>
 
 <h2 id="grades">7. Sample grade data</h2>
 <p>The shipped grade block contains five academic years of sample data (140, 145, 152, 148, and 161 students respectively), all marked <code>sample: true</code>. The chart below is rendered by the same ECharts configuration the live site uses — a flat, accessible grouped bar with shared tooltip and a dark-aware palette.</p>
@@ -312,7 +312,7 @@ li { margin-bottom: 5px; }
 
 <rect x="170" y="70" width="110" height="60" rx="10" fill="#FFFFFF" stroke="#0E6B5C" stroke-width="1.5"/>
 <text x="225" y="98" font-weight="600" fill="#0E6B5C">npm test</text>
-<text x="225" y="116" font-size="10" fill="#50646A">56 / 56 gate</text>
+<text x="225" y="116" font-size="10" fill="#50646A">64 / 64 gate</text>
 
 <rect x="320" y="70" width="110" height="60" rx="10" fill="#FFFFFF" stroke="#0E6B5C" stroke-width="1.5"/>
 <text x="375" y="98" font-weight="600" fill="#0E6B5C">git push</text>
@@ -402,7 +402,7 @@ jobs:
 </ul>
 
 <div class="footer">
-T&amp;L@Biomed Technical Paper · Generated from the project repository · 56/56 tests passing · Single-file static site · MIT-style use for course materials
+T&amp;L@Biomed Technical Paper · Generated from the project repository · 64/64 tests passing · Single-file static site · MIT-style use for course materials
 </div>
 
 </article>

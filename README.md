@@ -60,8 +60,8 @@ Edit that one block and redeploy — no code changes needed.
 npm test
 ```
 
-The suite (56 tests) checks: every question is well-formed and has a valid
-answer; grade counts sum to their cohorts; links are real `http(s)` URLs; the
+The suite (64 tests) checks: every question is well-formed with a valid
+answer and a known topic + difficulty band; grade counts sum to their cohorts; links are real `http(s)` URLs; the
 page stays a single self-contained file; dependencies stay on the locked
 whitelist (ECharts via jsDelivr + SRI, fonts via the mirror). If a test
 fails, fix the data before deploying — a typo cannot reach students.

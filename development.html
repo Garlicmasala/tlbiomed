@@ -65,7 +65,7 @@ li { margin-bottom: 5px; }
   <span><b>Project</b> T&amp;L@Biomed</span>
   <span><b>Stack</b> HTML / CSS / vanilla JS</span>
   <span><b>Commits</b> 17</span>
-  <span><b>Tests</b> 56 / 56</span>
+  <span><b>Tests</b> 64 / 64</span>
   <span><b>Code</b> 2,537 lines · 53 functions</span>
 </div>
 
@@ -172,11 +172,11 @@ li { margin-bottom: 5px; }
 </table>
 
 <h2 id="test-evolution">5. Test suite evolution</h2>
-<p>The suite started at 48 tests in the initial commit and grew to 52 when the technical paper was added (4 new smoke tests), then to 56 with this development guide (4 more smoke tests). The breakdown by category has remained stable — the majority are BDD behavior tests that guard content integrity. Round 4 kept the suite at 56: the new difficulty and topic-key dimensions are currently validated by an audit script, not yet by the suite — closing that gap is a tracked next step.</p>
+<p>The suite started at 48 tests in the initial commit and grew to 52 when the technical paper was added (4 new smoke tests), then to 56 with this development guide (4 more smoke tests). The breakdown by category has remained stable — the majority are BDD behavior tests that guard content integrity. Round 4 kept the suite at 56; a later taxonomy round folded the difficulty and topic-key checks into <code>config.behavior</code> (known topic, valid difficulty, all three bands represented, bilingual labels), closing the audit-script gap — the suite is now 64 tests.</p>
 
 <div class="figure">
 <div id="chart-tests" class="chart"></div>
-<div class="caption">Figure 2 — Test suite composition (56 tests). BDD behavior tests (20) guard content integrity; smoke tests (18) guard the shipped artifact; TDD tests (quiz 9, grades 5, i18n 4) guard pure logic.</div>
+<div class="caption">Figure 2 — Test suite composition (64 tests). BDD behavior tests (28) guard content integrity; smoke tests (18) guard the shipped artifact; TDD tests (quiz 9, grades 5, i18n 4) guard pure logic.</div>
 </div>
 
 <h3>5.1 How the sandbox works</h3>
@@ -224,7 +224,7 @@ return sandbox.window.TL;  // evaluateQuestion, computeScore, gradeStats, bandSo
 
 <div class="figure">
 <div id="chart-footprint" class="chart"></div>
-<div class="caption">Figure 6 — Artifact footprint across the three HTML pages: index.html carries the app (2,537 lines · 125.9 KB); paper.html and development.html document it (559 lines · 43.2 KB and 495 lines · 41.9 KB).</div>
+<div class="caption">Figure 6 — Artifact footprint across the three HTML pages: index.html carries the app (2,537 lines · 125.9 KB); paper.html and development.html document it (559 lines · 43.4 KB and 495 lines · 42.0 KB).</div>
 </div>
 
 <h2 id="adrs">8. Architecture decision records</h2>
@@ -334,7 +334,7 @@ return sandbox.window.TL;  // evaluateQuestion, computeScore, gradeStats, bandSo
 <li>Add a test in the appropriate suite (<code>quiz.test.js</code>, <code>grades.test.js</code>, etc.).</li>
 <li>Add the DOM wiring and markup.</li>
 <li>Add the element ID to the smoke test's interactive elements list.</li>
-<li>Run <code>npm test</code> — all 56+ must pass.</li>
+<li>Run <code>npm test</code> — all 64+ must pass.</li>
 <li>Update <code>paper.html</code> and this document if the feature is significant.</li>
 </ol>
 
@@ -351,7 +351,7 @@ return sandbox.window.TL;  // evaluateQuestion, computeScore, gradeStats, bandSo
 
 <rect x="160" y="70" width="110" height="60" rx="10" fill="#FFFFFF" stroke="#0E6B5C" stroke-width="1.5"/>
 <text x="215" y="98" font-weight="600" fill="#0E6B5C">npm test</text>
-<text x="215" y="116" font-size="10" fill="#50646A">56 / 56 gate</text>
+<text x="215" y="116" font-size="10" fill="#50646A">64 / 64 gate</text>
 
 <rect x="300" y="70" width="110" height="60" rx="10" fill="#FFFFFF" stroke="#0E6B5C" stroke-width="1.5"/>
 <text x="355" y="98" font-weight="600" fill="#0E6B5C">git push</text>
@@ -388,7 +388,7 @@ return sandbox.window.TL;  // evaluateQuestion, computeScore, gradeStats, bandSo
 <p><b>Lessons.</b> (1) Verify Pages is enabled before debugging the workflow itself. (2) <code>upload-pages-artifact</code> takes exactly one path — for a curated artifact, stage files into a temp directory and upload that. (3) Push-to-deploy means the instructor's update loop is just: edit <code>SITE_CONFIG</code> → <code>npm test</code> → <code>git push</code>.</p>
 
 <div class="footer">
-T&amp;L@Biomed Development Guide · Generated from the project repository · 56/56 tests passing · 19 commits · 2,537 lines · Single-file static site
+T&amp;L@Biomed Development Guide · Generated from the project repository · 64/64 tests passing · 19 commits · 2,537 lines · Single-file static site
 </div>
 
 </article>
@@ -483,7 +483,7 @@ T&amp;L@Biomed Development Guide · Generated from the project repository · 56/
     ],
     series: [
       { name: "lines", type: "bar", data: [2537, 559, 495], itemStyle: { color: palette[0] }, label: { show: true, position: "top", fontFamily: "IBM Plex Mono, monospace", fontSize: 10, color: label } },
-      { name: "KB", type: "bar", yAxisIndex: 1, data: [125.9, 43.2, 41.9], itemStyle: { color: palette[1] }, label: { show: true, position: "top", fontFamily: "IBM Plex Mono, monospace", fontSize: 10, color: label } }
+      { name: "KB", type: "bar", yAxisIndex: 1, data: [125.9, 43.4, 42.0], itemStyle: { color: palette[1] }, label: { show: true, position: "top", fontFamily: "IBM Plex Mono, monospace", fontSize: 10, color: label } }
     ]
   });
 

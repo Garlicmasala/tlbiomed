@@ -143,3 +143,56 @@ describe("links in notes and tutorials", () => {
     });
   });
 });
+
+describe("quiz taxonomy (topic & difficulty)", () => {
+  it("gives every question a topic from the declared subject set", () => {
+    cfg.quiz.questions.forEach((q) => {
+      assert.ok(q.topic && typeof q.topic === "string" && q.topic.trim() !== "", "question " + q.id);
+      assert.ok(TL.LANGS.en["quiz.topic." + q.topic], "unknown topic " + q.topic + " (question " + q.id + ")");
+    });
+  });
+
+  it("gives every question a valid difficulty band", () => {
+    const valid = ["basic", "intermediate", "advanced"];
+    cfg.quiz.questions.forEach((q) => {
+      assert.ok(valid.indexOf(q.difficulty) !== -1, "question " + q.id + " difficulty " + q.difficulty);
+    });
+  });
+
+  it("represents all three difficulty bands", () => {
+    const bands = new Set(cfg.quiz.questions.map((q) => q.difficulty));
+    ["basic", "intermediate", "advanced"].forEach((b) => assert.ok(bands.has(b), "missing band " + b));
+  });
+
+  it("covers a healthy spread of distinct topics (at least 15)", () => {
+    const topics = new Set(cfg.quiz.questions.map((q) => q.topic));
+    assert.ok(topics.size >= 15, "only " + topics.size + " distinct topics");
+  });
+
+  it("provides English labels for every topic used", () => {
+    cfg.quiz.questions.forEach((q) => {
+      assert.ok(TL.LANGS.en["quiz.topic." + q.topic], "en label missing for " + q.topic);
+    });
+  });
+
+  it("provides Traditional-Chinese labels for every topic used", () => {
+    cfg.quiz.questions.forEach((q) => {
+      assert.ok(TL.LANGS.zh["quiz.topic." + q.topic], "zh label missing for " + q.topic);
+    });
+  });
+
+  it("provides bilingual labels for the three difficulty bands", () => {
+    ["quiz.diffBasic", "quiz.diffInter", "quiz.diffAdv"].forEach((k) => {
+      assert.ok(TL.LANGS.en[k], "en missing " + k);
+      assert.ok(TL.LANGS.zh[k], "zh missing " + k);
+    });
+  });
+
+  it("keeps every topic label key in use", () => {
+    const used = new Set(cfg.quiz.questions.map((q) => "quiz.topic." + q.topic));
+    Object.keys(TL.LANGS.en).forEach((k) => {
+      if (k.indexOf("quiz.topic.") === 0) assert.ok(used.has(k), "unused topic key " + k);
+    });
+  });
+});
+
