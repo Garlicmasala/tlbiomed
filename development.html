@@ -64,9 +64,9 @@ li { margin-bottom: 5px; }
 <div class="meta">
   <span><b>Project</b> T&amp;L@Biomed</span>
   <span><b>Stack</b> HTML / CSS / vanilla JS</span>
-  <span><b>Commits</b> 12</span>
+  <span><b>Commits</b> 17</span>
   <span><b>Tests</b> 56 / 56</span>
-  <span><b>Code</b> 2,522 lines · 53 functions</span>
+  <span><b>Code</b> 2,537 lines · 53 functions</span>
 </div>
 
 <div class="stats-row">
@@ -101,7 +101,7 @@ li { margin-bottom: 5px; }
 <tr><td>Fonts</td><td>Spectral + IBM Plex (miaoda mirror)</td><td>Academic display + readable body, self-hosted mirror, no Google Fonts tracking</td></tr>
 <tr><td>Testing</td><td>Node built-in <code>node:test</code> + <code>vm</code></td><td>Zero test dependencies, runs core logic in a sandbox without a browser</td></tr>
 <tr><td>Version control</td><td>Git (main branch)</td><td>Local repo, ready to push to any remote</td></tr>
-<tr><td>Deployment</td><td>GitHub Actions → Pages (or Netlify Drop)</td><td>Free, automatic on push, no server management</td></tr>
+<tr><td>Deployment</td><td>GitHub Actions → Pages</td><td>Free, automatic on push, no server management</td></tr>
 </table>
 
 <h2 id="workflow">3. Development workflow (BDD / TDD / Smoke)</h2>
@@ -109,7 +109,7 @@ li { margin-bottom: 5px; }
 <ul>
 <li><b>BDD (config.behavior)</b> — 20 tests that assert the <em>content</em> is well-formed: every quiz question has a valid answer and unique ID, grade counts sum to their cohort, all links are real URLs, the passcode and language config are valid. These describe the expected behavior of the published data.</li>
 <li><b>TDD (quiz, grades, i18n)</b> — 18 tests that assert the <em>pure logic</em> is correct: answer evaluation, score computation, band sorting (A+ &gt; A &gt; … &gt; F), grade statistics, shuffle non-mutation, duration formatting, translation lookup and placeholder substitution. These were written alongside (or before) the logic they test.</li>
-<li><b>Smoke</b> — 14 tests that assert the <em>shipped artifact</em> is intact: single self-contained file, locked ECharts CDN with SRI, allowed font mirror only, no emoji, no ES modules, all interactive element IDs present, and the same checks for <code>paper.html</code>. These catch regressions that logic tests cannot.</li>
+<li><b>Smoke</b> — 18 tests that assert the <em>shipped artifact</em> is intact: single self-contained file, locked ECharts CDN with SRI, allowed font mirror only, no emoji, no ES modules, all interactive element IDs present, and the same checks for <code>paper.html</code>. These catch regressions that logic tests cannot.</li>
 </ul>
 
 <svg class="svg-diagram" viewBox="0 0 800 240" xmlns="http://www.w3.org/2000/svg" font-family="IBM Plex Sans, sans-serif">
@@ -141,31 +141,36 @@ li { margin-bottom: 5px; }
 </svg>
 
 <h2 id="commits">4. Commit history &amp; growth</h2>
-<p>The project evolved over 12 commits across three days, each adding a meaningful layer. The chart below shows lines added per commit (net insertions).</p>
+<p>The project evolved over 17 commits across three days, each adding a meaningful layer. The chart below shows lines added per commit (net insertions).</p>
 
 <div class="figure">
 <div id="chart-commits" class="chart"></div>
-<div class="caption">Figure 1 — Net insertions per commit. The initial scaffold (a8cdd7b) accounts for most of the codebase; later commits add interactivity, content, i18n, the paper, and the latest feature batch.</div>
+<div class="caption">Figure 1 — Lines added per commit. The initial scaffold (a8cdd7b) accounts for most of the codebase; later commits add interactivity, content, i18n, the paper, the study guide, the topic filter, difficulty tagging, and the Pages deployment.</div>
 </div>
 
 <table>
-<tr><th>Commit</th><th>Date</th><th>What it added</th><th>Net lines</th></tr>
+<tr><th>Commit</th><th>Date</th><th>What it added</th><th>Lines added</th></tr>
 <tr><td><code>a8cdd7b</code></td><td>2026-09-06</td><td>Initial scaffold: 4 tabs, passcode gate, quiz with feedback, ECharts grades, tutorials, dark mode, i18n framework, 48 tests</td><td>+2,022</td></tr>
-<tr><td><code>0abd8fe</code></td><td>2026-09-06</td><td>Interactivity layer: shuffled options, timer, keyboard shortcuts, attempt history, notes/tutorials filters, grade chart/table + counts/percent toggles, toasts, copy-link</td><td>+487</td></tr>
-<tr><td><code>cb85dec</code></td><td>2026-09-06</td><td>Expanded subjects (8 notes, 7 tutorial groups, 10 quiz questions) + full English/Traditional-Chinese i18n with auto-detect</td><td>+402</td></tr>
+<tr><td><code>0abd8fe</code></td><td>2026-09-06</td><td>Interactivity layer: shuffled options, timer, keyboard shortcuts, attempt history, notes/tutorials filters, grade chart/table + counts/percent toggles, toasts, copy-link</td><td>+534</td></tr>
+<tr><td><code>cb85dec</code></td><td>2026-09-06</td><td>Expanded subjects (8 notes, 7 tutorial groups, 10 quiz questions) + full English/Traditional-Chinese i18n with auto-detect</td><td>+508</td></tr>
 <tr><td><code>0cd9612</code></td><td>2026-09-06</td><td>Technical paper (<code>paper.html</code>) with architecture, test, grade, i18n and deployment graphs; 4 new smoke tests (52 total)</td><td>+436</td></tr>
-<tr><td><code>170660b</code></td><td>2026-09-06</td><td>Site-wide search, quiz retry-wrong-only, grade print/PDF; expanded content (10 notes, 15 Qs, 5 grade years); updated paper</td><td>+127</td></tr>
+<tr><td><code>170660b</code></td><td>2026-09-06</td><td>Site-wide search, quiz retry-wrong-only, grade print/PDF; expanded content (10 notes, 15 Qs, 5 grade years); updated paper</td><td>+150</td></tr>
 <tr><td><code>0348f6b</code></td><td>2026-09-06</td><td>Development guide (<code>development.html</code>) with workflow diagrams, test evolution, code metrics and ADRs; 4 new smoke tests</td><td>+414</td></tr>
 <tr><td><code>f008aca</code></td><td>2026-09-06</td><td>Footer links to paper and dev guide (EN + zh); smoke test allows same-deploy .html links</td><td>+8</td></tr>
 <tr><td><code>15302ec</code></td><td>2026-09-07</td><td>Study Guide tab with bilingual educational instruction; 24 i18n keys per language</td><td>+118</td></tr>
 <tr><td><code>75c04fe</code></td><td>2026-09-07</td><td>Docs sync: 5 tabs, 56 tests, 157 i18n keys; commit graphs refreshed</td><td>+30</td></tr>
 <tr><td><code>ece24c7</code></td><td>2026-09-08</td><td>Content expansion: 14 notes (Weeks 1–14), 25 quiz Qs, 10 tutorial groups, 6 study-guide cards; i18n 136</td><td>+68</td></tr>
 <tr><td><code>d75a98e</code></td><td>2026-09-08</td><td>Content round 2: quiz 25→35, 3 reference notes, Medical Statistics tutorial group</td><td>+21</td></tr>
-<tr><td><code>98b88f6</code></td><td>2026-09-08</td><td>Quiz topic filter: 18 subject chips, topic tags on all questions, quiz 35→40; i18n 157</td><td>+119</td></tr>
+<tr><td><code>98b88f6</code></td><td>2026-09-08</td><td>Quiz topic filter: subject chip row, topic tags on all questions, quiz 35→40; i18n 157</td><td>+119</td></tr>
+<tr><td><code>4f79c5f</code></td><td>2026-09-08</td><td>Docs sync: commit graphs/tables in paper + dev guide (add 75c04fe, ece24c7, d75a98e, 98b88f6), metrics 2,522 lines / 53 functions, smoke 14→18, content growth to 17 notes / 40 quiz / 5 years</td><td>+25</td></tr>
+<tr><td><code>f9b59a8</code></td><td>2026-09-08</td><td>Round 4: quiz 40→45 (musculoskeletal, clinical chemistry, cell biology, biochemistry, genetics); difficulty dimension (basic/intermediate/advanced) on all questions with a live topic-difficulty tag; i18n 160→163</td><td>+63</td></tr>
+<tr><td><code>74e89d0</code></td><td>2026-09-08</td><td>Deploy all site pages (index/paper/development) to Pages artifact</td><td>+5</td></tr>
+<tr><td><code>7e78938</code></td><td>2026-09-08</td><td>Enable Pages (source: GitHub Actions) — trigger deploy</td><td>+0</td></tr>
+<tr><td><code>1485931</code></td><td>2026-09-08</td><td>Fix Pages artifact: upload site root (single path)</td><td>+1</td></tr>
 </table>
 
 <h2 id="test-evolution">5. Test suite evolution</h2>
-<p>The suite started at 48 tests in the initial commit and grew to 52 when the technical paper was added (4 new smoke tests), then to 56 with this development guide (4 more smoke tests). The breakdown by category has remained stable — the majority are BDD behavior tests that guard content integrity.</p>
+<p>The suite started at 48 tests in the initial commit and grew to 52 when the technical paper was added (4 new smoke tests), then to 56 with this development guide (4 more smoke tests). The breakdown by category has remained stable — the majority are BDD behavior tests that guard content integrity. Round 4 kept the suite at 56: the new difficulty and topic-key dimensions are currently validated by an audit script, not yet by the suite — closing that gap is a tracked next step.</p>
 
 <div class="figure">
 <div id="chart-tests" class="chart"></div>
@@ -192,14 +197,14 @@ return sandbox.window.TL;  // evaluateQuestion, computeScore, gradeStats, bandSo
 <h2 id="metrics">7. Code metrics</h2>
 <div class="figure">
 <div id="chart-metrics" class="chart"></div>
-<div class="caption">Figure 4 — Approximate line distribution in <code>index.html</code> (2,522 lines total). CSS design system ~26%, config &amp; i18n ~22%, core logic ~34%, markup ~18%.</div>
+<div class="caption">Figure 4 — Approximate line distribution in <code>index.html</code> (2,537 lines total). CSS design system ~26%, config &amp; i18n ~22%, core logic ~34%, markup ~18%.</div>
 </div>
 
 <table>
 <tr><th>Metric</th><th>Value</th><th>Notes</th></tr>
-<tr><td>Total lines</td><td>2,522</td><td><code>index.html</code> single file</td></tr>
+<tr><td>Total lines</td><td>2,537</td><td><code>index.html</code> single file</td></tr>
 <tr><td>Functions</td><td>53</td><td>All in core script; 10 are pure logic (TL.*)</td></tr>
-<tr><td>i18n keys</td><td>160 / language</td><td>320 total strings (EN + 中文)</td></tr>
+<tr><td>i18n keys</td><td>163 / language</td><td>326 total strings (EN + 中文)</td></tr>
 <tr><td>Test files</td><td>5</td><td>quiz, grades, config.behavior, smoke, i18n</td></tr>
 <tr><td>Test helpers</td><td>3</td><td>extract (vm sandbox), check-html (tag balance), patch-scaffold</td></tr>
 <tr><td>External requests</td><td>2</td><td>ECharts JS (jsDelivr + SRI), font CSS (miaoda mirror)</td></tr>
@@ -212,7 +217,7 @@ return sandbox.window.TL;  // evaluateQuestion, computeScore, gradeStats, bandSo
 <div class="adr">
 <h4>ADR-01: Single self-contained HTML file <span class="status">Accepted</span></h4>
 <p><b>Decision:</b> The entire site — markup, styles, logic, config, i18n — lives in one <code>index.html</code>.</p>
-<p><b>Why:</b> Zero build step, zero dependency installation, trivial deployment (copy one file), trivial backup, and the instructor can open it in any text editor. The tradeoff — a large file (~123 KB) — is acceptable for a course hub of this scale.</p>
+<p><b>Why:</b> Zero build step, zero dependency installation, trivial deployment (copy one file), trivial backup, and the instructor can open it in any text editor. The tradeoff — a large file (~126 KB) — is acceptable for a course hub of this scale.</p>
 </div>
 
 <div class="adr">
@@ -240,9 +245,9 @@ return sandbox.window.TL;  // evaluateQuestion, computeScore, gradeStats, bandSo
 </div>
 
 <div class="adr">
-<h4>ADR-06: GitHub Pages via Actions (primary), Netlify Drop (fallback) <span class="status">Accepted</span></h4>
-<p><b>Decision:</b> Primary deployment is GitHub Pages via the included Actions workflow (<code>git push</code> → automatic deploy). Netlify Drop is the fallback for quick previews.</p>
-<p><b>Why:</b> Both are free. GitHub Pages gives automatic deployment on every push (matching the instructor's "I'll update quiz and grades when needed" workflow) and never expires. Netlify Drop gives instant preview URLs without a GitHub account, but anonymous drops expire after 1 hour and are rate-limited — fine for preview, not for permanence.</p>
+<h4>ADR-06: GitHub Pages via Actions (primary) <span class="status">Accepted</span></h4>
+<p><b>Decision:</b> Primary deployment is GitHub Pages via the included Actions workflow (<code>git push</code> → automatic deploy). Netlify Drop was the original fallback for quick previews; its anonymous deploys were suspended in September 2026, so GitHub Pages is the only maintained path.</p>
+<p><b>Why:</b> Both are free. GitHub Pages gives automatic deployment on every push (matching the instructor's "I'll update quiz and grades when needed" workflow) and never expires. Netlify Drop used to give instant preview URLs without a GitHub account, but anonymous drops expired after 1 hour, were rate-limited, and the service suspended them entirely in September 2026 — preview only, never permanence.</p>
 </div>
 
 <h2 id="environment">9. Development environment &amp; quirks</h2>
@@ -252,8 +257,8 @@ return sandbox.window.TL;  // evaluateQuestion, computeScore, gradeStats, bandSo
 <li><b>Inline Node scripts with regex.</b> Passing JavaScript with regex or special characters via <code>node -e "..."</code> in PowerShell frequently mangles quotes and parentheses. Write a temp <code>.js</code> file and run it instead.</li>
 <li><b>CRLF/LF.</b> Git on Windows may convert LF to CRLF on checkout (<code>warning: LF will be replaced by CRLF</code>). This is cosmetic and doesn't affect the site, but it inflates file byte counts slightly.</li>
 <li><b>Edit/Write tool timeouts.</b> On Windows, the file edit/write tools occasionally time out (likely antivirus scanning large HTML files). When this happens, writing a Node patch script and running it via Bash is a reliable fallback.</li>
-<li><b>Netlify anonymous Drop limits.</b> Anonymous (unclaimed) Netlify Drop sites expire after 1 hour and are subject to a daily upload limit. Claiming the site with a free Netlify account removes both limitations.</li>
-<li><b>Browser automation iframe.</b> Netlify Drop's file input lives inside a <code>storage.html</code> iframe — the automation must target that iframe before uploading.</li>
+<li><b>Netlify anonymous Drop limits (historical).</b> Anonymous (unclaimed) Netlify Drop sites expired after 1 hour and were subject to a daily upload limit. As of September 2026 the service suspends anonymous deploys and CAPTCHA-gates the upload page, so this path is no longer usable.</li>
+<li><b>Browser automation iframe.</b> Netlify Drop's file input lives inside a <code>storage.html</code> iframe — the automation had to target that iframe before uploading (moot since Drop is suspended; kept for history).</li>
 </ul>
 
 <h2 id="extending">10. Extending the project</h2>
@@ -261,7 +266,7 @@ return sandbox.window.TL;  // evaluateQuestion, computeScore, gradeStats, bandSo
 <p>All content is in <code>SITE_CONFIG</code> at the top of <code>index.html</code>. Adding a note, question, or grade year is a data edit — no code changes needed. After editing, run <code>npm test</code> to verify the content is well-formed (valid answer, counts sum to cohort, real URLs), then commit and push.</p>
 
 <h3>10.2 Adding a language</h3>
-<p>Add a new dictionary to <code>LANGS</code> with the same 103 keys as <code>en</code>. The i18n test suite automatically verifies key parity — if a key is missing, the test fails. Update <code>SITE_CONFIG.language</code> if the new language should be a default or auto-detected.</p>
+<p>Add a new dictionary to <code>LANGS</code> with the same 163 keys as <code>en</code>. The i18n test suite automatically verifies key parity — if a key is missing, the test fails. Update <code>SITE_CONFIG.language</code> if the new language should be a default or auto-detected.</p>
 
 <h3>10.3 Adding a feature</h3>
 <ol>
@@ -306,13 +311,13 @@ return sandbox.window.TL;  // evaluateQuestion, computeScore, gradeStats, bandSo
 <line x1="410" y1="100" x2="440" y2="100" stroke="#0E6B5C" stroke-width="1.5" marker-end="url(#arr2)"/>
 <line x1="570" y1="100" x2="610" y2="100" stroke="#0E6B5C" stroke-width="1.5" marker-end="url(#arr2)"/>
 </g>
-<text x="400" y="170" text-anchor="middle" font-size="11" fill="#7C8F93" font-family="IBM Plex Mono, monospace">Alternative: Netlify Drop (drag index.html) for instant preview — free, but anonymous drops expire in 1 hour.</text>
+<text x="400" y="170" text-anchor="middle" font-size="11" fill="#7C8F93" font-family="IBM Plex Mono, monospace">Alternative: Cloudflare Pages / Vercel — any static host works; Netlify Drop is discontinued.</text>
 </svg>
 
 <p>The included workflow (<code>.github/workflows/deploy.yml</code>) triggers on every push to <code>main</code> and on manual <code>workflow_dispatch</code>. It uses <code>actions/configure-pages@v5</code>, <code>upload-pages-artifact@v3</code> (uploading <code>./index.html</code>), and <code>deploy-pages@v4</code>. No build step is required — the artifact is the file itself.</p>
 
 <div class="footer">
-T&amp;L@Biomed Development Guide · Generated from the project repository · 56/56 tests passing · 12 commits · 2,522 lines · Single-file static site
+T&amp;L@Biomed Development Guide · Generated from the project repository · 56/56 tests passing · 17 commits · 2,537 lines · Single-file static site
 </div>
 
 </article>
@@ -330,9 +335,9 @@ T&amp;L@Biomed Development Guide · Generated from the project repository · 56/
     color: palette,
     tooltip: { trigger: "axis" },
     grid: grid(),
-    xAxis: { type: "category", data: ["a8cdd7b\ninitial", "0abd8fe\ninteractivity", "cb85dec\nsubjects+i18n", "0cd9612\npaper", "170660b\nsearch+retry", "0348f6b\ndev guide", "f008aca\nfooter links", "15302ec\nstudy guide", "75c04fe\ndocs sync", "ece24c7\nexpand", "d75a98e\nexpand", "98b88f6\ntopic filter"], axisLine: { lineStyle: { color: axis } }, axisLabel: { color: label, fontFamily: "IBM Plex Mono, monospace", fontSize: 10, interval: 0 } },
+    xAxis: { type: "category", data: ["a8cdd7b\ninitial", "0abd8fe\ninteractivity", "cb85dec\nsubjects+i18n", "0cd9612\npaper", "170660b\nsearch+retry", "0348f6b\ndev guide", "f008aca\nfooter", "15302ec\nstudy guide", "75c04fe\ndocs sync", "ece24c7\nexpand", "d75a98e\nexpand", "98b88f6\ntopic filter", "4f79c5f\ndocs sync", "f9b59a8\ndifficulty", "74e89d0\npages artifact", "7e78938\npages retrigger", "1485931\nartifact fix"], axisLine: { lineStyle: { color: axis } }, axisLabel: { color: label, fontFamily: "IBM Plex Mono, monospace", fontSize: 10, interval: 0 } },
     yAxis: { type: "value", name: "lines added", nameTextStyle: { color: label, fontSize: 11 }, axisLabel: { color: label, fontFamily: "IBM Plex Mono, monospace", fontSize: 11 }, splitLine: { lineStyle: { color: split } } },
-    series: [{ type: "bar", barMaxWidth: 50, data: [2022, 487, 402, 436, 127, 414, 8, 118, 30, 68, 21, 119], itemStyle: { color: palette[2] }, label: { show: true, position: "top", fontFamily: "IBM Plex Mono, monospace", fontSize: 11, color: label } }]
+    series: [{ type: "bar", barMaxWidth: 50, data: [2022, 534, 508, 436, 150, 414, 8, 118, 30, 68, 21, 119, 25, 63, 5, 0, 1], itemStyle: { color: palette[2] }, label: { show: true, position: "top", fontFamily: "IBM Plex Mono, monospace", fontSize: 11, color: label } }]
   });
 
   // Figure 2: tests
@@ -357,7 +362,7 @@ T&amp;L@Biomed Development Guide · Generated from the project repository · 56/
     tooltip: { trigger: "axis" },
     legend: { bottom: 0, textStyle: { color: label, fontSize: 12 } },
     grid: grid(),
-    xAxis: { type: "category", data: ["a8cdd7b\ninitial", "cb85dec\nexpand", "170660b\nall", "98b88f6\nnow"], axisLine: { lineStyle: { color: axis } }, axisLabel: { color: label, fontFamily: "IBM Plex Mono, monospace", fontSize: 10, interval: 0 } },
+    xAxis: { type: "category", data: ["a8cdd7b\ninitial", "cb85dec\nexpand", "170660b\nall", "f9b59a8\nround 4"], axisLine: { lineStyle: { color: axis } }, axisLabel: { color: label, fontFamily: "IBM Plex Mono, monospace", fontSize: 10, interval: 0 } },
     yAxis: { type: "value", minInterval: 1, name: "count", nameTextStyle: { color: label, fontSize: 11 }, axisLabel: { color: label, fontFamily: "IBM Plex Mono, monospace", fontSize: 11 }, splitLine: { lineStyle: { color: split } } },
     series: [
       { name: "Notes", type: "bar", stack: "total", data: [4, 8, 10, 17], itemStyle: { color: palette[0] } },

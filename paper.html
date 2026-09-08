@@ -66,7 +66,7 @@ li { margin-bottom: 5px; }
   <span><b>Project</b> T&amp;L@Biomed</span>
   <span><b>Stack</b> HTML / CSS / vanilla JS</span>
   <span><b>Tests</b> 56 / 56 passing</span>
-  <span><b>Size</b> ~91 KB · 2,128 lines</span>
+  <span><b>Size</b> ~126 KB · 2,537 lines</span>
   <span><b>Languages</b> English · 繁體中文</span>
 </div>
 
@@ -118,7 +118,7 @@ li { margin-bottom: 5px; }
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#0E6B5C"/></marker>
   </defs>
   <rect x="40" y="30" width="720" height="360" rx="14" fill="#F2F6F3" stroke="#DCE6E1"/>
-  <text x="60" y="58" font-size="13" font-weight="600" fill="#0A4F44" font-family="IBM Plex Mono, monospace">index.html  (single file, ~123 KB)</text>
+  <text x="60" y="58" font-size="13" font-weight="600" fill="#0A4F44" font-family="IBM Plex Mono, monospace">index.html  (single file, ~126 KB)</text>
 
   <rect x="70" y="80" width="160" height="70" rx="10" fill="#FFFFFF" stroke="#0E6B5C" stroke-width="1.5"/>
   <text x="150" y="108" text-anchor="middle" font-size="13" font-weight="600" fill="#0E6B5C">SITE_CONFIG</text>
@@ -141,8 +141,8 @@ li { margin-bottom: 5px; }
   <text x="230" y="238" text-anchor="middle" font-size="11" fill="#50646A">tokens, dark mode, responsive, lab/medical palette</text>
 
   <rect x="430" y="190" width="310" height="70" rx="10" fill="#FFFFFF" stroke="#C97F1B" stroke-width="1.5"/>
-  <text x="585" y="218" text-anchor="middle" font-size="13" font-weight="600" fill="#C97F1B">Markup (4 tab views)</text>
-  <text x="585" y="238" text-anchor="middle" font-size="11" fill="#50646A">Notes · Quiz · Grades · Tutorials + unlock screen</text>
+  <text x="585" y="218" text-anchor="middle" font-size="13" font-weight="600" fill="#C97F1B">Markup (5 tab views)</text>
+  <text x="585" y="238" text-anchor="middle" font-size="11" fill="#50646A">Notes · Quiz · Grades · Tutorials · Guide + unlock screen</text>
 
   <line x1="150" y1="150" x2="150" y2="190" stroke="#0E6B5C" stroke-width="1.5" marker-end="url(#arrow)"/>
   <line x1="330" y1="150" x2="330" y2="190" stroke="#0E6B5C" stroke-width="1.5" marker-end="url(#arrow)"/>
@@ -158,19 +158,19 @@ li { margin-bottom: 5px; }
   <text x="585" y="345" text-anchor="middle" font-size="11" fill="#50646A">Spectral + IBM Plex Sans / Mono</text>
 
   <rect x="70" y="380" width="670" height="0" fill="none"/>
-  <text x="400" y="405" text-anchor="middle" font-size="11" fill="#7C8F93" font-family="IBM Plex Mono, monospace">Pure logic is extracted by tests/helpers/extract.js and run in a Node vm sandbox — no browser needed for 48 unit + smoke tests.</text>
+  <text x="400" y="405" text-anchor="middle" font-size="11" fill="#7C8F93" font-family="IBM Plex Mono, monospace">Pure logic is extracted by tests/helpers/extract.js and run in a Node vm sandbox — no browser needed for 56 unit + smoke tests.</text>
 </svg>
 
-<p><b>Layer responsibilities.</b> <code>SITE_CONFIG</code> is the single source of truth for all published content (notes, quiz, grades, tutorials) and settings (passcode, language). <code>LANGS</code> holds every UI string in both languages. The pure-logic core (<code>window.TL</code>) contains only deterministic functions — scoring, grade statistics, band sorting, array shuffling, duration formatting, and translation lookups — with no DOM access. The DOM layer wires that logic to the four views, handles routing (hash-based), theme and language toggles, and the passcode gate. CSS is a token-based design system with light/dark variants. All markup is static HTML; dynamic lists are rendered by the DOM layer from config.</p>
+<p><b>Layer responsibilities.</b> <code>SITE_CONFIG</code> is the single source of truth for all published content (notes, quiz, grades, tutorials) and settings (passcode, language). <code>LANGS</code> holds every UI string in both languages. The pure-logic core (<code>window.TL</code>) contains only deterministic functions — scoring, grade statistics, band sorting, array shuffling, duration formatting, and translation lookups — with no DOM access. The DOM layer wires that logic to the five views, handles routing (hash-based), theme and language toggles, and the passcode gate. CSS is a token-based design system with light/dark variants. All markup is static HTML; dynamic lists are rendered by the DOM layer from config.</p>
 
 <h2 id="features">3. Feature catalogue</h2>
 
 <table>
 <tr><th>Section</th><th>Visibility</th><th>Key interactions</th><th>Sample content</th></tr>
-<tr><td><b>Notes</b></td><td>Private (passcode)</td><td>Link cards, live client-side filter, tags, sample badges</td><td>10 cards (weeks 1–10)</td></tr>
-<tr><td><b>Mock Quiz</b></td><td>Public</td><td>Instant correct/wrong feedback, per-question explanations, progress bar, timer, keyboard shortcuts (1–4 / Enter), question &amp; answer shuffling, score ring, full answer review, per-device attempt history</td><td>45 MCQ across 18 subjects</td></tr>
+<tr><td><b>Notes</b></td><td>Private (passcode)</td><td>Link cards, live client-side filter, tags, sample badges</td><td>17 cards (weeks 1–14 + 3 reference)</td></tr>
+<tr><td><b>Mock Quiz</b></td><td>Public</td><td>Instant correct/wrong feedback, per-question explanations, progress bar, timer, keyboard shortcuts (1–4 / Enter), question &amp; answer shuffling, score ring, full answer review, per-device attempt history</td><td>45 MCQ across 19 subjects</td></tr>
 <tr><td><b>Grade Distribution</b></td><td>Private (passcode)</td><td>ECharts grouped bar chart, year selector (single / all), chart/table toggle, counts/percent toggle, summary stat chips</td><td>5 academic years</td></tr>
-<tr><td><b>Structured Tutorials</b></td><td>Private (passcode)</td><td>Topic-grouped link lists, live filter, step counts</td><td>7 topics / 15 items</td></tr>
+<tr><td><b>Structured Tutorials</b></td><td>Private (passcode)</td><td>Topic-grouped link lists, live filter, step counts</td><td>11 topics / 23 items</td></tr>
 </table>
 
 <h3>3.1 Cross-cutting features</h3>
@@ -208,7 +208,7 @@ li { margin-bottom: 5px; }
 
 <div class="figure">
 <div id="chart-i18n" class="chart"></div>
-<div class="caption">Figure 1 — i18n key coverage: 160 keys per language, 100% parity between English and Traditional Chinese (206 total strings).</div>
+<div class="caption">Figure 1 — i18n key coverage: 163 keys per language, 100% parity between English and Traditional Chinese (326 total strings).</div>
 </div>
 
 <p><b>Mechanics.</b> Static elements carry <code>data-i18n</code> (or <code>data-i18n-ph</code> for placeholders) and are re-rendered on language switch. Dynamic strings (question counters, verdicts, stat chips, toasts) use a <code>t(key)</code> / <code>fmt(key, vars)</code> pair with <code>{placeholder}</code> substitution. Initial language is read from <code>localStorage</code>, then auto-detected from the browser (<code>zh-*</code> → 中文), then the configured default. The choice is persisted and the document title and meta description update with it.</p>
@@ -224,7 +224,7 @@ li { margin-bottom: 5px; }
 <h3>6.1 What the suites guard</h3>
 <ul>
 <li><b>config.behavior (20 tests)</b> — every quiz question is well-formed with a valid answer and unique ID; grade counts sum to their stated cohort; all links are real <code>http(s)</code> URLs; passcode and language config are valid; sample bank has ≥8 questions.</li>
-<li><b>smoke (10 tests)</b> — single-file self-containment, locked ECharts CDN with SRI, allowed font mirror only, no emoji, no <code>scrollIntoView</code> / ES modules, all interactive element IDs present, pure-logic API exposed.</li>
+<li><b>smoke (18 tests)</b> — single-file self-containment, locked ECharts CDN with SRI, allowed font mirror only, no emoji, no <code>scrollIntoView</code> / ES modules, all interactive element IDs present, pure-logic API exposed.</li>
 <li><b>quiz (9 tests)</b> — answer evaluation, score computation to one decimal, band sorting (A+ &gt; A &gt; A- &gt; … &gt; F), Fisher–Yates shuffle non-mutation, duration formatting.</li>
 <li><b>grades (5 tests)</b> — per-year statistics (total, pass, fail, pass rate, mode band), band ordering, fail-band handling.</li>
 <li><b>i18n (4 tests)</b> — EN→ZH key parity, safe fallback, placeholder substitution in both languages, and that every <code>data-i18n</code> key used in markup exists in both dictionaries.</li>
@@ -232,7 +232,7 @@ li { margin-bottom: 5px; }
 
 <div class="figure">
 <div id="chart-commits" class="chart"></div>
-<div class="caption">Figure 3 — Commit growth: 12 commits, 4,252 net insertions. Initial scaffold (a8cdd7b), interactivity (0abd8fe), subjects + i18n (cb85dec), paper (0cd9612), search + retry (170660b), dev guide (0348f6b), footer links (f008aca), study guide (15302ec), docs sync (75c04fe), expansion (ece24c7, d75a98e), topic filter (98b88f6).</div>
+<div class="caption">Figure 3 — Commit growth: 17 commits, 4,522 lines added. Initial scaffold (a8cdd7b), interactivity (0abd8fe), subjects + i18n (cb85dec), paper (0cd9612), search + retry (170660b), dev guide (0348f6b), footer links (f008aca), study guide (15302ec), docs sync (75c04fe), expansion (ece24c7, d75a98e), topic filter (98b88f6), docs sync (4f79c5f), difficulty (f9b59a8), Pages setup (74e89d0, 7e78938, 1485931).</div>
 </div>
 
 <p>Additionally, an HTML tag-balance helper verifies opening/closing tag parity on every run, and the full suite is re-executed after every change before commit. The current result is <b>56 / 56 passing</b>.</p>
@@ -286,27 +286,27 @@ li { margin-bottom: 5px; }
 <line x1="430" y1="100" x2="470" y2="100" stroke="#0E6B5C" stroke-width="1.5" marker-end="url(#arrow2)"/>
 <line x1="600" y1="100" x2="640" y2="100" stroke="#0E6B5C" stroke-width="1.5" marker-end="url(#arrow2)"/>
 </g>
-<text x="400" y="170" text-anchor="middle" font-size="11" fill="#7C8F93" font-family="IBM Plex Mono, monospace">Alternatives: Netlify Drop (drag folder), Cloudflare Pages, Vercel — any static host works.</text>
+<text x="400" y="170" text-anchor="middle" font-size="11" fill="#7C8F93" font-family="IBM Plex Mono, monospace">Alternatives: Cloudflare Pages, Vercel — any static host works.</text>
 </svg>
 
-<p>The workflow (<code>.github/workflows/deploy.yml</code>) uses <code>actions/configure-pages@v5</code>, <code>upload-pages-artifact@v3</code> (uploading <code>./index.html</code>), and <code>deploy-pages@v4</code>, triggered on every push to <code>main</code> and on manual <code>workflow_dispatch</code>. No build step is required.</p>
+<p>The workflow (<code>.github/workflows/deploy.yml</code>) uses <code>actions/configure-pages@v5</code>, <code>upload-pages-artifact@v3</code> (uploading the site root), and <code>deploy-pages@v4</code>, triggered on every push to <code>main</code> and on manual <code>workflow_dispatch</code>. No build step is required.</p>
 
 <h2 id="security">9. Security &amp; limitations</h2>
 <ul>
 <li><b>Passcode is a light gate, not real security.</b> It stops casual browsing, but the passcode and all private content are visible in the page source. Suitable for class materials; do not put truly sensitive data behind it.</li>
 <li><b>Client-side only.</b> Quiz results and attempt history live in the student's own <code>localStorage</code>; no analytics, no tracking, no data leaves the browser.</li>
 <li><b>Dependency whitelist.</b> Only two external resources load: ECharts from jsDelivr with a fixed version and SRI integrity hash, and fonts from the miaoda.feishu.cn mirror. No other CDNs, no analytics, no polyfill.io.</li>
-<li><b>Anonymous hosting expiry.</b> Netlify Drop without an account expires sites after one hour and rate-limits anonymous uploads — a claimed (free) account or GitHub Pages is required for permanence.</li>
+<li><b>Anonymous hosting expiry.</b> Netlify Drop's anonymous deploys (hourly expiry, daily upload limits) were suspended in September 2026 and its upload page is now CAPTCHA-gated; GitHub Pages is the permanent path.</li>
 <li><b>Grade chart colour ramp.</b> Supports up to 5 years before cycling; keep "All years" views within that range.</li>
 </ul>
 
 <h2 id="roadmap">10. Roadmap</h2>
 <ul>
-<li><b>Quiz modes.</b> Timed auto-submit, multiple-answer questions, and a "review only wrong answers" retry mode.</li>
+<li><b>Quiz modes.</b> Timed auto-submit and multiple-answer questions (retry-wrong-only revision is already live).</li>
+<li><b>Difficulty practice.</b> Filter the quiz by difficulty band (basic / intermediate / advanced) and review per band.</li>
 <li><b>Grade import.</b> A small CSV-paste utility to populate <code>SITE_CONFIG.grades.years</code> without hand-editing JSON.</li>
 <li><b>More languages.</b> The <code>LANGS</code> dictionary is flat — Simplified Chinese and other languages are a single dictionary away.</li>
-<li><b>Print/PDF export.</b> The paper and the grade view are already print-CSS friendly; a one-click export could be added.</li>
-<li><b>Search across notes + tutorials.</b> The current per-section filters could be unified into a site-wide search.</li>
+<li><b>Passcode hardening.</b> The gate is source-readable by design; a hash check would close that, at the cost of a tiny static build step.</li>
 </ul>
 
 <div class="footer">
@@ -333,7 +333,7 @@ T&amp;L@Biomed Technical Paper · Generated from the project repository · 56/56
     grid: baseGrid(),
     xAxis: { type: "category", data: ["English", "繁體中文"], axisLine: { lineStyle: { color: axis } }, axisLabel: { color: label, fontFamily: "IBM Plex Mono, monospace", fontSize: 12 } },
     yAxis: { type: "value", name: "translated strings", nameTextStyle: { color: label, fontSize: 11 }, axisLabel: { color: label, fontFamily: "IBM Plex Mono, monospace", fontSize: 11 }, splitLine: { lineStyle: { color: split } } },
-    series: [{ type: "bar", barMaxWidth: 80, data: [160, 160], itemStyle: { color: palette[1] }, label: { show: true, position: "top", fontFamily: "IBM Plex Mono, monospace", fontSize: 12, color: label } }]
+    series: [{ type: "bar", barMaxWidth: 80, data: [163, 163], itemStyle: { color: palette[1] }, label: { show: true, position: "top", fontFamily: "IBM Plex Mono, monospace", fontSize: 12, color: label } }]
   });
 
   // Figure 2: test distribution donut
@@ -363,9 +363,9 @@ T&amp;L@Biomed Technical Paper · Generated from the project repository · 56/56
     color: palette,
     tooltip: { trigger: "axis" },
     grid: baseGrid(),
-    xAxis: { type: "category", data: ["a8cdd7b\ninitial", "0abd8fe\ninteractivity", "cb85dec\nsubjects + i18n", "0cd9612\npaper", "170660b\nsearch + retry", "0348f6b\ndev guide", "f008aca\nfooter links", "15302ec\nstudy guide", "75c04fe\ndocs sync", "ece24c7\nexpand", "d75a98e\nexpand", "98b88f6\ntopic filter"], axisLine: { lineStyle: { color: axis } }, axisLabel: { color: label, fontFamily: "IBM Plex Mono, monospace", fontSize: 10, interval: 0 } },
+    xAxis: { type: "category", data: ["a8cdd7b\ninitial", "0abd8fe\ninteractivity", "cb85dec\nsubjects+i18n", "0cd9612\npaper", "170660b\nsearch+retry", "0348f6b\ndev guide", "f008aca\nfooter", "15302ec\nstudy guide", "75c04fe\ndocs sync", "ece24c7\nexpand", "d75a98e\nexpand", "98b88f6\ntopic filter", "4f79c5f\ndocs sync", "f9b59a8\ndifficulty", "74e89d0\npages artifact", "7e78938\npages retrigger", "1485931\nartifact fix"], axisLine: { lineStyle: { color: axis } }, axisLabel: { color: label, fontFamily: "IBM Plex Mono, monospace", fontSize: 10, interval: 0 } },
     yAxis: { type: "value", name: "lines added", nameTextStyle: { color: label, fontSize: 11 }, axisLabel: { color: label, fontFamily: "IBM Plex Mono, monospace", fontSize: 11 }, splitLine: { lineStyle: { color: split } } },
-    series: [{ type: "bar", barMaxWidth: 60, data: [2022, 487, 402, 436, 127, 414, 8, 118, 30, 68, 21, 119], itemStyle: { color: palette[2] }, label: { show: true, position: "top", fontFamily: "IBM Plex Mono, monospace", fontSize: 11, color: label } }]
+    series: [{ type: "bar", barMaxWidth: 60, data: [2022, 534, 508, 436, 150, 414, 8, 118, 30, 68, 21, 119, 25, 63, 5, 0, 1], itemStyle: { color: palette[2] }, label: { show: true, position: "top", fontFamily: "IBM Plex Mono, monospace", fontSize: 11, color: label } }]
   });
 
   // Figure 4: grade distribution
