@@ -186,7 +186,7 @@ return sandbox.window.TL;  // evaluateQuestion, computeScore, gradeStats, bandSo
 
 <div class="figure">
 <div id="chart-content" class="chart"></div>
-<div class="caption">Figure 3 — Sample content growth across commits. Notes (4→17), quiz questions (5→40), grade years (3→5). All content is marked <code>sample: true</code> until the instructor replaces it.</div>
+<div class="caption">Figure 3 — Sample content growth across commits. Notes (4→17), quiz questions (5→45), grade years (3→5). All content is marked <code>sample: true</code> until the instructor replaces it.</div>
 </div>
 
 <h2 id="metrics">7. Code metrics</h2>
@@ -199,7 +199,7 @@ return sandbox.window.TL;  // evaluateQuestion, computeScore, gradeStats, bandSo
 <tr><th>Metric</th><th>Value</th><th>Notes</th></tr>
 <tr><td>Total lines</td><td>2,522</td><td><code>index.html</code> single file</td></tr>
 <tr><td>Functions</td><td>53</td><td>All in core script; 10 are pure logic (TL.*)</td></tr>
-<tr><td>i18n keys</td><td>157 / language</td><td>314 total strings (EN + 中文)</td></tr>
+<tr><td>i18n keys</td><td>160 / language</td><td>320 total strings (EN + 中文)</td></tr>
 <tr><td>Test files</td><td>5</td><td>quiz, grades, config.behavior, smoke, i18n</td></tr>
 <tr><td>Test helpers</td><td>3</td><td>extract (vm sandbox), check-html (tag balance), patch-scaffold</td></tr>
 <tr><td>External requests</td><td>2</td><td>ECharts JS (jsDelivr + SRI), font CSS (miaoda mirror)</td></tr>
@@ -361,7 +361,7 @@ T&amp;L@Biomed Development Guide · Generated from the project repository · 56/
     yAxis: { type: "value", minInterval: 1, name: "count", nameTextStyle: { color: label, fontSize: 11 }, axisLabel: { color: label, fontFamily: "IBM Plex Mono, monospace", fontSize: 11 }, splitLine: { lineStyle: { color: split } } },
     series: [
       { name: "Notes", type: "bar", stack: "total", data: [4, 8, 10, 17], itemStyle: { color: palette[0] } },
-      { name: "Quiz questions", type: "bar", stack: "total", data: [5, 10, 15, 40], itemStyle: { color: palette[1] } },
+      { name: "Quiz questions", type: "bar", stack: "total", data: [5, 10, 15, 45], itemStyle: { color: palette[1] } },
       { name: "Grade years", type: "bar", stack: "total", data: [3, 3, 5, 5], itemStyle: { color: palette[2] } }
     ]
   });

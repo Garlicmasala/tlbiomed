@@ -168,7 +168,7 @@ li { margin-bottom: 5px; }
 <table>
 <tr><th>Section</th><th>Visibility</th><th>Key interactions</th><th>Sample content</th></tr>
 <tr><td><b>Notes</b></td><td>Private (passcode)</td><td>Link cards, live client-side filter, tags, sample badges</td><td>10 cards (weeks 1–10)</td></tr>
-<tr><td><b>Mock Quiz</b></td><td>Public</td><td>Instant correct/wrong feedback, per-question explanations, progress bar, timer, keyboard shortcuts (1–4 / Enter), question &amp; answer shuffling, score ring, full answer review, per-device attempt history</td><td>40 MCQ across 18 subjects</td></tr>
+<tr><td><b>Mock Quiz</b></td><td>Public</td><td>Instant correct/wrong feedback, per-question explanations, progress bar, timer, keyboard shortcuts (1–4 / Enter), question &amp; answer shuffling, score ring, full answer review, per-device attempt history</td><td>45 MCQ across 18 subjects</td></tr>
 <tr><td><b>Grade Distribution</b></td><td>Private (passcode)</td><td>ECharts grouped bar chart, year selector (single / all), chart/table toggle, counts/percent toggle, summary stat chips</td><td>5 academic years</td></tr>
 <tr><td><b>Structured Tutorials</b></td><td>Private (passcode)</td><td>Topic-grouped link lists, live filter, step counts</td><td>7 topics / 15 items</td></tr>
 </table>
@@ -208,7 +208,7 @@ li { margin-bottom: 5px; }
 
 <div class="figure">
 <div id="chart-i18n" class="chart"></div>
-<div class="caption">Figure 1 — i18n key coverage: 157 keys per language, 100% parity between English and Traditional Chinese (206 total strings).</div>
+<div class="caption">Figure 1 — i18n key coverage: 160 keys per language, 100% parity between English and Traditional Chinese (206 total strings).</div>
 </div>
 
 <p><b>Mechanics.</b> Static elements carry <code>data-i18n</code> (or <code>data-i18n-ph</code> for placeholders) and are re-rendered on language switch. Dynamic strings (question counters, verdicts, stat chips, toasts) use a <code>t(key)</code> / <code>fmt(key, vars)</code> pair with <code>{placeholder}</code> substitution. Initial language is read from <code>localStorage</code>, then auto-detected from the browser (<code>zh-*</code> → 中文), then the configured default. The choice is persisted and the document title and meta description update with it.</p>
@@ -333,7 +333,7 @@ T&amp;L@Biomed Technical Paper · Generated from the project repository · 56/56
     grid: baseGrid(),
     xAxis: { type: "category", data: ["English", "繁體中文"], axisLine: { lineStyle: { color: axis } }, axisLabel: { color: label, fontFamily: "IBM Plex Mono, monospace", fontSize: 12 } },
     yAxis: { type: "value", name: "translated strings", nameTextStyle: { color: label, fontSize: 11 }, axisLabel: { color: label, fontFamily: "IBM Plex Mono, monospace", fontSize: 11 }, splitLine: { lineStyle: { color: split } } },
-    series: [{ type: "bar", barMaxWidth: 80, data: [157, 157], itemStyle: { color: palette[1] }, label: { show: true, position: "top", fontFamily: "IBM Plex Mono, monospace", fontSize: 12, color: label } }]
+    series: [{ type: "bar", barMaxWidth: 80, data: [160, 160], itemStyle: { color: palette[1] }, label: { show: true, position: "top", fontFamily: "IBM Plex Mono, monospace", fontSize: 12, color: label } }]
   });
 
   // Figure 2: test distribution donut

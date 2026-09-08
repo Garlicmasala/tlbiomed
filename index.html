@@ -337,6 +337,7 @@ main { max-width: 980px; margin: 0 auto; padding: 26px 16px 60px; }
 .quiz-stats { font-family: var(--font-mono); font-size: 12.5px; color: var(--ink-3); margin-top: 10px; }
 .chip-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 14px; }
 .chip-row .chip-label { font-size: 12px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-soft); margin-right: 2px; }
+.qmeta { font-family: var(--font-mono); font-size: 12px; color: var(--ink-soft); margin: 8px 0 2px; }
 .chip { border: 1px solid var(--line); background: var(--surface); color: var(--ink); padding: 5px 12px; border-radius: 999px; font-size: 12.5px; cursor: pointer; transition: border-color .15s, background .15s, color .15s; }
 .chip:hover { border-color: var(--accent); }
 .chip.active { background: var(--accent); border-color: var(--accent); color: #fff; }
@@ -756,6 +757,7 @@ footer {
       </div>
       <div class="qbar"><div class="qbar-fill" id="quiz-progress"></div></div>
       <div class="qnum" id="quiz-qnum"></div>
+      <div class="qmeta" id="quiz-topic-tag"></div>
       <div class="qprompt" id="quiz-prompt"></div>
       <div class="options" id="quiz-options"></div>
       <div class="feedback hidden" id="quiz-feedback"></div>
@@ -1072,110 +1074,115 @@ var SITE_CONFIG = {
   quiz: {
     sample: true,
     title: "Mock Quiz — sample set",
-    intro: "Forty starter questions across cell biology, biochemistry, physiology, microbiology, immunology, pharmacology, genetics, haematology, neuroscience, endocrinology, renal, anatomy, cancer biology, medical statistics, respiratory, reproductive, musculoskeletal and clinical chemistry.",
+    intro: "Forty-five starter questions across cell biology, biochemistry, physiology, microbiology, immunology, pharmacology, genetics, haematology, neuroscience, endocrinology, renal, anatomy, cancer biology, medical statistics, respiratory, reproductive, musculoskeletal and clinical chemistry.",
     shuffle: false,
     shuffleOptions: true,
     questions: [
       {
-        id: "q1", topic: "cell-bio",
+        id: "q1", topic: "cell-bio", difficulty: "intermediate",
         prompt: "Which organelle is the primary site of ATP production in eukaryotic cells?",
         options: ["Nucleus", "Mitochondrion", "Ribosome", "Golgi apparatus"],
         answerIndex: 1,
         explanation: "The mitochondrion hosts the electron transport chain and oxidative phosphorylation, producing most cellular ATP."
       },
       {
-        id: "q2", topic: "genetics",
+        id: "q2", topic: "genetics", difficulty: "intermediate",
         prompt: "The basic structural unit of DNA is the:",
         options: ["Amino acid", "Nucleotide", "Fatty acid", "Monosaccharide"],
         answerIndex: 1,
         explanation: "DNA is a polymer of nucleotides, each made of a phosphate, a deoxyribose sugar and a nitrogenous base."
       },
       {
-        id: "q3", topic: "micro",
+        id: "q3", topic: "micro", difficulty: "basic",
         prompt: "Which of the following is a Gram-positive bacterium?",
         options: ["Escherichia coli", "Vibrio cholerae", "Staphylococcus aureus", "Neisseria meningitidis"],
         answerIndex: 2,
         explanation: "Staphylococcus aureus retains the crystal violet stain (thick peptidoglycan wall), so it appears Gram-positive."
       },
       {
-        id: "q4", topic: "physiology",
+        id: "q4", topic: "physiology", difficulty: "intermediate",
         prompt: "On a standard ECG, the P wave corresponds to:",
         options: ["Ventricular depolarisation", "Atrial depolarisation", "Ventricular repolarisation", "AV nodal delay"],
         answerIndex: 1,
         explanation: "The P wave reflects atrial depolarisation; the QRS complex reflects ventricular depolarisation."
       },
       {
-        id: "q5", topic: "biochem",
+        id: "q5", topic: "biochem", difficulty: "intermediate",
         prompt: "Which enzyme catalyses the first committed step of glycolysis?",
         options: ["Hexokinase", "Pyruvate kinase", "Phosphofructokinase-1", "Aldolase"],
         answerIndex: 2,
         explanation: "Phosphofructokinase-1 converts fructose-6-phosphate to fructose-1,6-bisphosphate — the first committed (and key regulated) step."
       },
       {
-        id: "q6", topic: "immunology",
+        id: "q6", topic: "immunology", difficulty: "intermediate",
         prompt: "Which cell type is the main producer of antibodies?",
         options: ["Cytotoxic T cell", "Plasma cell", "Macrophage", "Natural killer cell"],
         answerIndex: 1,
         explanation: "Plasma cells are differentiated B lymphocytes that secrete antibodies."
       },
       {
-        id: "q7", topic: "pharmacology",
+        id: "q7", topic: "pharmacology", difficulty: "intermediate",
         prompt: "In pharmacokinetics, the plasma half-life of a drug is:",
         options: ["The time for its concentration to fall by half", "The time until it is fully absorbed", "The duration of its therapeutic effect", "The time it spends in the gut"],
         answerIndex: 0,
         explanation: "Half-life is the time taken for the plasma concentration to drop to half its current value."
       },
       {
-        id: "q8", topic: "genetics",
+        id: "q8", topic: "genetics", difficulty: "basic",
         prompt: "In double-stranded DNA, adenine pairs with:",
         options: ["Cytosine", "Guanine", "Thymine", "Uracil"],
         answerIndex: 2,
         explanation: "Adenine pairs with thymine (two hydrogen bonds); guanine pairs with cytosine."
       },
       {
-        id: "q9", topic: "neuroscience",
+        id: "q9", topic: "neuroscience", difficulty: "intermediate",
         prompt: "The neurotransmitter released at the neuromuscular junction is:",
         options: ["Dopamine", "Serotonin", "Acetylcholine", "GABA"],
         answerIndex: 2,
         explanation: "Motor neurones release acetylcholine at the neuromuscular junction to trigger muscle contraction."
       },
       {
-        id: "q10", topic: "haematology",
+        id: "q10", topic: "haematology", difficulty: "basic",
         prompt: "Which blood cell is responsible for oxygen transport?",
         options: ["Platelet", "Erythrocyte", "Neutrophil", "Monocyte"],
         answerIndex: 1,
         explanation: "Erythrocytes (red blood cells) carry oxygen bound to haemoglobin."
       },
-      { id: "q11", topic: "endocrinology", prompt: "Which hormone is secreted by the beta cells of the pancreatic islets?", options: ["Glucagon", "Insulin", "Somatostatin", "Amylase"], answerIndex: 1, explanation: "Beta cells secrete insulin; alpha cells secrete glucagon; delta cells secrete somatostatin." },
-      { id: "q12", topic: "respiratory", prompt: "In the lungs, gas exchange occurs across the:", options: ["Trachea", "Bronchi", "Alveoli", "Pleura"], answerIndex: 2, explanation: "Alveoli are the thin-walled sacs where oxygen and carbon dioxide diffuse between air and blood." },
-      { id: "q13", topic: "renal", prompt: "The functional unit of the kidney is the:", options: ["Neuron", "Nephron", "Glomerulus", "Collecting duct"], answerIndex: 1, explanation: "The nephron — glomerulus plus tubule — filters and modifies urine." },
-      { id: "q14", topic: "anatomy", prompt: "The mitral (bicuspid) valve is located between the:", options: ["Right atrium and right ventricle", "Left atrium and left ventricle", "Right ventricle and pulmonary artery", "Left ventricle and aorta"], answerIndex: 1, explanation: "The mitral valve separates the left atrium from the left ventricle; the tricuspid valve is on the right." },
-      { id: "q15", topic: "biochem", prompt: "Which molecule is the primary energy currency of the cell?", options: ["NADH", "ATP", "Glucose", "Acetyl-CoA"], answerIndex: 1, explanation: "Adenosine triphosphate (ATP) stores readily releasable energy in its phosphate bonds." },
-      { id: "q16", topic: "anatomy", prompt: "Which bone forms the main structural framework of the upper arm?", options: ["Tibia", "Radius", "Femur", "Humerus"], answerIndex: 3, explanation: "The humerus is the long bone of the upper arm, articulating with the scapula and the radius/ulna." },
-      { id: "q17", topic: "genetics", prompt: "A condition that appears in every generation and affects males and females equally is most likely:", options: ["Autosomal dominant", "Autosomal recessive", "X-linked recessive", "Mitochondrial"], answerIndex: 0, explanation: "Autosomal dominant traits appear in every generation and affect both sexes equally; recessive traits often skip generations." },
-      { id: "q18", topic: "endocrinology", prompt: "Cortisol secretion from the adrenal cortex is directly stimulated by:", options: ["Aldosterone", "ACTH", "TSH", "Insulin"], answerIndex: 1, explanation: "Adrenocorticotropic hormone (ACTH) from the anterior pituitary drives cortisol release." },
-      { id: "q19", topic: "renal", prompt: "Which hormone most directly increases water reabsorption in the collecting duct?", options: ["Aldosterone", "ADH (vasopressin)", "Atrial natriuretic peptide", "Parathyroid hormone"], answerIndex: 1, explanation: "ADH inserts aquaporins in the collecting duct, concentrating the urine." },
-      { id: "q20", topic: "cancer", prompt: "A hallmark of cancer cells is:", options: ["Contact inhibition", "Terminal differentiation", "Evasion of apoptosis", "Fully restored DNA repair"], answerIndex: 2, explanation: "Evading apoptosis lets damaged cells survive and accumulate — one of the hallmarks of cancer." },
-      { id: "q21", topic: "statistics", prompt: "The median of the dataset 3, 5, 7, 9, 24.8 is:", options: ["24.8", "5", "7", "9"], answerIndex: 2, explanation: "With five values the median is the middle one — 7 — and is far more robust than the mean here." },
-      { id: "q22", topic: "haematology", prompt: "Which white blood cell increases most in a parasitic infection?", options: ["Neutrophil", "Lymphocyte", "Eosinophil", "Monocyte"], answerIndex: 2, explanation: "Eosinophils defend against parasites and drive allergic responses." },
-      { id: "q23", topic: "micro", prompt: "The primary mechanism of action of penicillins is:", options: ["Inhibition of protein synthesis", "Inhibition of DNA gyrase", "Disruption of the cell membrane", "Inhibition of cell-wall synthesis"], answerIndex: 3, explanation: "Penicillins block peptidoglycan cross-linking, weakening the bacterial cell wall." },
-      { id: "q24", topic: "pharmacology", prompt: "A drug that binds to a receptor and produces a response is called a(n):", options: ["Antagonist", "Inhibitor", "Agonist", "Placebo"], answerIndex: 2, explanation: "Agonists activate their receptor; antagonists block it without producing a response." },
-      { id: "q25", topic: "cell-bio", prompt: "Which process describes the movement of water across a semipermeable membrane?", options: ["Diffusion", "Active transport", "Facilitated diffusion", "Osmosis"], answerIndex: 3, explanation: "Osmosis is the net movement of water down its concentration gradient across a semipermeable membrane." },
-      { id: "q26", topic: "respiratory", prompt: "Which measure is the air remaining in the lungs after a maximal expiration?", options: ["Tidal volume", "Vital capacity", "Residual volume", "Inspiratory reserve volume"], answerIndex: 2, explanation: "Residual volume cannot be expired voluntarily — it keeps the alveoli from collapsing." },
-      { id: "q27", topic: "reproductive", prompt: "The corpus luteum predominantly secretes which hormone in the luteal phase?", options: ["Oestrogen", "Progesterone", "FSH", "hCG"], answerIndex: 1, explanation: "The corpus luteum secretes progesterone, which maintains the uterine lining for implantation." },
-      { id: "q28", topic: "musculoskeletal", prompt: "Which of the following is a muscle of mastication?", options: ["Masseter", "Sartorius", "Deltoid", "Trapezius"], answerIndex: 0, explanation: "The masseter is one of the four muscles of mastication, elevating the mandible." },
-      { id: "q29", topic: "clinical-chem", prompt: "Which lipoprotein is commonly called the “bad cholesterol”?", options: ["HDL cholesterol", "Triglycerides", "LDL cholesterol", "Total cholesterol"], answerIndex: 2, explanation: "LDL cholesterol delivers cholesterol to tissues; high levels are associated with atherosclerosis." },
-      { id: "q30", topic: "infectious", prompt: "Which organism is the most common cause of community-acquired pneumonia?", options: ["Staphylococcus aureus", "Streptococcus pneumoniae", "Haemophilus influenzae", "Mycoplasma pneumoniae"], answerIndex: 1, explanation: "Streptococcus pneumoniae is the leading bacterial cause of community-acquired pneumonia." },
-      { id: "q31", topic: "cancer", prompt: "Which cancer screening test uses the PSA blood marker?", options: ["Colorectal", "Breast", "Prostate", "Cervical"], answerIndex: 2, explanation: "PSA (prostate-specific antigen) is used in prostate cancer screening and monitoring." },
-      { id: "q32", topic: "immunology", prompt: "Which immunoglobulin crosses the placenta and protects the newborn?", options: ["IgA", "IgM", "IgG", "IgE"], answerIndex: 2, explanation: "IgG is actively transported across the placenta, providing passive immunity at birth." },
-      { id: "q33", topic: "pharmacology", prompt: "First-pass metabolism of an oral drug occurs mainly in the:", options: ["Kidney", "Liver", "Lung", "Gut wall"], answerIndex: 1, explanation: "The liver metabolises much of an absorbed dose before it reaches the systemic circulation." },
-      { id: "q34", topic: "renal", prompt: "Which substance is normally completely reabsorbed by the proximal tubule?", options: ["Urea", "Glucose", "Potassium", "Creatinine"], answerIndex: 1, explanation: "Glucose is fully reabsorbed in the proximal tubule via sodium-glucose cotransporters until the transport maximum is exceeded." },
-      { id: "q35", topic: "anatomy", prompt: "The tibia and fibula are bones of the:", options: ["Lower leg", "Upper limb", "Forearm", "Thorax"], answerIndex: 0, explanation: "The tibia and fibula form the skeleton of the lower leg (crus)." },
-      { id: "q36", topic: "physiology", prompt: "Stroke volume is defined as the:", options: ["Volume of blood pumped per minute", "Volume of blood ejected per beat", "Volume of blood in the ventricle at end-diastole", "Pressure in the aorta during systole"], answerIndex: 1, explanation: "Stroke volume is the volume ejected by one ventricular contraction; cardiac output is stroke volume × heart rate." },
-      { id: "q37", topic: "neuroscience", prompt: "Which glial cell forms the myelin sheath in the central nervous system?", options: ["Astrocyte", "Oligodendrocyte", "Schwann cell", "Microglia"], answerIndex: 1, explanation: "Oligodendrocytes myelinate CNS axons; Schwann cells do the same in the peripheral nervous system." },
-      { id: "q38", topic: "statistics", prompt: "Sensitivity of a diagnostic test is the proportion of:", options: ["Healthy people correctly identified as negative", "All positive results that are true positives", "Diseased people correctly identified as positive", "The population that has the disease"], answerIndex: 2, explanation: "Sensitivity = true positives ÷ all diseased people; it measures how good the test is at detecting disease." },
-      { id: "q39", topic: "infectious", prompt: "Which vaccine type uses a weakened but living pathogen?", options: ["Live-attenuated vaccine", "Inactivated vaccine", "mRNA vaccine", "Subunit vaccine"], answerIndex: 0, explanation: "Live-attenuated vaccines replicate mildly in the host, provoking a strong and long-lived immune response." },
-      { id: "q40", topic: "reproductive", prompt: "During the ovarian cycle, ovulation is triggered by a surge of:", options: ["FSH", "Oestradiol", "LH", "Progesterone"], answerIndex: 2, explanation: "The mid-cycle LH surge triggers ovulation; the follicle then transforms into the corpus luteum." }
+      { id: "q11", topic: "endocrinology", difficulty: "intermediate", prompt: "Which hormone is secreted by the beta cells of the pancreatic islets?", options: ["Glucagon", "Insulin", "Somatostatin", "Amylase"], answerIndex: 1, explanation: "Beta cells secrete insulin; alpha cells secrete glucagon; delta cells secrete somatostatin." },
+      { id: "q12", topic: "respiratory", difficulty: "basic", prompt: "In the lungs, gas exchange occurs across the:", options: ["Trachea", "Bronchi", "Alveoli", "Pleura"], answerIndex: 2, explanation: "Alveoli are the thin-walled sacs where oxygen and carbon dioxide diffuse between air and blood." },
+      { id: "q13", topic: "renal", difficulty: "intermediate", prompt: "The functional unit of the kidney is the:", options: ["Neuron", "Nephron", "Glomerulus", "Collecting duct"], answerIndex: 1, explanation: "The nephron — glomerulus plus tubule — filters and modifies urine." },
+      { id: "q14", topic: "anatomy", difficulty: "basic", prompt: "The mitral (bicuspid) valve is located between the:", options: ["Right atrium and right ventricle", "Left atrium and left ventricle", "Right ventricle and pulmonary artery", "Left ventricle and aorta"], answerIndex: 1, explanation: "The mitral valve separates the left atrium from the left ventricle; the tricuspid valve is on the right." },
+      { id: "q15", topic: "biochem", difficulty: "basic", prompt: "Which molecule is the primary energy currency of the cell?", options: ["NADH", "ATP", "Glucose", "Acetyl-CoA"], answerIndex: 1, explanation: "Adenosine triphosphate (ATP) stores readily releasable energy in its phosphate bonds." },
+      { id: "q16", topic: "anatomy", difficulty: "basic", prompt: "Which bone forms the main structural framework of the upper arm?", options: ["Tibia", "Radius", "Femur", "Humerus"], answerIndex: 3, explanation: "The humerus is the long bone of the upper arm, articulating with the scapula and the radius/ulna." },
+      { id: "q17", topic: "genetics", difficulty: "intermediate", prompt: "A condition that appears in every generation and affects males and females equally is most likely:", options: ["Autosomal dominant", "Autosomal recessive", "X-linked recessive", "Mitochondrial"], answerIndex: 0, explanation: "Autosomal dominant traits appear in every generation and affect both sexes equally; recessive traits often skip generations." },
+      { id: "q18", topic: "endocrinology", difficulty: "advanced", prompt: "Cortisol secretion from the adrenal cortex is directly stimulated by:", options: ["Aldosterone", "ACTH", "TSH", "Insulin"], answerIndex: 1, explanation: "Adrenocorticotropic hormone (ACTH) from the anterior pituitary drives cortisol release." },
+      { id: "q19", topic: "renal", difficulty: "intermediate", prompt: "Which hormone most directly increases water reabsorption in the collecting duct?", options: ["Aldosterone", "ADH (vasopressin)", "Atrial natriuretic peptide", "Parathyroid hormone"], answerIndex: 1, explanation: "ADH inserts aquaporins in the collecting duct, concentrating the urine." },
+      { id: "q20", topic: "cancer", difficulty: "advanced", prompt: "A hallmark of cancer cells is:", options: ["Contact inhibition", "Terminal differentiation", "Evasion of apoptosis", "Fully restored DNA repair"], answerIndex: 2, explanation: "Evading apoptosis lets damaged cells survive and accumulate — one of the hallmarks of cancer." },
+      { id: "q21", topic: "statistics", difficulty: "basic", prompt: "The median of the dataset 3, 5, 7, 9, 24.8 is:", options: ["24.8", "5", "7", "9"], answerIndex: 2, explanation: "With five values the median is the middle one — 7 — and is far more robust than the mean here." },
+      { id: "q22", topic: "haematology", difficulty: "basic", prompt: "Which white blood cell increases most in a parasitic infection?", options: ["Neutrophil", "Lymphocyte", "Eosinophil", "Monocyte"], answerIndex: 2, explanation: "Eosinophils defend against parasites and drive allergic responses." },
+      { id: "q23", topic: "micro", difficulty: "basic", prompt: "The primary mechanism of action of penicillins is:", options: ["Inhibition of protein synthesis", "Inhibition of DNA gyrase", "Disruption of the cell membrane", "Inhibition of cell-wall synthesis"], answerIndex: 3, explanation: "Penicillins block peptidoglycan cross-linking, weakening the bacterial cell wall." },
+      { id: "q24", topic: "pharmacology", difficulty: "intermediate", prompt: "A drug that binds to a receptor and produces a response is called a(n):", options: ["Antagonist", "Inhibitor", "Agonist", "Placebo"], answerIndex: 2, explanation: "Agonists activate their receptor; antagonists block it without producing a response." },
+      { id: "q25", topic: "cell-bio", difficulty: "intermediate", prompt: "Which process describes the movement of water across a semipermeable membrane?", options: ["Diffusion", "Active transport", "Facilitated diffusion", "Osmosis"], answerIndex: 3, explanation: "Osmosis is the net movement of water down its concentration gradient across a semipermeable membrane." },
+      { id: "q26", topic: "respiratory", difficulty: "intermediate", prompt: "Which measure is the air remaining in the lungs after a maximal expiration?", options: ["Tidal volume", "Vital capacity", "Residual volume", "Inspiratory reserve volume"], answerIndex: 2, explanation: "Residual volume cannot be expired voluntarily — it keeps the alveoli from collapsing." },
+      { id: "q27", topic: "reproductive", difficulty: "intermediate", prompt: "The corpus luteum predominantly secretes which hormone in the luteal phase?", options: ["Oestrogen", "Progesterone", "FSH", "hCG"], answerIndex: 1, explanation: "The corpus luteum secretes progesterone, which maintains the uterine lining for implantation." },
+      { id: "q28", topic: "musculoskeletal", difficulty: "basic", prompt: "Which of the following is a muscle of mastication?", options: ["Masseter", "Sartorius", "Deltoid", "Trapezius"], answerIndex: 0, explanation: "The masseter is one of the four muscles of mastication, elevating the mandible." },
+      { id: "q29", topic: "clinical-chem", difficulty: "intermediate", prompt: "Which lipoprotein is commonly called the “bad cholesterol”?", options: ["HDL cholesterol", "Triglycerides", "LDL cholesterol", "Total cholesterol"], answerIndex: 2, explanation: "LDL cholesterol delivers cholesterol to tissues; high levels are associated with atherosclerosis." },
+      { id: "q30", topic: "infectious", difficulty: "intermediate", prompt: "Which organism is the most common cause of community-acquired pneumonia?", options: ["Staphylococcus aureus", "Streptococcus pneumoniae", "Haemophilus influenzae", "Mycoplasma pneumoniae"], answerIndex: 1, explanation: "Streptococcus pneumoniae is the leading bacterial cause of community-acquired pneumonia." },
+      { id: "q31", topic: "cancer", difficulty: "advanced", prompt: "Which cancer screening test uses the PSA blood marker?", options: ["Colorectal", "Breast", "Prostate", "Cervical"], answerIndex: 2, explanation: "PSA (prostate-specific antigen) is used in prostate cancer screening and monitoring." },
+      { id: "q32", topic: "immunology", difficulty: "advanced", prompt: "Which immunoglobulin crosses the placenta and protects the newborn?", options: ["IgA", "IgM", "IgG", "IgE"], answerIndex: 2, explanation: "IgG is actively transported across the placenta, providing passive immunity at birth." },
+      { id: "q33", topic: "pharmacology", difficulty: "advanced", prompt: "First-pass metabolism of an oral drug occurs mainly in the:", options: ["Kidney", "Liver", "Lung", "Gut wall"], answerIndex: 1, explanation: "The liver metabolises much of an absorbed dose before it reaches the systemic circulation." },
+      { id: "q34", topic: "renal", difficulty: "intermediate", prompt: "Which substance is normally completely reabsorbed by the proximal tubule?", options: ["Urea", "Glucose", "Potassium", "Creatinine"], answerIndex: 1, explanation: "Glucose is fully reabsorbed in the proximal tubule via sodium-glucose cotransporters until the transport maximum is exceeded." },
+      { id: "q35", topic: "anatomy", difficulty: "basic", prompt: "The tibia and fibula are bones of the:", options: ["Lower leg", "Upper limb", "Forearm", "Thorax"], answerIndex: 0, explanation: "The tibia and fibula form the skeleton of the lower leg (crus)." },
+      { id: "q36", topic: "physiology", difficulty: "basic", prompt: "Stroke volume is defined as the:", options: ["Volume of blood pumped per minute", "Volume of blood ejected per beat", "Volume of blood in the ventricle at end-diastole", "Pressure in the aorta during systole"], answerIndex: 1, explanation: "Stroke volume is the volume ejected by one ventricular contraction; cardiac output is stroke volume × heart rate." },
+      { id: "q37", topic: "neuroscience", difficulty: "basic", prompt: "Which glial cell forms the myelin sheath in the central nervous system?", options: ["Astrocyte", "Oligodendrocyte", "Schwann cell", "Microglia"], answerIndex: 1, explanation: "Oligodendrocytes myelinate CNS axons; Schwann cells do the same in the peripheral nervous system." },
+      { id: "q38", topic: "statistics", difficulty: "intermediate", prompt: "Sensitivity of a diagnostic test is the proportion of:", options: ["Healthy people correctly identified as negative", "All positive results that are true positives", "Diseased people correctly identified as positive", "The population that has the disease"], answerIndex: 2, explanation: "Sensitivity = true positives ÷ all diseased people; it measures how good the test is at detecting disease." },
+      { id: "q39", topic: "infectious", difficulty: "intermediate", prompt: "Which vaccine type uses a weakened but living pathogen?", options: ["Live-attenuated vaccine", "Inactivated vaccine", "mRNA vaccine", "Subunit vaccine"], answerIndex: 0, explanation: "Live-attenuated vaccines replicate mildly in the host, provoking a strong and long-lived immune response." },
+      { id: "q40", topic: "reproductive", difficulty: "basic", prompt: "During the ovarian cycle, ovulation is triggered by a surge of:", options: ["FSH", "Oestradiol", "LH", "Progesterone"], answerIndex: 2, explanation: "The mid-cycle LH surge triggers ovulation; the follicle then transforms into the corpus luteum." },
+      { id: "q41", topic: "musculoskeletal", difficulty: "basic", prompt: "A tendon connects:", options: ["Bone to bone", "Muscle to bone", "Muscle to muscle", "Cartilage to bone"], answerIndex: 1, explanation: "Tendons attach muscle to bone; ligaments connect bone to bone." },
+      { id: "q42", topic: "clinical-chem", difficulty: "intermediate", prompt: "HbA1c reflects average blood glucose over approximately:", options: ["2–3 days", "2–3 weeks", "2–3 months", "2–3 years"], answerIndex: 2, explanation: "Red blood cells live about 120 days, so HbA1c mirrors glycaemia over roughly 2–3 months." },
+      { id: "q43", topic: "cell-bio", difficulty: "intermediate", prompt: "Which organelle is the main site of drug and toxin detoxification in hepatocytes?", options: ["Smooth endoplasmic reticulum", "Rough endoplasmic reticulum", "Golgi apparatus", "Lysosome"], answerIndex: 0, explanation: "The smooth ER hosts cytochrome P450 enzymes that metabolise drugs and toxins." },
+      { id: "q44", topic: "biochem", difficulty: "advanced", prompt: "Which of the following is a ketone body?", options: ["Acetyl-CoA", "Acetoacetate", "Lactate", "Pyruvate"], answerIndex: 1, explanation: "Acetoacetate, beta-hydroxybutyrate and acetone are ketone bodies produced during fasting." },
+      { id: "q45", topic: "genetics", difficulty: "intermediate", prompt: "Haemophilia A is classically inherited in an:", options: ["Autosomal dominant pattern", "Autosomal recessive pattern", "X-linked recessive pattern", "Mitochondrial pattern"], answerIndex: 2, explanation: "Haemophilia A is X-linked recessive, so it mainly affects males and is transmitted through carrier mothers." }
     ]
   },
 
@@ -1296,6 +1303,9 @@ var LANGS = {
     "quiz.metaOptShuffled": "answers shuffled",
     "quiz.filterTitle": "Filter by topic",
     "quiz.topicAll": "All topics",
+    "quiz.diffBasic": "Basic",
+    "quiz.diffInter": "Intermediate",
+    "quiz.diffAdv": "Advanced",
     "quiz.topic.cell-bio": "Cell biology",
     "quiz.topic.biochem": "Biochemistry",
     "quiz.topic.physiology": "Physiology",
@@ -1458,6 +1468,9 @@ var LANGS = {
     "quiz.metaOptShuffled": "選項隨機",
     "quiz.filterTitle": "按主題篩選",
     "quiz.topicAll": "全部主題",
+    "quiz.diffBasic": "基礎",
+    "quiz.diffInter": "中級",
+    "quiz.diffAdv": "高級",
     "quiz.topic.cell-bio": "細胞生物學",
     "quiz.topic.biochem": "生物化學",
     "quiz.topic.physiology": "生理學",
@@ -2012,6 +2025,8 @@ function renderQuestion() {
   var q = state.quiz.questions[state.quiz.idx];
   var total = state.quiz.questions.length;
   $("quiz-qnum").textContent = fmt("quiz.qnum", { c: state.quiz.idx + 1, t: total });
+  var dl = { basic: "quiz.diffBasic", intermediate: "quiz.diffInter", advanced: "quiz.diffAdv" }[q.difficulty] || "";
+  $("quiz-topic-tag").textContent = [q.topic ? t("quiz.topic." + q.topic) : "", dl ? t(dl) : ""].filter(Boolean).join(" · ");
   $("quiz-prompt").textContent = q.prompt;
   $("quiz-progress").style.width = (state.quiz.idx / total * 100) + "%";
 
