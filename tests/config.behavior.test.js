@@ -194,5 +194,24 @@ describe("quiz taxonomy (topic & difficulty)", () => {
       if (k.indexOf("quiz.topic.") === 0) assert.ok(used.has(k), "unused topic key " + k);
     });
   });
-});
 
+  it("resolves custom subject labels from SITE_CONFIG.quiz.topics", () => {
+    const map = { "_demo-sub": { en: "Demo Subject", zh: "示範科目" } };
+    assert.equal(TL.topicLabelFor("_demo-sub", "en", map), "Demo Subject");
+    assert.equal(TL.topicLabelFor("_demo-sub", "zh", map), "示範科目");
+    assert.ok(TL.hasTopicLabel("_demo-sub", "en", map) && TL.hasTopicLabel("_demo-sub", "zh", map));
+    assert.equal(TL.topicLabelFor("_demo-sub", "en", {}), "demo sub", "falls back when map lacks the id");
+    assert.ok(cfg.quiz.topics && typeof cfg.quiz.topics === "object" && !Array.isArray(cfg.quiz.topics), "quiz.topics config slot exists");
+  });
+
+  it("falls back to LANGS labels for built-in subjects not listed in quiz.topics", () => {
+    assert.equal(TL.topicLabelFor("cell-bio", "en"), "Cell biology");
+    assert.equal(TL.topicLabelFor("cell-bio", "zh"), "細胞生物學");
+    assert.equal(TL.topicLabelFor("virology", "en"), "Virology");
+    assert.equal(TL.topicLabelFor("virology", "zh"), "病毒學");
+  });
+
+  it("renders a readable fallback for an unknown subject id", () => {
+    assert.equal(TL.topicLabelFor("neural-crest", "en"), "neural crest");
+  });
+});

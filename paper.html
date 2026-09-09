@@ -65,7 +65,7 @@ li { margin-bottom: 5px; }
 <div class="meta">
   <span><b>Project</b> T&amp;L@Biomed</span>
   <span><b>Stack</b> HTML / CSS / vanilla JS</span>
-  <span><b>Tests</b> 64 / 64 passing</span>
+  <span><b>Tests</b> 67 / 67 passing</span>
   <span><b>Size</b> ~126 KB · 2,537 lines</span>
   <span><b>Languages</b> English · 繁體中文</span>
 </div>
@@ -73,7 +73,7 @@ li { margin-bottom: 5px; }
 <div class="stats-row">
   <div class="stat"><div class="v">1</div><div class="l">HTML file</div></div>
   <div class="stat"><div class="v">5</div><div class="l">Course tabs</div></div>
-  <div class="stat"><div class="v">56</div><div class="l">Automated tests</div></div>
+  <div class="stat"><div class="v">67</div><div class="l">Automated tests</div></div>
   <div class="stat"><div class="v">$0</div><div class="l">Hosting cost</div></div>
 </div>
 
@@ -193,7 +193,7 @@ li { margin-bottom: 5px; }
 <li><b>Toasts &amp; copy-link.</b> Non-blocking notifications for unlock, lock, theme, language, and clipboard actions.</li>
 <li><b>Site-wide search.</b> A search box in the tab bar finds matching notes and tutorial items in a single dropdown, grouped by section, with direct links.</li>
 <li><b>Retry wrong only.</b> After a quiz attempt, students can re-attempt just the questions they missed — focused revision.</li>
-<li><b>Topic filter &amp; difficulty.</b> A chip row filters the question pool by any of the 21 subjects; every question shows a topic·difficulty tag while answering.</li>
+<li><b>Topic filter &amp; difficulty.</b> A chip row filters the question pool by any of the 25 subjects (custom subjects add bilingual labels via <code>quiz.topics</code>); every question shows a topic·difficulty tag while answering.</li>
 <li><b>Print grades.</b> One-click print/PDF export of the grade distribution; print CSS hides navigation and chrome.</li>
 <li><b>Responsive &amp; reduced-motion.</b> Mobile layout collapses the DNA masthead and hides keyboard hints; <code>prefers-reduced-motion</code> disables animations.</li>
 </ul>
@@ -218,7 +218,7 @@ li { margin-bottom: 5px; }
 <tr><td><code>language</code></td><td><code>{ default, detect }</code></td><td>Default UI language and browser auto-detect flag</td></tr>
 <tr><td><code>notes</code></td><td>array of <code>{ title, desc, url, tags, sample }</code></td><td>Note link cards</td></tr>
 <tr><td><code>tutorials</code></td><td>array of <code>{ topic, note, items: [{ title, desc, url, sample }] }</code></td><td>Topic-grouped tutorial links</td></tr>
-<tr><td><code>quiz</code></td><td><code>{ title, intro, shuffle, shuffleOptions, questions: [...] }</code></td><td>Mock quiz; each question <code>{ id, topic, difficulty, prompt, options[2–6], answerIndex, explanation }</code></td></tr>
+<tr><td><code>quiz</code></td><td><code>{ title, intro, shuffle, shuffleOptions, topics, questions: [...] }</code></td><td>Mock quiz; each question <code>{ id, topic, difficulty, prompt, options[2–6], answerIndex, explanation }</code></td></tr>
 <tr><td><code>grades</code></td><td><code>{ failBands, years: [{ year, cohort, distribution }] }</code></td><td>Past grade distributions; counts must sum to <code>cohort</code></td></tr>
 </table>
 
@@ -227,24 +227,24 @@ li { margin-bottom: 5px; }
 </div>
 
 <h3>4.1 Quiz question bank &amp; taxonomy</h3>
-<p>The shipped bank holds <b>64 questions</b> spread across <b>21 topics</b> and three difficulty bands (<code>basic</code>, <code>intermediate</code>, <code>advanced</code>). Topics and difficulties are plain data on each question — the filter chips and the topic·difficulty tag are derived from that data at render time, so the UI can never drift from the bank. The matrix below shows how the bank is covered: anatomy, microbiology and haematology are the basic-weighted topics, while cancer biology leans advanced.</p>
+<p>The shipped bank holds <b>76 questions</b> spread across <b>25 topics</b> and three difficulty bands (<code>basic</code>, <code>intermediate</code>, <code>advanced</code>). Topics and difficulties are plain data on each question — the filter chips and the topic·difficulty tag are derived from that data at render time, so the UI can never drift from the bank. A brand-new subject resolves its bilingual label from <code>quiz.topics</code> when the instructor defines one, or from the built-in dictionary otherwise. The matrix below shows how the bank is covered: anatomy, microbiology and haematology are the basic-weighted topics, while cancer biology leans advanced.</p>
 
 <div class="figure">
 <div id="chart-taxonomy" class="chart" style="min-height:380px"></div>
-<div class="caption">Figure 1 — Question bank coverage: 64 questions across 21 topics, stacked by difficulty (basic 22 · intermediate 27 · advanced 15).</div>
+<div class="caption">Figure 1 — Question bank coverage: 76 questions across 25 topics, stacked by difficulty (basic 26 · intermediate 31 · advanced 19).</div>
 </div>
 
 <div class="figure">
 <div id="chart-difficulty" class="chart" style="min-height:300px"></div>
-<div class="caption">Figure 2 — Difficulty split of the 64-question bank.</div>
+<div class="caption">Figure 2 — Difficulty split of the 76-question bank.</div>
 </div>
 
 <h2 id="i18n">5. Internationalization</h2>
-<p>The UI chrome (not the course content, which the instructor authors in their chosen language) is fully translated. Strings live in a flat <code>LANGS</code> dictionary; adding a third language means appending one dictionary with the same keys. Translation lookups fall back English → the raw key, so a missing string never crashes the page.</p>
+<p>The UI chrome (not the course content, which the instructor authors in their chosen language) is fully translated. Strings live in a flat <code>LANGS</code> dictionary; adding a third language means appending one dictionary with the same keys. Translation lookups fall back English → the raw key, so a missing string never crashes the page. Course subject labels are course content, not chrome: a brand-new subject resolves from <code>quiz.topics</code> (custom bilingual labels) or the built-in dictionary, falling back to a prettified id.</p>
 
 <div class="figure">
 <div id="chart-i18n" class="chart"></div>
-<div class="caption">Figure 3 — i18n key coverage: 168 keys per language, 100% parity between English and Traditional Chinese (336 total strings).</div>
+<div class="caption">Figure 3 — i18n key coverage: 172 keys per language, 100% parity between English and Traditional Chinese (344 total strings).</div>
 </div>
 
 <p><b>Mechanics.</b> Static elements carry <code>data-i18n</code> (or <code>data-i18n-ph</code> for placeholders) and are re-rendered on language switch. Dynamic strings (question counters, verdicts, stat chips, toasts) use a <code>t(key)</code> / <code>fmt(key, vars)</code> pair with <code>{placeholder}</code> substitution; live quiz and results views re-render their dynamic strings (question counter, topic/difficulty tag, answer feedback, verdicts, review list) on every language switch. Initial language is read from <code>localStorage</code>, then auto-detected from the browser (<code>zh-*</code> → 中文), then the configured default. The choice is persisted and the document title and meta description update with it.</p>
@@ -254,7 +254,7 @@ li { margin-bottom: 5px; }
 
 <div class="figure">
 <div id="chart-tests" class="chart"></div>
-<div class="caption">Figure 4 — Distribution of the 64 automated tests across five suites (config.behavior 28, smoke 18, quiz 9, grades 5, i18n 4).</div>
+<div class="caption">Figure 4 — Distribution of the 67 automated tests across five suites (config.behavior 31, smoke 18, quiz 9, grades 5, i18n 4).</div>
 </div>
 
 <h3>6.1 What the suites guard</h3>
@@ -313,7 +313,7 @@ li { margin-bottom: 5px; }
 
 <rect x="170" y="70" width="110" height="60" rx="10" fill="#FFFFFF" stroke="#0E6B5C" stroke-width="1.5"/>
 <text x="225" y="98" font-weight="600" fill="#0E6B5C">npm test</text>
-<text x="225" y="116" font-size="10" fill="#50646A">64 / 64 gate</text>
+<text x="225" y="116" font-size="10" fill="#50646A">67 / 67 gate</text>
 
 <rect x="320" y="70" width="110" height="60" rx="10" fill="#FFFFFF" stroke="#0E6B5C" stroke-width="1.5"/>
 <text x="375" y="98" font-weight="600" fill="#0E6B5C">git push</text>
@@ -403,7 +403,7 @@ jobs:
 </ul>
 
 <div class="footer">
-T&amp;L@Biomed Technical Paper · Generated from the project repository · 64/64 tests passing · Single-file static site · MIT-style use for course materials
+T&amp;L@Biomed Technical Paper · Generated from the project repository · 67/67 tests passing · Single-file static site · MIT-style use for course materials
 </div>
 
 </article>
@@ -426,7 +426,7 @@ T&amp;L@Biomed Technical Paper · Generated from the project repository · 64/64
     grid: baseGrid(),
     xAxis: { type: "category", data: ["English", "繁體中文"], axisLine: { lineStyle: { color: axis } }, axisLabel: { color: label, fontFamily: "IBM Plex Mono, monospace", fontSize: 12 } },
     yAxis: { type: "value", name: "translated strings", nameTextStyle: { color: label, fontSize: 11 }, axisLabel: { color: label, fontFamily: "IBM Plex Mono, monospace", fontSize: 11 }, splitLine: { lineStyle: { color: split } } },
-    series: [{ type: "bar", barMaxWidth: 80, data: [168, 168], itemStyle: { color: palette[1] }, label: { show: true, position: "top", fontFamily: "IBM Plex Mono, monospace", fontSize: 12, color: label } }]
+    series: [{ type: "bar", barMaxWidth: 80, data: [172, 172], itemStyle: { color: palette[1] }, label: { show: true, position: "top", fontFamily: "IBM Plex Mono, monospace", fontSize: 12, color: label } }]
   });
 
   // Figure 2: test distribution donut
@@ -484,10 +484,10 @@ T&amp;L@Biomed Technical Paper · Generated from the project repository · 64/64
   });
 
     // Figure 5: question bank taxonomy (topic x difficulty, stacked)
-  var tNames = ["Genetics","Cell biology","Biochemistry","Pharmacology","Renal","Anatomy","Microbiology","Physiology","Immunology","Neuroscience","Haematology","Endocrinology","Respiratory","Cancer biology","Medical statistics","Reproductive","Musculoskeletal","Clinical chemistry","Infectious disease","Histology","Virology"];
-  var tBasic = [1,0,1,0,0,3,2,1,1,1,2,1,1,1,1,1,2,0,1,1,1];
-  var tInter = [3,3,1,2,3,0,0,1,1,1,1,1,1,0,1,1,1,2,2,1,1];
-  var tAdv   = [0,0,1,1,0,0,1,1,1,1,0,1,1,2,1,1,0,1,0,1,1];
+  var tNames = ["Genetics","Cell biology","Biochemistry","Pharmacology","Renal","Anatomy","Microbiology","Physiology","Immunology","Neuroscience","Haematology","Endocrinology","Respiratory","Cancer biology","Medical statistics","Reproductive","Musculoskeletal","Clinical chemistry","Infectious disease","Histology","Virology","Cardiology","Gastroenterology","Embryology","Dermatology"];
+  var tBasic = [1,0,1,0,0,3,2,1,1,1,2,1,1,1,1,1,2,0,1,1,1,1,1,1,1];
+  var tInter = [3,3,1,2,3,0,0,1,1,1,1,1,1,0,1,1,1,2,2,1,1,1,1,1,1];
+  var tAdv   = [0,0,1,1,0,0,1,1,1,1,0,1,1,2,1,1,0,1,0,1,1,1,1,1,1];
   var c5 = echarts.init(document.getElementById("chart-taxonomy"));
   c5.setOption({
     color: palette,
@@ -510,9 +510,9 @@ T&amp;L@Biomed Technical Paper · Generated from the project repository · 64/64
     tooltip: { trigger: "item", triggerOn: "click", renderMode: "richText", confine: true, formatter: "{b}: {c} questions ({d}%)" },
     legend: { bottom: 0, itemWidth: 14, itemHeight: 8, textStyle: { color: label, fontSize: 11 } },
     series: [{ type: "pie", radius: ["42%", "68%"], center: ["50%", "46%"], avoidLabelOverlap: true, itemStyle: { borderColor: "#fff", borderWidth: 2 }, label: { fontFamily: "IBM Plex Mono, monospace", fontSize: 11, color: label, formatter: "{b}\n{c}" }, data: [
-      { value: 22, name: "basic" },
-      { value: 27, name: "intermediate" },
-      { value: 15, name: "advanced" }
+      { value: 26, name: "basic" },
+      { value: 31, name: "intermediate" },
+      { value: 19, name: "advanced" }
     ] }]
   });
 

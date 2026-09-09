@@ -19,13 +19,13 @@ deploys automatically via GitHub Actions.
 **Interactive features**
 
 - Mock quiz: instant correct/wrong feedback, per-question explanations, progress bar, timer, keyboard shortcuts (keys 1–4 to answer, Enter to continue), optional question/answer shuffling, and a score ring with full answer review.
-- Topic filter: a chip row filters the question pool by subject (21 subjects); every question carries a topic tag and a difficulty tag (basic / intermediate / advanced).
+- Topic filter: a chip row filters the question pool by subject (25 subjects); every question carries a topic tag and a difficulty tag (basic / intermediate / advanced).
 - Retry-wrong-only: after an attempt, re-attempt just the missed questions.
 - Site-wide search: one box finds matching notes and tutorial items, grouped by section.
 - Attempt history: best score and attempt count are stored on the student's own device (localStorage) — nothing leaves the browser.
 - Grade distribution: chart/table view toggle, counts/percent toggle, year selector (single / all), one-click print/PDF.
 - Dark mode: footer toggle, remembered per device.
-- Multilingual: English and 繁體中文 (168 UI keys per language), auto-detected from the browser and switchable in the footer (remembered per device).
+- Multilingual: English and 繁體中文 (172 UI keys per language), auto-detected from the browser and switchable in the footer (remembered per device).
 - Toasts and a "Copy link" button in the footer for sharing the site.
 
 ## Project layout
@@ -52,7 +52,8 @@ Edit that one block and redeploy — no code changes needed.
 - **Mock quiz** — `SITE_CONFIG.quiz.questions`: `{ id, topic, difficulty, prompt, options[2–6], answerIndex, explanation }`. `answerIndex` counts from 0; `topic` feeds the filter chips and the topic tag; `difficulty` is one of `basic` / `intermediate` / `advanced`. `shuffle` reorders questions, `shuffleOptions` reorders answers within each question (correctness is tracked automatically). Set `quiz.sample` to `false` when you publish real questions.
 - **Grade distribution** — `SITE_CONFIG.grades.years`: one entry per past year, `{ year, cohort, distribution: { "A+": 8, "A": 21, ... } }`. Counts must sum to `cohort`. `failBands` lists the failing bands (default `["F"]`). Set `grades.sample` to `false` when you publish real figures.
 - **Passcode** — `SITE_CONFIG.passcode`. Empty string `""` opens the private sections to everyone.
-- **Language** — `SITE_CONFIG.language`: `{ default: "en", detect: true }`. `detect` auto-picks 中文 for Chinese browsers first; students can always switch from the footer. UI strings live in the `LANGS` dictionary in `index.html` — add a language by appending a dictionary with the same 163 keys.
+- **Language** — `SITE_CONFIG.language`: `{ default: "en", detect: true }`. `detect` auto-picks 中文 for Chinese browsers first; students can always switch from the footer. UI strings live in the `LANGS` dictionary in `index.html` — add a language by appending a dictionary with the same 172 keys.
+- **Custom subjects** — a brand-new subject resolves its bilingual label from `SITE_CONFIG.quiz.topics` (instructor-defined) or the built-in dictionary; the topic chip and tag appear automatically.
 
 ### Validate after every edit
 
@@ -60,7 +61,7 @@ Edit that one block and redeploy — no code changes needed.
 npm test
 ```
 
-The suite (64 tests) checks: every question is well-formed with a valid
+The suite (67 tests) checks: every question is well-formed with a valid
 answer and a known topic + difficulty band; grade counts sum to their cohorts; links are real `http(s)` URLs; the
 page stays a single self-contained file; dependencies stay on the locked
 whitelist (ECharts via jsDelivr + SRI, fonts via the mirror). If a test
@@ -88,7 +89,7 @@ Settings.
   browsers, but anyone who opens the page source can read the passcode.
   Fine for sharing materials with a class; don't put truly sensitive data
   behind it.
-- **Sample data** — the shipped quiz (64 questions), grade figures (5
+- **Sample data** — the shipped quiz (76 questions), grade figures (5
   years), notes (17 cards) and tutorial links (11 topics, 23 items) are
   marked `sample: true` and show a banner. Replace them and delete the
   flags.

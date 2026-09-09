@@ -1083,9 +1083,14 @@ var SITE_CONFIG = {
   quiz: {
     sample: true,
     title: "Mock Quiz — sample set",
-    intro: "Sixty-four starter questions across cell biology, biochemistry, physiology, microbiology, immunology, pharmacology, genetics, haematology, neuroscience, endocrinology, renal, anatomy, cancer biology, medical statistics, respiratory, reproductive, musculoskeletal, histology, virology, infectious disease and clinical chemistry.",
+    intro: "Seventy-six starter questions across cell biology, biochemistry, physiology, microbiology, immunology, pharmacology, genetics, haematology, neuroscience, endocrinology, renal, anatomy, embryology, cancer biology, medical statistics, respiratory, cardiology, gastroenterology, reproductive, musculoskeletal, histology, dermatology, virology, infectious disease and clinical chemistry.",
     shuffle: false,
     shuffleOptions: true,
+    topics: {
+      // Optional: bilingual labels for subjects YOU define. Built-in subjects
+      // resolve automatically; add an entry only for a brand-new topic id.
+      // "my-subject": { en: "My Subject", zh: "我的科目" }
+    },
     questions: [
       {
         id: "q1", topic: "cell-bio", difficulty: "intermediate",
@@ -1211,6 +1216,18 @@ var SITE_CONFIG = {
       { id: "q62", topic: "virology", difficulty: "basic", prompt: "Which statement correctly distinguishes viruses from bacteria?", options: ["Viruses cannot replicate outside a host cell","Viruses are always larger than bacteria","Viruses possess a peptidoglycan cell wall","Viruses divide by binary fission"], answerIndex: 0, explanation: "Viruses are obligate intracellular parasites that hijack host machinery to replicate; they lack cellular structure and are not killed by antibiotics." },
       { id: "q63", topic: "virology", difficulty: "intermediate", prompt: "Which virus has a double-stranded DNA genome and causes chickenpox and shingles?", options: ["Influenza virus","Varicella-zoster virus","HIV","Poliovirus"], answerIndex: 1, explanation: "Varicella-zoster virus, a dsDNA herpesvirus, causes primary chickenpox and can reactivate later as shingles (zoster)." },
       { id: "q64", topic: "virology", difficulty: "advanced", prompt: "Which drug class directly inhibits influenza neuraminidase?", options: ["Neuraminidase inhibitors such as oseltamivir","Nucleoside reverse transcriptase inhibitors","Protease inhibitors","Beta-lactam antibiotics"], answerIndex: 0, explanation: "Oseltamivir and zanamivir block neuraminidase, preventing release of new influenza virions from infected cells." },
+      { id: "q65", topic: "cardio", difficulty: "basic", prompt: "Which heart chamber pumps deoxygenated blood to the lungs?", options: ["Left atrium","Left ventricle","Right ventricle","Right atrium"], answerIndex: 2, explanation: "The right ventricle pumps deoxygenated blood through the pulmonary trunk to the lungs for gas exchange." },
+      { id: "q66", topic: "cardio", difficulty: "intermediate", prompt: "The first heart sound (S1, “lub”) is produced mainly by:", options: ["Closure of the semilunar valves","Closure of the atrioventricular valves","Turbulent flow in the aorta","Opening of the pulmonary valve"], answerIndex: 1, explanation: "S1 coincides with closure of the mitral and tricuspid (atrioventricular) valves at the start of ventricular systole; S2 is the semilunar valves closing." },
+      { id: "q67", topic: "cardio", difficulty: "advanced", prompt: "Which ECG change is classically seen in acute ST-elevation myocardial infarction?", options: ["ST-segment elevation over the affected territory","PR-interval prolongation","Peaked P waves","U-wave inversion"], answerIndex: 0, explanation: "Acute transmural ischaemia typically produces ST elevation over the affected region; PR prolongation suggests AV block and peaked P waves suggest hyperkalaemia." },
+      { id: "q68", topic: "gastro", difficulty: "basic", prompt: "Most digestion and absorption of nutrients occurs in the:", options: ["Stomach","Small intestine","Large intestine","Oesophagus"], answerIndex: 1, explanation: "The small intestine’s large surface area (villi and microvilli) is where most digestion and absorption take place." },
+      { id: "q69", topic: "gastro", difficulty: "intermediate", prompt: "Which stomach cells secrete hydrochloric acid?", options: ["Chief cells","Parietal cells","G cells","Goblet cells"], answerIndex: 1, explanation: "Parietal cells secrete HCl and intrinsic factor; chief cells secrete pepsinogen and G cells release gastrin." },
+      { id: "q70", topic: "gastro", difficulty: "advanced", prompt: "Vitamin B12 is absorbed in the:", options: ["Duodenum","Jejunum","Terminal ileum","Transverse colon"], answerIndex: 2, explanation: "The intrinsic factor–B12 complex is absorbed in the terminal ileum, so ileal disease or resection causes B12 deficiency." },
+      { id: "q71", topic: "embryo", difficulty: "basic", prompt: "The nervous system develops from which germ layer?", options: ["Ectoderm","Mesoderm","Endoderm","Trophoblast"], answerIndex: 0, explanation: "The ectoderm gives rise to the neural tube and thus the central nervous system, as well as the skin epidermis." },
+      { id: "q72", topic: "embryo", difficulty: "intermediate", prompt: "Supplementing which vitamin before and during early pregnancy reduces the risk of neural tube defects?", options: ["Vitamin C","Folate","Vitamin K","Retinol"], answerIndex: 1, explanation: "Periconceptional folic acid reduces the risk of neural tube defects such as spina bifida." },
+      { id: "q73", topic: "embryo", difficulty: "advanced", prompt: "Gastrulation results in the formation of:", options: ["The three germ layers (ectoderm, mesoderm and endoderm)","The neural tube","The notochord only","The placenta"], answerIndex: 0, explanation: "Gastrulation reorganises the bilaminar disc into a trilaminar embryo with ectoderm, mesoderm and endoderm." },
+      { id: "q74", topic: "derm", difficulty: "basic", prompt: "Which layer of the skin is the outermost and contains keratinocytes?", options: ["Epidermis","Dermis","Hypodermis","Deep fascia"], answerIndex: 0, explanation: "The epidermis is the stratified squamous outer layer whose keratinocytes produce keratin and barrier lipids." },
+      { id: "q75", topic: "derm", difficulty: "intermediate", prompt: "Melanocytes are located in which layer of the epidermis?", options: ["Stratum corneum","Stratum granulosum","Stratum basale","Stratum lucidum"], answerIndex: 2, explanation: "Melanocytes sit in the stratum basale and transfer melanin to keratinocytes, protecting against UV damage." },
+      { id: "q76", topic: "derm", difficulty: "advanced", prompt: "Which cell type is the main immune sentinel of the epidermis?", options: ["Keratinocytes","Langerhans cells","Merkel cells","Fibroblasts"], answerIndex: 1, explanation: "Langerhans cells are antigen-presenting dendritic cells of the epidermis that patrol for pathogens." }
     ]
   },
 
@@ -1302,7 +1319,7 @@ var LANGS = {
     "quiz.desc": "Multiple choice, instant feedback. Pick an answer to see whether you got it right.",
     "quiz.banner": "<strong>Sample questions.</strong> Replace the <code>quiz</code> block in <code>SITE_CONFIG</code> to publish your own.",
     "quiz.start": "Start the quiz",
-    "quiz.intro": "Sixty-four starter questions across cell biology, biochemistry, physiology, microbiology, immunology, pharmacology, genetics, haematology, neuroscience, endocrinology, renal, anatomy, cancer biology, medical statistics, respiratory, reproductive, musculoskeletal, histology, virology, infectious disease and clinical chemistry.",
+    "quiz.intro": "Seventy-six starter questions across cell biology, biochemistry, physiology, microbiology, immunology, pharmacology, genetics, haematology, neuroscience, endocrinology, renal, anatomy, embryology, cancer biology, medical statistics, respiratory, cardiology, gastroenterology, reproductive, musculoskeletal, histology, dermatology, virology, infectious disease and clinical chemistry.",
     "quiz.qnum": "Question {c} of {t}",
     "quiz.next": "Next question",
     "quiz.seeResults": "See results",
@@ -1356,6 +1373,10 @@ var LANGS = {
     "quiz.topic.infectious": "Infectious disease",
     "quiz.topic.histology": "Histology",
     "quiz.topic.virology": "Virology",
+    "quiz.topic.cardio": "Cardiology",
+    "quiz.topic.gastro": "Gastroenterology",
+    "quiz.topic.embryo": "Embryology",
+    "quiz.topic.derm": "Dermatology",
     "tag.sample": "sample",
     "grades.eyebrow": "TLB / Grades",
     "grades.title": "Grade Distribution",
@@ -1470,7 +1491,7 @@ var LANGS = {
     "quiz.desc": "多項選擇題，即時回饋。選取答案即知對錯。",
     "quiz.banner": "<strong>範例題目。</strong>替換 <code>SITE_CONFIG</code> 中的 <code>quiz</code> 區塊以發佈你自己的題目。",
     "quiz.start": "開始測驗",
-    "quiz.intro": "六十四道入門題目，涵蓋細胞生物學、生物化學、生理學、微生物學、免疫學、藥理學、遺傳學、血液學、神經科學、內分泌學、腎臟、解剖學、癌症生物學、醫學統計、呼吸系統、生殖系統、肌肉骨骼、組織學、病毒學、傳染病及臨床化學。",
+    "quiz.intro": "七十六道入門題目，涵蓋細胞生物學、生物化學、生理學、微生物學、免疫學、藥理學、遺傳學、血液學、神經科學、內分泌學、腎臟、解剖學、胚胎學、癌症生物學、醫學統計、呼吸系統、心臟學、消化系統、生殖系統、肌肉骨骼、組織學、皮膚病學、病毒學、傳染病及臨床化學。",
     "quiz.qnum": "第 {c} 題，共 {t} 題",
     "quiz.next": "下一題",
     "quiz.seeResults": "查看結果",
@@ -1524,6 +1545,10 @@ var LANGS = {
     "quiz.topic.infectious": "傳染病",
     "quiz.topic.histology": "組織學",
     "quiz.topic.virology": "病毒學",
+    "quiz.topic.cardio": "心臟學",
+    "quiz.topic.gastro": "消化系統",
+    "quiz.topic.embryo": "胚胎學",
+    "quiz.topic.derm": "皮膚病學",
     "tag.sample": "範例",
     "grades.eyebrow": "TLB / 成績",
     "grades.title": "成績分佈",
@@ -1613,6 +1638,33 @@ TL.formatDuration = function (sec) {
 
 /* Look up a UI string. Missing key -> English -> the key itself. */
 function currentLang() { return state.lang; }
+function topicLabelFor(tp, lang, custom) {
+  custom = custom || (SITE_CONFIG.quiz.topics || {});
+  var c = custom[tp];
+  if (c) {
+    if (c[lang]) return c[lang];
+    if (c.en) return c.en;
+  }
+  var e = LANGS.en["quiz.topic." + tp];
+  var z = LANGS.zh["quiz.topic." + tp];
+  if (lang === "zh" && z) return z;
+  if (e) return e;
+  return tp.replace(/[-_]/g, " ").replace(/^\s+|\s+$/g, "");
+}
+function hasTopicLabel(tp, lang, custom) {
+  custom = custom || (SITE_CONFIG.quiz.topics || {});
+  var c = custom[tp];
+  if (c) {
+    if (c[lang]) return true;
+    if (c.en) return true;
+  }
+  if (LANGS.en["quiz.topic." + tp]) return true;
+  if (lang === "zh" && LANGS.zh["quiz.topic." + tp]) return true;
+  return false;
+}
+function topicLabel(tp) {
+  return topicLabelFor(tp, currentLang());
+}
 function t(key, lang) {
   var L = lang || currentLang();
   var dict = LANGS[L] || LANGS.en;
@@ -1628,6 +1680,8 @@ function fmt(key, vars, lang) {
   return s;
 }
 TL.t = t;
+TL.topicLabelFor = topicLabelFor;
+TL.hasTopicLabel = hasTopicLabel;
 TL.fmt = fmt;
 
 /* Rank a band label like "A+", "B-", "F" on the grade scale
@@ -1808,7 +1862,7 @@ function applyI18n() {
     var q = state.quiz.questions[state.quiz.idx];
     var dlMap = { basic: "quiz.diffBasic", intermediate: "quiz.diffInter", advanced: "quiz.diffAdv" };
     var dlKey = q.difficulty ? dlMap[q.difficulty] : "";
-    $("quiz-topic-tag").textContent = [q.topic ? t("quiz.topic." + q.topic) : "", dlKey ? t(dlKey) : ""].filter(Boolean).join(" · ");
+    $("quiz-topic-tag").textContent = [q.topic ? topicLabel(q.topic) : "", dlKey ? t(dlKey) : ""].filter(Boolean).join(" · ");
     if (state.quiz.answers[q.id] !== undefined) {
       var ok = state.quiz.answers[q.id] === q.answerIndex;
       var fb = $("quiz-feedback");
@@ -2035,7 +2089,7 @@ function renderQuizIntro() {
     var b = document.createElement("button");
     b.type = "button";
     b.className = "chip" + (tp === quizTopicFilter ? " active" : "");
-    b.textContent = tp === "all" ? t("quiz.topicAll") : t("quiz.topic." + tp);
+    b.textContent = tp === "all" ? t("quiz.topicAll") : topicLabel(tp);
     b.setAttribute("data-topic", tp);
     b.addEventListener("click", function () { quizTopicFilter = tp; renderQuizIntro(); });
     filterEl.appendChild(b);
@@ -2079,7 +2133,7 @@ function renderQuestion() {
   var total = state.quiz.questions.length;
   $("quiz-qnum").textContent = fmt("quiz.qnum", { c: state.quiz.idx + 1, t: total });
   var dl = { basic: "quiz.diffBasic", intermediate: "quiz.diffInter", advanced: "quiz.diffAdv" }[q.difficulty] || "";
-  $("quiz-topic-tag").textContent = [q.topic ? t("quiz.topic." + q.topic) : "", dl ? t(dl) : ""].filter(Boolean).join(" · ");
+  $("quiz-topic-tag").textContent = [q.topic ? topicLabel(q.topic) : "", dl ? t(dl) : ""].filter(Boolean).join(" · ");
   $("quiz-prompt").textContent = q.prompt;
   $("quiz-progress").style.width = (state.quiz.idx / total * 100) + "%";
 

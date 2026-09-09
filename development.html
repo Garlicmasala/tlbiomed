@@ -65,7 +65,7 @@ li { margin-bottom: 5px; }
   <span><b>Project</b> T&amp;L@Biomed</span>
   <span><b>Stack</b> HTML / CSS / vanilla JS</span>
   <span><b>Commits</b> 17</span>
-  <span><b>Tests</b> 64 / 64</span>
+  <span><b>Tests</b> 67 / 67</span>
   <span><b>Code</b> 2,537 lines · 53 functions</span>
 </div>
 
@@ -121,8 +121,8 @@ li { margin-bottom: 5px; }
 
 <rect x="200" y="80" width="130" height="70" rx="10" fill="#FFFFFF" stroke="#0E6B5C" stroke-width="1.5"/>
 <text x="265" y="105" font-weight="600" fill="#0E6B5C">npm test</text>
-<text x="265" y="125" font-size="11" fill="#50646A">BDD 20 · TDD 18</text>
-<text x="265" y="140" font-size="11" fill="#50646A">Smoke 18 = 56</text>
+<text x="265" y="125" font-size="11" fill="#50646A">BDD 31 · Smoke 18</text>
+<text x="265" y="140" font-size="11" fill="#50646A">Quiz 9 · Grades 5 · i18n 4 = 67</text>
 
 <rect x="370" y="80" width="130" height="70" rx="10" fill="#FFFFFF" stroke="#0E6B5C" stroke-width="1.5"/>
 <text x="435" y="110" font-weight="600" fill="#0E6B5C">git commit</text>
@@ -169,14 +169,16 @@ li { margin-bottom: 5px; }
 <tr><td><code>1485931</code></td><td>2026-09-08</td><td>Fix Pages artifact: upload site root (single path)</td><td>+1</td></tr>
 <tr><td><code>f008c29</code></td><td>2026-09-08</td><td>Docs expansion: quiz-taxonomy (topic×difficulty) and difficulty figures, deployment-migration callout (paper); ADR-07–11, difficulty dimension, postmortem (dev guide)</td><td>+139</td></tr>
 <tr><td><code>9813f75</code></td><td>2026-09-08</td><td>Docs expansion round 2: startup sequence, verbatim deploy.yml, access-model figure (paper); artifact-footprint chart, PowerShell quirks (dev guide)</td><td>+96</td></tr>
+<tr><td><code>b6f8dda</code></td><td>2026-09-08</td><td>GUI refine: hover lift/glow on options and buttons, tab shadows, search focus ring, non-colour answer feedback</td><td>+30</td></tr>
+<tr><td><code>b61891b</code></td><td>2026-09-09</td><td>Content round 5: quiz 45→64, two new subjects (histology, virology), 21 topics, i18n 164→168</td><td>+52</td></tr>
 </table>
 
 <h2 id="test-evolution">5. Test suite evolution</h2>
-<p>The suite started at 48 tests in the initial commit and grew to 52 when the technical paper was added (4 new smoke tests), then to 56 with this development guide (4 more smoke tests). The breakdown by category has remained stable — the majority are BDD behavior tests that guard content integrity. Round 4 kept the suite at 56; a later taxonomy round folded the difficulty and topic-key checks into <code>config.behavior</code> (known topic, valid difficulty, all three bands represented, bilingual labels), closing the audit-script gap — the suite is now 64 tests.</p>
+<p>The suite started at 48 tests in the initial commit and grew to 52 when the technical paper was added (4 new smoke tests), then to 56 with this development guide (4 more smoke tests). The taxonomy round added 8 BDD tests (64), and custom-subject coverage added 3 more (67). The breakdown by category has remained stable — the majority are BDD behavior tests that guard content integrity. Round 4 kept the suite at 56; a later taxonomy round folded the difficulty and topic-key checks into <code>config.behavior</code> (known topic, valid difficulty, all three bands represented, bilingual labels), closing the audit-script gap — the suite is now 64 tests.</p>
 
 <div class="figure">
 <div id="chart-tests" class="chart"></div>
-<div class="caption">Figure 2 — Test suite composition (64 tests). BDD behavior tests (28) guard content integrity; smoke tests (18) guard the shipped artifact; TDD tests (quiz 9, grades 5, i18n 4) guard pure logic.</div>
+<div class="caption">Figure 2 — Test suite composition (67 tests). BDD behavior tests (31) guard content integrity; smoke tests (18) guard the shipped artifact; TDD tests (quiz 9, grades 5, i18n 4) guard pure logic.</div>
 </div>
 
 <h3>5.1 How the sandbox works</h3>
@@ -193,7 +195,7 @@ return sandbox.window.TL;  // evaluateQuestion, computeScore, gradeStats, bandSo
 
 <div class="figure">
 <div id="chart-content" class="chart"></div>
-<div class="caption">Figure 3 — Sample content growth across commits. Notes (4→17), quiz questions (5→45), grade years (3→5). All content is marked <code>sample: true</code> until the instructor replaces it.</div>
+<div class="caption">Figure 3 — Sample content growth across commits. Notes (4→17), quiz questions (5→76), grade years (3→5). All content is marked <code>sample: true</code> until the instructor replaces it.</div>
 </div>
 
 <h3>6.1 The difficulty dimension (round 4)</h3>
@@ -201,7 +203,7 @@ return sandbox.window.TL;  // evaluateQuestion, computeScore, gradeStats, bandSo
 
 <div class="figure">
 <div id="chart-difficulty" class="chart" style="min-height:300px"></div>
-<div class="caption">Figure 4 — Difficulty split of the 64-question bank at HEAD.</div>
+<div class="caption">Figure 4 — Difficulty split of the 76-question bank at HEAD.</div>
 </div>
 
 <h2 id="metrics">7. Code metrics</h2>
@@ -214,7 +216,7 @@ return sandbox.window.TL;  // evaluateQuestion, computeScore, gradeStats, bandSo
 <tr><th>Metric</th><th>Value</th><th>Notes</th></tr>
 <tr><td>Total lines</td><td>2,537</td><td><code>index.html</code> single file</td></tr>
 <tr><td>Functions</td><td>53</td><td>All in core script; 10 are pure logic (TL.*)</td></tr>
-<tr><td>i18n keys</td><td>168 / language</td><td>336 total strings (EN + 中文)</td></tr>
+<tr><td>i18n keys</td><td>172 / language</td><td>344 total strings (EN + 中文)</td></tr>
 <tr><td>Test files</td><td>5</td><td>quiz, grades, config.behavior, smoke, i18n</td></tr>
 <tr><td>Test helpers</td><td>3</td><td>extract (vm sandbox), check-html (tag balance), patch-scaffold</td></tr>
 <tr><td>External requests</td><td>2</td><td>ECharts JS (jsDelivr + SRI), font CSS (miaoda mirror)</td></tr>
@@ -274,12 +276,12 @@ return sandbox.window.TL;  // evaluateQuestion, computeScore, gradeStats, bandSo
 <div class="adr">
 <h4>ADR-08: Topic &amp; difficulty live in the question data <span class="status">Accepted</span></h4>
 <p><b>Decision:</b> Each question carries <code>topic</code> and <code>difficulty</code>; the filter chips and the topic·difficulty tag are derived from the bank at render time.</p>
-<p><b>Why:</b> The UI cannot drift from the data — adding a question with a new topic automatically adds its chip and tag, and removing the last question of a topic removes both.</p>
+<p><b>Why:</b> The UI cannot drift from the data — adding a question with a new topic automatically adds its chip and tag, and removing the last question of a topic removes both. Instructor-defined subjects add their own bilingual labels in <code>quiz.topics</code>, so a brand-new course subject needs no dictionary edit.</p>
 </div>
 
 <div class="adr">
 <h4>ADR-09: Flat i18n dictionary with parity tests <span class="status">Accepted</span></h4>
-<p><b>Decision:</b> All UI strings live in one flat <code>LANGS</code> object (168 keys per language at HEAD); lookups fall back English → raw key.</p>
+<p><b>Decision:</b> All UI strings live in one flat <code>LANGS</code> object (172 keys per language at HEAD); lookups fall back English → raw key.</p>
 <p><b>Why:</b> A missing or mistyped key fails the i18n suite instead of the page; adding a language is appending one dictionary with the same keys.</p>
 </div>
 
@@ -324,9 +326,10 @@ return sandbox.window.TL;  // evaluateQuestion, computeScore, gradeStats, bandSo
 <h2 id="extending">10. Extending the project</h2>
 <h3>10.1 Adding content</h3>
 <p>All content is in <code>SITE_CONFIG</code> at the top of <code>index.html</code>. Adding a note, question, or grade year is a data edit — no code changes needed. After editing, run <code>npm test</code> to verify the content is well-formed (valid answer, counts sum to cohort, real URLs), then commit and push.</p>
+<p><b>Adding a subject.</b> Put the new topic id on the questions — chips and tags follow automatically. If the subject is brand-new, give it bilingual labels in <code>quiz.topics</code>; built-in subjects already resolve from <code>LANGS</code>. Tests verify every used topic has an English and Traditional-Chinese label.</p>
 
 <h3>10.2 Adding a language</h3>
-<p>Add a new dictionary to <code>LANGS</code> with the same 168 keys as <code>en</code>. The i18n test suite automatically verifies key parity — if a key is missing, the test fails. Update <code>SITE_CONFIG.language</code> if the new language should be a default or auto-detected.</p>
+<p>Add a new dictionary to <code>LANGS</code> with the same 172 keys as <code>en</code>. The i18n test suite automatically verifies key parity — if a key is missing, the test fails. Update <code>SITE_CONFIG.language</code> if the new language should be a default or auto-detected.</p>
 
 <h3>10.3 Adding a feature</h3>
 <ol>
@@ -334,7 +337,7 @@ return sandbox.window.TL;  // evaluateQuestion, computeScore, gradeStats, bandSo
 <li>Add a test in the appropriate suite (<code>quiz.test.js</code>, <code>grades.test.js</code>, etc.).</li>
 <li>Add the DOM wiring and markup.</li>
 <li>Add the element ID to the smoke test's interactive elements list.</li>
-<li>Run <code>npm test</code> — all 64+ must pass.</li>
+<li>Run <code>npm test</code> — all 67+ must pass.</li>
 <li>Update <code>paper.html</code> and this document if the feature is significant.</li>
 </ol>
 
@@ -433,12 +436,12 @@ T&amp;L@Biomed Development Guide · Generated from the project repository · 64/
     tooltip: { trigger: "axis" },
     legend: { bottom: 0, textStyle: { color: label, fontSize: 12 } },
     grid: grid(),
-    xAxis: { type: "category", data: ["a8cdd7b\ninitial", "cb85dec\nexpand", "170660b\nall", "f9b59a8\nround 4"], axisLine: { lineStyle: { color: axis } }, axisLabel: { color: label, fontFamily: "IBM Plex Mono, monospace", fontSize: 10, interval: 0 } },
+    xAxis: { type: "category", data: ["a8cdd7b\ninitial", "cb85dec\nexpand", "170660b\nall", "f9b59a8\nround 4", "b61891b\nround 5", "custom\nsubjects"], axisLine: { lineStyle: { color: axis } }, axisLabel: { color: label, fontFamily: "IBM Plex Mono, monospace", fontSize: 10, interval: 0 } },
     yAxis: { type: "value", minInterval: 1, name: "count", nameTextStyle: { color: label, fontSize: 11 }, axisLabel: { color: label, fontFamily: "IBM Plex Mono, monospace", fontSize: 11 }, splitLine: { lineStyle: { color: split } } },
     series: [
-      { name: "Notes", type: "bar", stack: "total", data: [4, 8, 10, 17], itemStyle: { color: palette[0] } },
-      { name: "Quiz questions", type: "bar", stack: "total", data: [5, 10, 15, 45], itemStyle: { color: palette[1] } },
-      { name: "Grade years", type: "bar", stack: "total", data: [3, 3, 5, 5], itemStyle: { color: palette[2] } }
+      { name: "Notes", type: "bar", stack: "total", data: [4, 8, 10, 17, 17, 17], itemStyle: { color: palette[0] } },
+      { name: "Quiz questions", type: "bar", stack: "total", data: [5, 10, 15, 45, 64, 76], itemStyle: { color: palette[1] } },
+      { name: "Grade years", type: "bar", stack: "total", data: [3, 3, 5, 5, 5, 5], itemStyle: { color: palette[2] } }
     ]
   });
 
