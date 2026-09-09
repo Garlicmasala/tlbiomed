@@ -171,6 +171,7 @@ li { margin-bottom: 5px; }
 <tr><td><code>9813f75</code></td><td>2026-09-08</td><td>Docs expansion round 2: startup sequence, verbatim deploy.yml, access-model figure (paper); artifact-footprint chart, PowerShell quirks (dev guide)</td><td>+96</td></tr>
 <tr><td><code>b6f8dda</code></td><td>2026-09-08</td><td>GUI refine: hover lift/glow on options and buttons, tab shadows, search focus ring, non-colour answer feedback</td><td>+30</td></tr>
 <tr><td><code>b61891b</code></td><td>2026-09-09</td><td>Content round 5: quiz 45→64, two new subjects (histology, virology), 21 topics, i18n 164→168</td><td>+52</td></tr>
+<tr><td><code>3b2499c</code></td><td>2026-09-09</td><td>More subjects &amp; custom: quiz 64→76, four new subjects (cardiology, gastroenterology, embryology, dermatology), 25 topics, custom subject labels via quiz.topics, i18n 168→172</td><td>+125</td></tr>
 </table>
 
 <h2 id="test-evolution">5. Test suite evolution</h2>
@@ -226,7 +227,7 @@ return sandbox.window.TL;  // evaluateQuestion, computeScore, gradeStats, bandSo
 
 <div class="figure">
 <div id="chart-footprint" class="chart"></div>
-<div class="caption">Figure 6 — Artifact footprint across the three HTML pages: index.html carries the app (2,609 lines · 137.6 KB); paper.html and development.html document it (560 lines · 44.0 KB and 495 lines · 42.0 KB).</div>
+<div class="caption">Figure 6 — Artifact footprint across the three HTML pages: index.html carries the app (2,663 lines · 140 KB); paper.html and development.html document it (560 lines · 44.3 KB and 499 lines · 43.1 KB).</div>
 </div>
 
 <h2 id="adrs">8. Architecture decision records</h2>
@@ -234,7 +235,7 @@ return sandbox.window.TL;  // evaluateQuestion, computeScore, gradeStats, bandSo
 <div class="adr">
 <h4>ADR-01: Single self-contained HTML file <span class="status">Accepted</span></h4>
 <p><b>Decision:</b> The entire site — markup, styles, logic, config, i18n — lives in one <code>index.html</code>.</p>
-<p><b>Why:</b> Zero build step, zero dependency installation, trivial deployment (copy one file), trivial backup, and the instructor can open it in any text editor. The tradeoff — a large file (~126 KB) — is acceptable for a course hub of this scale.</p>
+<p><b>Why:</b> Zero build step, zero dependency installation, trivial deployment (copy one file), trivial backup, and the instructor can open it in any text editor. The tradeoff — a large file (~140 KB) — is acceptable for a course hub of this scale.</p>
 </div>
 
 <div class="adr">
@@ -391,7 +392,7 @@ return sandbox.window.TL;  // evaluateQuestion, computeScore, gradeStats, bandSo
 <p><b>Lessons.</b> (1) Verify Pages is enabled before debugging the workflow itself. (2) <code>upload-pages-artifact</code> takes exactly one path — for a curated artifact, stage files into a temp directory and upload that. (3) Push-to-deploy means the instructor's update loop is just: edit <code>SITE_CONFIG</code> → <code>npm test</code> → <code>git push</code>.</p>
 
 <div class="footer">
-T&amp;L@Biomed Development Guide · Generated from the project repository · 64/64 tests passing · 19 commits · 2,537 lines · Single-file static site
+T&amp;L@Biomed Development Guide · Generated from the project repository · 67/67 tests passing · 29 commits · 3,722 lines · Single-file static site
 </div>
 
 </article>
@@ -466,9 +467,9 @@ T&amp;L@Biomed Development Guide · Generated from the project repository · 64/
     tooltip: { trigger: "item", triggerOn: "click", renderMode: "richText", confine: true, formatter: "{b}: {c} questions ({d}%)" },
     legend: { bottom: 0, itemWidth: 14, itemHeight: 8, textStyle: { color: label, fontSize: 11 } },
     series: [{ type: "pie", radius: ["42%", "68%"], center: ["50%", "46%"], avoidLabelOverlap: true, itemStyle: { borderColor: "#fff", borderWidth: 2 }, label: { fontFamily: "IBM Plex Mono, monospace", fontSize: 11, color: label, formatter: "{b}\n{c}" }, data: [
-      { value: 16, name: "basic" },
-      { value: 23, name: "intermediate" },
-      { value: 6, name: "advanced" }
+      { value: 26, name: "basic" },
+      { value: 31, name: "intermediate" },
+      { value: 19, name: "advanced" }
     ] }]
   });
 
@@ -485,8 +486,8 @@ T&amp;L@Biomed Development Guide · Generated from the project repository · 64/
       { type: "value", name: "KB", nameTextStyle: { color: label, fontSize: 11 }, axisLabel: { color: label, fontFamily: "IBM Plex Mono, monospace", fontSize: 11 }, splitLine: { show: false } }
     ],
     series: [
-      { name: "lines", type: "bar", data: [[2609, 560, 495], itemStyle: { color: palette[0] }, label: { show: true, position: "top", fontFamily: "IBM Plex Mono, monospace", fontSize: 10, color: label } },
-      { name: "KB", type: "bar", yAxisIndex: 1, data: [137.6, 44.0, 42.00], itemStyle: { color: palette[1] }, label: { show: true, position: "top", fontFamily: "IBM Plex Mono, monospace", fontSize: 10, color: label } }
+      { name: "lines", type: "bar", data: [[2663, 560, 499], itemStyle: { color: palette[0] }, label: { show: true, position: "top", fontFamily: "IBM Plex Mono, monospace", fontSize: 10, color: label } },
+      { name: "KB", type: "bar", yAxisIndex: 1, data: [140, 44.3, 43.1], itemStyle: { color: palette[1] }, label: { show: true, position: "top", fontFamily: "IBM Plex Mono, monospace", fontSize: 10, color: label } }
     ]
   });
 

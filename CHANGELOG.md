@@ -2,9 +2,12 @@
 
 All changes to T&L@Biomed, newest first. Each entry names the abbreviated
 commit hash — full history via `git log`. Test counts refer to `npm test`
-(64 at HEAD).
+(67 at HEAD).
 
 ## 2026-09-09
+- **3b2499c** — More subjects & custom: quiz 64 → 76 questions. Four new subjects — Cardiology, Gastroenterology, Embryology and Dermatology (25 topics in total); difficulty now basic 26 · intermediate 31 · advanced 19. Teachers can register their own subjects with bilingual labels via `SITE_CONFIG.quiz.topics` — a new subject resolves labels from the config map, the built-in dictionary, or a prettified id, with no LANGS edit required (3 new tests cover resolution, built-in fallback and unknown-id prettify). Intro copy updated to “Seventy-six starter questions” (EN + 中文); i18n 168 → 172 keys per language; suite 64 → 67 tests; paper figures 1–4, dev metrics/workflow/footprint and README synced.
+
+
 - **b61891b** — Content round 5: quiz 45 → 64 questions. Every subject now holds at least 3 questions; two new subjects added — Histology and Virology (21 topics in total). Difficulty rebalanced toward advanced (basic 22 · intermediate 27 · advanced 15). Intro copy updated to “Sixty-four starter questions” (EN + 中文); i18n 164 → 168 keys per language; paper figures 1–2, dev metrics and README synced.
 
 
