@@ -19,13 +19,13 @@ deploys automatically via GitHub Actions.
 **Interactive features**
 
 - Mock quiz: instant correct/wrong feedback, per-question explanations, progress bar, timer, keyboard shortcuts (keys 1–4 to answer, Enter to continue), optional question/answer shuffling, and a score ring with full answer review.
-- Topic filter: a chip row filters the question pool by subject (19 subjects); every question carries a topic tag and a difficulty tag (basic / intermediate / advanced).
+- Topic filter: a chip row filters the question pool by subject (21 subjects); every question carries a topic tag and a difficulty tag (basic / intermediate / advanced).
 - Retry-wrong-only: after an attempt, re-attempt just the missed questions.
 - Site-wide search: one box finds matching notes and tutorial items, grouped by section.
 - Attempt history: best score and attempt count are stored on the student's own device (localStorage) — nothing leaves the browser.
 - Grade distribution: chart/table view toggle, counts/percent toggle, year selector (single / all), one-click print/PDF.
 - Dark mode: footer toggle, remembered per device.
-- Multilingual: English and 繁體中文 (164 UI keys per language), auto-detected from the browser and switchable in the footer (remembered per device).
+- Multilingual: English and 繁體中文 (168 UI keys per language), auto-detected from the browser and switchable in the footer (remembered per device).
 - Toasts and a "Copy link" button in the footer for sharing the site.
 
 ## Project layout
@@ -88,7 +88,7 @@ Settings.
   browsers, but anyone who opens the page source can read the passcode.
   Fine for sharing materials with a class; don't put truly sensitive data
   behind it.
-- **Sample data** — the shipped quiz (45 questions), grade figures (5
+- **Sample data** — the shipped quiz (64 questions), grade figures (5
   years), notes (17 cards) and tutorial links (11 topics, 23 items) are
   marked `sample: true` and show a banner. Replace them and delete the
   flags.

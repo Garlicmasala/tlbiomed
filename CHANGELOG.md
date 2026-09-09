@@ -5,6 +5,8 @@ commit hash — full history via `git log`. Test counts refer to `npm test`
 (64 at HEAD).
 
 ## 2026-09-09
+- **72abd31** — Content round 5: quiz 45 → 64 questions. Every subject now holds at least 3 questions; two new subjects added — Histology and Virology (21 topics in total). Difficulty rebalanced toward advanced (basic 22 · intermediate 27 · advanced 15). Intro copy updated to “Sixty-four starter questions” (EN + 中文); i18n 164 → 168 keys per language; paper figures 1–2, dev metrics and README synced.
+
 
 - **eafbc3d** — UX round: quiz intro is now bilingual (copy lives in `LANGS["quiz.intro"]`, i18n 163 → 164 keys per language); switching language mid-quiz re-renders the running question (counter, topic·difficulty tag, answer feedback) and the results review; grades “All years” shows the aggregate modal band across all selected years instead of the first year’s; docs synced (paper i18n mechanics note, dev metrics, README, footprint).
 
